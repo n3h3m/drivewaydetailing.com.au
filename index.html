@@ -482,6 +482,179 @@
             .bg-navy .price-row.is-active {
                 color: #fff;
             }
+        
+            /* ---- Mobile polish (nov 2026) ---- */
+            html, body { overflow-x: clip; max-width: 100%; }
+            #nav .max-w-8xl { max-width: 100%; }
+            @media (max-width: 400px) {
+              #nav .nav-actions a { padding-left: 0.55rem; padding-right: 0.55rem; font-size: 11px; }
+              #nav-toggle { flex-shrink: 0; }
+              #nav { overflow-x: clip; }
+              .ribbon { right: 0 !important; }
+            }
+            .marquee-mask { overflow: hidden; max-width: 100%; contain: paint; }
+            .marquee-mask .marquee { overflow: hidden; }
+            .marquee { width: max-content; max-width: none; }
+
+            #mobile-sticky-bar {
+                opacity: 0;
+                transform: translateY(120%);
+                pointer-events: none;
+                transition: opacity .35s ease, transform .4s cubic-bezier(.2,.7,.2,1);
+            }
+            #mobile-sticky-bar.is-visible {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            #size-switcher-wrap { width: 100%; }
+            #size-switcher .size-card-row { display: none; }
+            #size-switcher .size-btn-row { display: inline-flex; }
+
+            @media (max-width: 1023px) {
+                .hero-ctas {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: stretch;
+                    width: 100%;
+                    max-width: 100%;
+                }
+                .hero-ctas > a.hero-cta-main {
+                    width: 100%;
+                    justify-content: center;
+                    align-items: center;
+                    height: 52px;
+                    min-height: 52px;
+                    box-sizing: border-box;
+                    padding-left: 1.25rem;
+                    padding-right: 1.25rem;
+                    padding-top: 0;
+                    padding-bottom: 0;
+                }
+                .hero-ctas > a.hero-cta-packages {
+                    justify-content: center;
+                    width: 100%;
+                    padding-left: 0.5rem;
+                    padding-right: 0.5rem;
+                }
+
+                #size-switcher .size-btn-row { display: none; }
+                #size-switcher .size-card-row {
+                    display: grid;
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                    gap: 0.5rem;
+                    width: 100%;
+                }
+                #size-switcher .size-card {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: flex-start;
+                    gap: 0.35rem;
+                    text-align: center;
+                    border-radius: 0.9rem;
+                    border: 1.5px solid rgba(14,42,87,0.12);
+                    background: #fff;
+                    padding: 0.7rem 0.35rem 0.65rem;
+                    min-width: 0;
+                    box-shadow: 0 1px 2px rgba(14,42,87,0.04);
+                    transition: border-color .15s, background .15s, box-shadow .15s;
+                }
+                #size-switcher .size-card .sc-icon {
+                    width: 40px; height: 28px;
+                    display: flex; align-items: center; justify-content: center;
+                    color: #0E2A57;
+                }
+                #size-switcher .size-card .sc-icon svg { width: 100%; height: auto; }
+                #size-switcher .size-card .sc-label {
+                    font-size: 11px; font-weight: 800; line-height: 1.2; color: #0E2A57;
+                }
+                #size-switcher .size-card .sc-desc {
+                    font-size: 9px; font-weight: 600; line-height: 1.25; color: rgba(14,42,87,0.55);
+                }
+                #size-switcher .size-card[aria-pressed="true"] {
+                    border-color: #14C5BD;
+                    background: #E2FAF8;
+                    box-shadow: 0 0 0 1px rgba(20,197,189,0.35);
+                }
+                #size-switcher .size-card[aria-pressed="true"] .sc-icon { color: #0B7F7A; }
+
+                #size-switcher.is-stuck {
+                    position: fixed;
+                    top: var(--nav-h, 56px);
+                    left: 0; right: 0;
+                    z-index: 35;
+                    margin: 0;
+                    padding: 0.4rem 0.75rem 0.5rem;
+                    box-sizing: border-box;
+                    width: 100%;
+                    max-width: 100vw;
+                    background: rgba(255,255,255,0.97);
+                    backdrop-filter: blur(8px);
+                    -webkit-backdrop-filter: blur(8px);
+                    border-bottom: 1px solid rgba(14,42,87,0.1);
+                    box-shadow: 0 6px 18px rgba(14,42,87,0.08);
+                }
+                #size-switcher.is-stuck .size-switch-heading { display: none; }
+                #size-switcher.is-stuck .size-card {
+                    padding: 0.4rem 0.25rem 0.45rem;
+                    gap: 0.2rem;
+                }
+                #size-switcher.is-stuck .size-card .sc-icon { width: 28px; height: 20px; }
+                #size-switcher.is-stuck .size-card .sc-label { font-size: 10px; }
+                #size-switcher.is-stuck .size-card .sc-desc { display: none; }
+
+                #contact {
+                    background-color: #0E2A57 !important;
+                    background-image: none !important;
+                    overflow-x: clip;
+                }
+                #contact .contact-phone-panel {
+                    max-width: 100%;
+                    min-width: 0;
+                    box-sizing: border-box;
+                }
+                #contact .contact-phone-panel .contact-phone-num {
+                    font-size: 1.25rem;
+                    line-height: 1.2;
+                    overflow-wrap: anywhere;
+                    word-break: break-word;
+                }
+                #contact .contact-side,
+                #contact .lg\\:col-span-2,
+                #contact .lg\\:col-span-3 {
+                    min-width: 0;
+                    max-width: 100%;
+                }
+                #contact h2 {
+                    overflow-wrap: anywhere;
+                    word-break: break-word;
+                }
+                #booking-form {
+                    max-width: 100%;
+                    min-width: 0;
+                    box-sizing: border-box;
+                }
+                #booking-form .booking-actions {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: stretch;
+                    width: 100%;
+                    gap: 0.75rem;
+                }
+                #booking-form .booking-actions > button,
+                #booking-form .booking-actions > a {
+                    width: 100%;
+                    justify-content: center;
+                    min-height: 52px;
+                    box-sizing: border-box;
+                }
+                #map-scroll {
+                    -webkit-overflow-scrolling: touch;
+                }
+            }
+
         </style>
     </head>
 
@@ -492,7 +665,7 @@
             class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-navy/10"
         >
             <div
-                class="max-w-8xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4"
+                class="max-w-8xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4 min-w-0 w-full"
             >
                 <a
                     href="#top"
@@ -600,7 +773,7 @@
                 </div>
 
                 <!-- Mobile-only quick actions (Message + Call) -->
-                <div class="md:hidden ml-auto flex items-center gap-2">
+                <div class="md:hidden ml-auto flex items-center gap-2 nav-actions">
                     <a
                         href="sms:0429654427?&body=Hi%20Driveway%20Detailing%20team%2C%20I'd%20like%20to%20enquire%20about%20getting%20my%20car%20detailed.%20"
                         class="inline-flex items-center gap-1.5 rounded-2xl bg-teal text-navy px-3 py-1.5 text-xs font-extrabold hover:bg-teal-700 hover:text-white transition shadow-sm"
@@ -819,10 +992,10 @@
                             most passionate detailers.
                         </p>
 
-                        <div class="mt-7 flex flex-wrap gap-3">
+                        <div class="mt-7 flex flex-wrap gap-3 hero-ctas">
                             <a
                                 href="#booking-form"
-                                class="group inline-flex items-center gap-2 rounded-2xl bg-teal text-navy hover:bg-white px-7 py-4 text-base font-extrabold transition shadow-cardLg"
+                                class="hero-cta-main group inline-flex items-center gap-2 rounded-2xl bg-teal text-navy hover:bg-white px-7 py-4 text-base font-extrabold transition shadow-cardLg"
                             >
                                 Book Now
                                 <svg
@@ -844,7 +1017,7 @@
                             </a>
                             <a
                                 href="tel:0429654427"
-                                class="group inline-flex items-center gap-2 rounded-2xl bg-white/10 border border-white/25 hover:bg-white/20 px-7 py-4 text-base font-bold backdrop-blur transition"
+                                class="hero-cta-main group inline-flex items-center gap-2 rounded-2xl bg-white/10 border border-white/25 hover:bg-white/20 px-7 py-4 text-base font-bold backdrop-blur transition"
                             >
                                 <svg
                                     width="16"
@@ -864,7 +1037,7 @@
                             </a>
                             <a
                                 href="#packages"
-                                class="inline-flex items-center gap-2 rounded-2xl text-white/80 hover:text-white px-2 py-4 text-sm font-semibold transition"
+                                class="hero-cta-packages inline-flex items-center gap-2 rounded-2xl text-white/80 hover:text-white px-2 py-4 text-sm font-semibold transition"
                             >
                                 See packages &amp; pricing →
                             </a>
@@ -956,14 +1129,14 @@
                                 >
                             </li>
                             <li
-                                class="flex items-center gap-2 rounded-lg bg-teal text-navy px-3 py-2.5"
+                                class="flex items-center gap-2 rounded-lg bg-white/5 border border-white/10 px-3 py-2.5"
                             >
                                 <svg
                                     width="20"
                                     height="20"
                                     viewBox="0 0 24 24"
                                     fill="none"
-                                    class="shrink-0"
+                                    class="text-teal shrink-0"
                                     aria-hidden="true"
                                 >
                                     <path
@@ -981,7 +1154,7 @@
                                     />
                                 </svg>
                                 <span
-                                    class="text-[11px] font-extrabold leading-tight"
+                                    class="text-[11px] font-bold leading-tight"
                                     >We come<br />to you!</span
                                 >
                             </li>
@@ -1087,7 +1260,7 @@
             </div>
 
             <!-- Marquee strip -->
-            <div class="border-t border-white/10 bg-navy-700">
+            <div class="border-t border-white/10 bg-navy-700 overflow-hidden">
                 <div class="marquee-mask overflow-hidden py-3">
                     <div
                         class="marquee text-white/70 text-sm font-bold tracking-[0.2em] uppercase"
@@ -1331,14 +1504,15 @@
                 </div>
 
                 <!-- Vehicle size switcher (drives the prices shown below) -->
-                <div class="mt-8 flex flex-col items-center gap-2">
+                <div id="size-switcher-wrap" class="mt-8">
+                    <div id="size-switcher" class="flex flex-col items-center gap-2">
                     <span
                         id="size-switch-label"
-                        class="text-[11px] font-extrabold tracking-[0.14em] uppercase text-navy/60"
+                        class="size-switch-heading text-[11px] font-extrabold tracking-[0.14em] uppercase text-navy/60"
                         >Your vehicle</span
                     >
                     <div
-                        class="inline-flex flex-wrap justify-center gap-1 rounded-2xl bg-white border border-navy/10 p-1 shadow-card"
+                        class="size-btn-row inline-flex flex-wrap justify-center gap-1 rounded-2xl bg-white border border-navy/10 p-1 shadow-card"
                         role="group"
                         aria-labelledby="size-switch-label"
                     >
@@ -1364,6 +1538,24 @@
                         >
                             Large SUV / 7 Seater
                         </button>
+                    </div>
+                    <div class="size-card-row" role="group" aria-labelledby="size-switch-label">
+                        <button type="button" class="size-btn size-card" data-size="hatch" aria-pressed="true">
+                            <span class="sc-icon"><svg viewBox="0 0 32 14" fill="currentColor" aria-hidden="true"><path d="M2 10c.4-.6 1.2-1.4 2-1.8 0 0 1.6-3.5 2.8-4.2C7.7 3.5 8.8 3.4 10 3.4h8.5c1.6 0 2.7.7 4 2 .6.6 1.3 1.6 1.9 2.3 1.3.4 3.2.9 4 1.5.7.5 1 1.3 1 2.3l-2 0a3.2 3.2 0 11-6.3 0H11a3.2 3.2 0 11-6.3 0H3c-.7-.1-.8-.7-.5-1.5z"/></svg></span>
+                            <span class="sc-label">Hatch / Sedan</span>
+                            <span class="sc-desc">Small cars &amp; sedans</span>
+                        </button>
+                        <button type="button" class="size-btn size-card" data-size="suv" aria-pressed="false">
+                            <span class="sc-icon"><svg viewBox="0 0 32 18" fill="currentColor" aria-hidden="true"><path d="M2 13c0-1 .5-1.8 1.2-2.3.4-1 1-3 2-4.4C6.5 4.6 8 4 10 4h11c2.2 0 3.4.6 4.5 1.8L28 9c1.5.4 2.5 1 2.8 2 .3.9.2 2-.2 2.5l-2 0a3.2 3.2 0 11-6.4 0H11a3.2 3.2 0 11-6.4 0H3.2c-.8-.1-1.2-.7-1.2-1.5z"/></svg></span>
+                            <span class="sc-label">Small SUV / Wagon</span>
+                            <span class="sc-desc">Crossovers &amp; wagons</span>
+                        </button>
+                        <button type="button" class="size-btn size-card" data-size="large" aria-pressed="false">
+                            <span class="sc-icon"><svg viewBox="0 0 32 18" fill="currentColor" aria-hidden="true"><path d="M2 14V5c0-1.1.9-2 2-2h18c1.1 0 2 .9 2 2v3l5 2.5V14h-3a3.2 3.2 0 11-6.4 0H11a3.2 3.2 0 11-6.4 0H2z"/></svg></span>
+                            <span class="sc-label">Large SUV / 7 Seater</span>
+                            <span class="sc-desc">People movers &amp; large SUVs</span>
+                        </button>
+                    </div>
                     </div>
                 </div>
 
@@ -4896,7 +5088,7 @@
         </section>
 
         <!-- ============ WHY US ============ -->
-        <section class="py-16 md:py-20 bg-paper border-y border-navy/10">
+        <section id="why" class="py-16 md:py-20 bg-paper border-y border-navy/10">
             <div class="max-w-8xl mx-auto px-4 sm:px-6">
                 <div class="reveal text-center max-w-2xl mx-auto">
                     <div
@@ -5305,12 +5497,19 @@
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Parramatta</span></li>
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Blacktown</span></li>
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Penrith</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Merrylands</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Lidcombe</span></li>
                             </ul>
                         </div>
                         <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal-700 leading-snug">Inner West</h3>
                             <ul class="mt-2.5 flex flex-wrap gap-2">
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Strathfield</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Burwood</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Ashfield</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Concord</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Homebush</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Croydon</span></li>
                             </ul>
                         </div>
                         <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
@@ -5320,6 +5519,8 @@
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Hornsby</span></li>
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Ryde</span></li>
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Chatswood</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Baulkham Hills</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Epping</span></li>
                             </ul>
                         </div>
                         <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
@@ -5328,24 +5529,42 @@
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Bankstown</span></li>
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Liverpool</span></li>
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-teal/60 text-navy px-3 py-1.5 text-sm font-bold">Glenfield ✓</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Fairfield</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Cabramatta</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Prestons</span></li>
                             </ul>
                         </div>
                         <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal-700 leading-snug">Sutherland Shire</h3>
                             <ul class="mt-2.5 flex flex-wrap gap-2">
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-teal/60 text-navy px-3 py-1.5 text-sm font-bold">Menai ✓</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Sutherland</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Cronulla</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Miranda</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Engadine</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Kirrawee</span></li>
                             </ul>
                         </div>
                         <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal-700 leading-snug">Blue Mountains</h3>
                             <ul class="mt-2.5 flex flex-wrap gap-2">
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-teal/60 text-navy px-3 py-1.5 text-sm font-bold">Katoomba ✓</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Springwood</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Blaxland</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Glenbrook</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Leura</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Wentworth Falls</span></li>
                             </ul>
                         </div>
                         <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal-700 leading-snug">Central Coast</h3>
                             <ul class="mt-2.5 flex flex-wrap gap-2">
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-teal/60 text-navy px-3 py-1.5 text-sm font-bold">Blackwall ✓</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Gosford</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Woy Woy</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Erina</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Terrigal</span></li>
+                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Umina Beach</span></li>
                             </ul>
                         </div>
                         <div class="rounded-lg bg-navy text-white px-4 py-3.5 flex flex-col justify-center">
@@ -5387,7 +5606,7 @@
                     <figure
                         class="bg-white rounded-lg border border-navy/10 shadow-card p-3 md:p-4 lg:flex-1 lg:flex lg:flex-col"
                     >
-                        <div class="overflow-x-auto -mx-1 px-1 lg:overflow-visible lg:relative lg:flex-1 lg:min-h-[320px]">
+                        <div id="map-scroll" class="overflow-x-auto -mx-1 px-1 lg:overflow-visible lg:relative lg:flex-1 lg:min-h-[320px]">
                             <svg
                                 viewBox="0 0 640 420"
                                 preserveAspectRatio="xMidYMid meet"
@@ -5505,6 +5724,7 @@
                                         transform="rotate(45 478 277)"
                                     />
                                     <text
+                                        id="map-cbd"
                                         x="487"
                                         y="281"
                                         font-size="11"
@@ -6431,7 +6651,7 @@
             <div
                 class="max-w-8xl mx-auto px-4 sm:px-6 grid lg:grid-cols-5 gap-10 lg:gap-14"
             >
-                <div class="lg:col-span-2">
+                <div class="lg:col-span-2 contact-side min-w-0">
                     <div
                         class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 text-teal px-3 py-1 text-[11px] font-bold tracking-[0.14em] uppercase"
                     >
@@ -6449,7 +6669,7 @@
 
                     <a
                         href="tel:0429654427"
-                        class="mt-6 inline-flex items-center gap-3 rounded-lg bg-white/5 border border-white/15 hover:bg-white/10 transition px-5 py-4 w-full"
+                        class="contact-phone-panel mt-6 inline-flex items-center gap-3 rounded-lg bg-white/5 border border-white/15 hover:bg-white/10 transition px-4 sm:px-5 py-4 w-full max-w-full min-w-0"
                     >
                         <div
                             class="w-12 h-12 rounded-full bg-teal text-navy flex items-center justify-center shrink-0"
@@ -6469,13 +6689,13 @@
                                 />
                             </svg>
                         </div>
-                        <div>
+                        <div class="min-w-0 flex-1">
                             <div
                                 class="text-xs uppercase tracking-[0.14em] text-white/55 font-bold"
                             >
                                 Call or message
                             </div>
-                            <div class="font-black text-2xl">0429 654 427</div>
+                            <div class="contact-phone-num font-black text-2xl">0429 654 427</div>
                         </div>
                     </a>
 
@@ -6592,7 +6812,7 @@
                                 >
                                     Social
                                 </div>
-                                <div class="flex gap-2 mt-1">
+                                <div class="flex flex-wrap gap-x-2 gap-y-1 mt-1 min-w-0">
                                     <a
                                         href="https://www.facebook.com/profile.php?id=61590132262669"
                                         target="_blank"
@@ -6609,7 +6829,16 @@
                                         class="font-bold underline-offset-4 hover:underline"
                                         >Instagram</a
                                     >
-                                    <span class="text-white/55"
+                                    <span class="text-white/30">·</span>
+                                    <a
+                                        href="https://m.me/61590132262669"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label="Messenger"
+                                        class="font-bold underline-offset-4 hover:underline"
+                                        >Messenger</a
+                                    >
+                                    <span class="text-white/55 break-all"
                                         >@drivewaydetailingnsw</span
                                     >
                                 </div>
@@ -6618,7 +6847,7 @@
                     </ul>
                 </div>
 
-                <div class="lg:col-span-3">
+                <div class="lg:col-span-3 min-w-0">
                     <form
                         id="booking-form"
                         class="bg-white text-ink rounded-lg p-6 md:p-7 shadow-cardLg grid grid-cols-1 md:grid-cols-2 gap-4 scroll-mt-24 md:scroll-mt-28"
@@ -7162,7 +7391,7 @@
                         </details>
 
                         <div
-                            class="md:col-span-2 flex flex-wrap items-center gap-3 pt-1"
+                            class="md:col-span-2 flex flex-wrap items-center gap-3 pt-1 booking-actions"
                         >
                             <button
                                 type="submit"
@@ -7534,6 +7763,25 @@
                                 />
                             </svg>
                         </a>
+                        <a
+                            href="https://m.me/61590132262669"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Messenger"
+                            class="w-9 h-9 inline-flex items-center justify-center rounded-full bg-white/5 hover:bg-teal hover:text-navy transition"
+                        >
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M12 2C6.48 2 2 6.14 2 11.25c0 2.9 1.44 5.49 3.7 7.2V22l3.38-1.86c.93.26 1.91.4 2.92.4 5.52 0 10-4.14 10-9.29S17.52 2 12 2zm1.01 12.48l-2.55-2.72-4.98 2.72 5.48-5.82 2.61 2.72 4.92-2.72-5.48 5.82z"
+                                />
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -7572,7 +7820,7 @@
         </footer>
 
         <!-- ============ STICKY MOBILE CALL BAR ============ -->
-        <div class="lg:hidden fixed bottom-3 left-3 right-3 z-40 flex gap-2">
+        <div id="mobile-sticky-bar" class="lg:hidden fixed bottom-3 left-3 right-3 z-40 flex gap-2" aria-hidden="true">
             <a
                 href="tel:0429654427"
                 class="call-glow flex-1 inline-flex items-center justify-center gap-2 rounded-2xl text-white px-4 py-3 text-sm font-extrabold shadow-cardLg"
@@ -7775,6 +8023,14 @@
                             r.dataset.size === size,
                         ),
                     );
+                // Keep booking form vehicle radio in sync
+                const vr = document.querySelector(
+                    `input[name="vehicletype"][data-size="${size}"]`,
+                );
+                if (vr && !vr.checked) {
+                    vr.checked = true;
+                    vr.dispatchEvent(new Event('change', { bubbles: true }));
+                }
             }
             document
                 .querySelectorAll('.size-btn')
@@ -8314,6 +8570,111 @@
                         : 'input';
                 el.addEventListener(evt, () => showErr(el.name, false));
             });
+
+
+            // ---------- Mobile sticky call bar (show after scroll) ----------
+            (function () {
+                const bar = document.getElementById('mobile-sticky-bar');
+                if (!bar) return;
+                const THRESH = 100;
+                function sync() {
+                    const on = window.scrollY > THRESH;
+                    bar.classList.toggle('is-visible', on);
+                    bar.setAttribute('aria-hidden', on ? 'false' : 'true');
+                }
+                window.addEventListener('scroll', sync, { passive: true });
+                sync();
+            })();
+
+            // ---------- Mobile size-switcher sticky between packages and why ----------
+            (function () {
+                const sw = document.getElementById('size-switcher');
+                const wrap = document.getElementById('size-switcher-wrap');
+                const pkgs = document.getElementById('packages');
+                const why = document.getElementById('why');
+                const nav = document.getElementById('nav');
+                if (!sw || !wrap || !pkgs || !why) return;
+                let placeholderH = 0;
+                function navH() {
+                    return nav ? nav.getBoundingClientRect().height : 56;
+                }
+                function mq() {
+                    return window.matchMedia('(max-width: 1023px)').matches;
+                }
+                function update() {
+                    document.documentElement.style.setProperty('--nav-h', navH() + 'px');
+                    if (!mq()) {
+                        sw.classList.remove('is-stuck');
+                        wrap.style.height = '';
+                        return;
+                    }
+                    const start = pkgs.getBoundingClientRect().top + window.scrollY;
+                    // stick once switcher would hit under nav
+                    const switcherTop = wrap.getBoundingClientRect().top + window.scrollY;
+                    const end = why.getBoundingClientRect().top + window.scrollY - navH() - 8;
+                    const y = window.scrollY + navH();
+                    const should = y >= switcherTop - 1 && y < end;
+                    if (should) {
+                        if (!sw.classList.contains('is-stuck')) {
+                            placeholderH = sw.getBoundingClientRect().height;
+                            wrap.style.height = placeholderH + 'px';
+                            sw.classList.add('is-stuck');
+                        } else {
+                            // keep placeholder in sync if compact height changes
+                            const h = sw.getBoundingClientRect().height;
+                            if (Math.abs(h - placeholderH) > 2) {
+                                placeholderH = h;
+                                wrap.style.height = h + 'px';
+                            }
+                        }
+                    } else {
+                        sw.classList.remove('is-stuck');
+                        wrap.style.height = '';
+                    }
+                }
+                window.addEventListener('scroll', update, { passive: true });
+                window.addEventListener('resize', update);
+                update();
+            })();
+
+            // ---------- Map: CBD at right-third on mobile ----------
+            (function () {
+                const sc = document.getElementById('map-scroll');
+                const svg = sc && sc.querySelector('svg');
+                const cbd = document.getElementById('map-cbd');
+                if (!sc || !svg) return;
+                function place() {
+                    if (window.matchMedia('(min-width: 1024px)').matches) {
+                        sc.scrollLeft = 0;
+                        return;
+                    }
+                    const cw = sc.clientWidth;
+                    const sw = svg.getBoundingClientRect().width;
+                    if (sw <= cw + 1) return;
+                    // CBD at x=487 in viewBox 640
+                    let cbdX;
+                    if (cbd && typeof cbd.getBBox === 'function') {
+                        try {
+                            const b = cbd.getBBox();
+                            const vb = svg.viewBox.baseVal;
+                            const scale = sw / (vb && vb.width ? vb.width : 640);
+                            cbdX = (b.x + b.width / 2) * scale;
+                        } catch (e) {
+                            cbdX = (487 / 640) * sw;
+                        }
+                    } else {
+                        cbdX = (487 / 640) * sw;
+                    }
+                    const target = cbdX - cw * (2 / 3);
+                    sc.scrollLeft = Math.max(0, Math.min(sw - cw, target));
+                }
+                window.addEventListener('load', place);
+                window.addEventListener('resize', place);
+                window.addEventListener('orientationchange', () => setTimeout(place, 200));
+                // after fonts/layout
+                setTimeout(place, 100);
+                setTimeout(place, 600);
+            })();
 
             // ---------- Footer year ----------
             document.getElementById('year').textContent =
