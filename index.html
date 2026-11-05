@@ -485,6 +485,64 @@
         
             /* ---- Mobile polish (nov 2026) ---- */
             html, body { overflow-x: clip; max-width: 100%; }
+
+            .handoff-actions { width: 100%; max-width: 100%; box-sizing: border-box; }
+            .handoff-btn {
+                min-height: 48px;
+                box-sizing: border-box;
+                max-width: 100%;
+            }
+            #site-credit {
+                border-top: 1px solid rgba(255,255,255,0.12);
+                margin-top: 0.25rem;
+                padding-top: 1rem;
+                padding-bottom: 0.25rem;
+                text-align: center;
+                width: 100%;
+            }
+            #site-credit a {
+                color: #14C5BD;
+                font-weight: 800;
+                font-size: 13px;
+                letter-spacing: 0.02em;
+                text-decoration: none;
+            }
+            #site-credit a:hover { color: #fff; }
+            @media (max-width: 1023px) {
+                footer {
+                    padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px));
+                }
+                body {
+                    padding-bottom: 0;
+                }
+                #site-credit {
+                    padding-bottom: 0.75rem;
+                    margin-bottom: 0.5rem;
+                }
+                .handoff-actions {
+                    padding-bottom: 2px;
+                    overflow: visible;
+                }
+            }
+
+
+            /* iOS date input fit */
+            input[type="date"].dd-date {
+                width: 100%;
+                max-width: 100%;
+                min-width: 0;
+                box-sizing: border-box;
+                -webkit-appearance: none;
+                appearance: none;
+                display: block;
+                height: 48px;
+                line-height: 1.25;
+                text-align: left;
+            }
+            input[type="date"].dd-date::-webkit-date-and-time-value {
+                text-align: left;
+            }
+
             #nav .max-w-8xl { max-width: 100%; }
             @media (max-width: 400px) {
               #nav .nav-actions a { padding-left: 0.55rem; padding-right: 0.55rem; font-size: 11px; }
@@ -1708,8 +1766,7 @@
                             >
                                 Interior
                             </div>
-                            <ul class="mt-2 space-y-1.5">
-                                <li class="flex gap-2">
+                            <ul class="mt-2 space-y-1.5"><li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -1727,7 +1784,7 @@
                                         /></svg
                                     ><span>Interior wipe down</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -1745,7 +1802,7 @@
                                         /></svg
                                     ><span>Full interior vacuum</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -1763,7 +1820,7 @@
                                         /></svg
                                     ><span>Door panel clean</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -1781,7 +1838,7 @@
                                         /></svg
                                     ><span>Windows &amp; mirrors</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -1799,7 +1856,30 @@
                                         /></svg
                                     ><span>Deodorising</span>
                                 </li>
-                                <li class="pkg-excluded flex gap-2 text-ink/30">
+<li class="pkg-excluded flex gap-2 text-ink/30">
+                                    <svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        class="shrink-0 mt-0.5"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M7 7l10 10M17 7L7 17"
+                                            stroke="currentColor"
+                                            stroke-width="2.2"
+                                            stroke-linecap="round"
+                                        /></svg
+                                    ><span
+                                        ><span class="line-through decoration-1"
+                                            >Leather clean &amp; condition</span
+                                        ><span class="sr-only">
+                                            (not included)</span
+                                        ></span
+                                    >
+                                </li>
+<li class="pkg-excluded flex gap-2 text-ink/30">
                                     <svg
                                         width="16"
                                         height="16"
@@ -1822,7 +1902,7 @@
                                         ></span
                                     >
                                 </li>
-                                <li class="pkg-excluded flex gap-2 text-ink/30">
+<li class="pkg-excluded flex gap-2 text-ink/30">
                                     <svg
                                         width="16"
                                         height="16"
@@ -1845,7 +1925,7 @@
                                         ></span
                                     >
                                 </li>
-                                <li class="pkg-excluded flex gap-2 text-ink/30">
+<li class="pkg-excluded flex gap-2 text-ink/30">
                                     <svg
                                         width="16"
                                         height="16"
@@ -1868,7 +1948,7 @@
                                         ></span
                                     >
                                 </li>
-                                <li class="pkg-excluded flex gap-2 text-ink/30">
+<li class="pkg-excluded flex gap-2 text-ink/30">
                                     <svg
                                         width="16"
                                         height="16"
@@ -1891,7 +1971,7 @@
                                         ></span
                                     >
                                 </li>
-                                <li class="pkg-excluded flex gap-2 text-ink/30">
+<li class="pkg-excluded flex gap-2 text-ink/30">
                                     <svg
                                         width="16"
                                         height="16"
@@ -1909,30 +1989,6 @@
                                     ><span
                                         ><span class="line-through decoration-1"
                                             >Ozone treatment</span
-                                        ><span class="sr-only">
-                                            (not included)</span
-                                        ></span
-                                    >
-                                </li>
-                            
-                                <li class="pkg-excluded flex gap-2 text-ink/30">
-                                    <svg
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        class="shrink-0 mt-0.5"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M7 7l10 10M17 7L7 17"
-                                            stroke="currentColor"
-                                            stroke-width="2.2"
-                                            stroke-linecap="round"
-                                        /></svg
-                                    ><span
-                                        ><span class="line-through decoration-1"
-                                            >Leather clean &amp; condition</span
                                         ><span class="sr-only">
                                             (not included)</span
                                         ></span
@@ -2371,8 +2427,7 @@
                             >
                                 Interior
                             </div>
-                            <ul class="mt-2 space-y-1.5">
-                                <li class="flex gap-2">
+                            <ul class="mt-2 space-y-1.5"><li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -2390,7 +2445,7 @@
                                         /></svg
                                     ><span>Interior wipe down</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -2408,7 +2463,7 @@
                                         /></svg
                                     ><span>Full interior vacuum</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -2426,7 +2481,7 @@
                                         /></svg
                                     ><span>Door panel clean</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -2444,7 +2499,7 @@
                                         /></svg
                                     ><span>Windows &amp; mirrors</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -2462,7 +2517,27 @@
                                         /></svg
                                     ><span>Deodorising</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
+                                    <svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        class="shrink-0 text-teal-700 mt-0.5"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M5 12l4 4 10-10"
+                                            stroke="currentColor"
+                                            stroke-width="2.6"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        /></svg
+                                    ><span
+                                        >Leather clean &amp; condition</span
+                                    >
+                                </li>
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -2480,7 +2555,7 @@
                                         /></svg
                                     ><span>Fabric seats shampoo</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -2498,7 +2573,7 @@
                                         /></svg
                                     ><span>Carpet &amp; mat shampoo</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -2516,7 +2591,7 @@
                                         /></svg
                                     ><span>Plastic dressing</span>
                                 </li>
-                                <li class="pkg-excluded flex gap-2 text-ink/30">
+<li class="pkg-excluded flex gap-2 text-ink/30">
                                     <svg
                                         width="16"
                                         height="16"
@@ -2539,7 +2614,7 @@
                                         ></span
                                     >
                                 </li>
-                                <li class="pkg-excluded flex gap-2 text-ink/30">
+<li class="pkg-excluded flex gap-2 text-ink/30">
                                     <svg
                                         width="16"
                                         height="16"
@@ -2560,27 +2635,6 @@
                                         ><span class="sr-only">
                                             (not included)</span
                                         ></span
-                                    >
-                                </li>
-                            
-                                <li class="flex gap-2">
-                                    <svg
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        class="shrink-0 text-teal-700 mt-0.5"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M5 12l4 4 10-10"
-                                            stroke="currentColor"
-                                            stroke-width="2.6"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                        /></svg
-                                    ><span
-                                        >Leather clean &amp; condition</span
                                     >
                                 </li></ul>
                             <div
@@ -3017,8 +3071,7 @@
                             >
                                 Interior
                             </div>
-                            <ul class="mt-2 space-y-1.5">
-                                <li class="flex gap-2">
+                            <ul class="mt-2 space-y-1.5"><li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3036,7 +3089,7 @@
                                         /></svg
                                     ><span>Interior wipe down</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3054,7 +3107,7 @@
                                         /></svg
                                     ><span>Full interior vacuum</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3072,7 +3125,7 @@
                                         /></svg
                                     ><span>Door panel clean</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3090,7 +3143,7 @@
                                         /></svg
                                     ><span>Windows &amp; mirrors</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3108,7 +3161,27 @@
                                         /></svg
                                     ><span>Deodorising</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
+                                    <svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        class="shrink-0 text-teal-700 mt-0.5"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M5 12l4 4 10-10"
+                                            stroke="currentColor"
+                                            stroke-width="2.6"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        /></svg
+                                    ><span
+                                        >Leather clean &amp; condition</span
+                                    >
+                                </li>
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3126,7 +3199,7 @@
                                         /></svg
                                     ><span>Fabric seats shampoo</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3144,7 +3217,7 @@
                                         /></svg
                                     ><span>Carpet &amp; mat shampoo</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3162,7 +3235,7 @@
                                         /></svg
                                     ><span>Plastic dressing</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3180,7 +3253,7 @@
                                         /></svg
                                     ><span>Steam clean</span>
                                 </li>
-                                <li class="pkg-excluded flex gap-2 text-ink/30">
+<li class="pkg-excluded flex gap-2 text-ink/30">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3201,27 +3274,6 @@
                                         ><span class="sr-only">
                                             (not included)</span
                                         ></span
-                                    >
-                                </li>
-                            
-                                <li class="flex gap-2">
-                                    <svg
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        class="shrink-0 text-teal-700 mt-0.5"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M5 12l4 4 10-10"
-                                            stroke="currentColor"
-                                            stroke-width="2.6"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                        /></svg
-                                    ><span
-                                        >Leather clean &amp; condition</span
                                     >
                                 </li></ul>
                             <div
@@ -3634,8 +3686,7 @@
                             >
                                 Interior
                             </div>
-                            <ul class="mt-2 space-y-1.5">
-                                <li class="flex gap-2">
+                            <ul class="mt-2 space-y-1.5"><li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3653,7 +3704,7 @@
                                         /></svg
                                     ><span>Interior wipe down</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3671,7 +3722,7 @@
                                         /></svg
                                     ><span>Full interior vacuum</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3689,7 +3740,7 @@
                                         /></svg
                                     ><span>Door panel clean</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3707,7 +3758,7 @@
                                         /></svg
                                     ><span>Windows &amp; mirrors</span>
                                 </li>
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3725,98 +3776,7 @@
                                         /></svg
                                     ><span>Deodorising</span>
                                 </li>
-                                <li class="flex gap-2">
-                                    <svg
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        class="shrink-0 text-teal mt-0.5"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M5 12l4 4 10-10"
-                                            stroke="currentColor"
-                                            stroke-width="2.6"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                        /></svg
-                                    ><span>Fabric seats shampoo</span>
-                                </li>
-                                <li class="flex gap-2">
-                                    <svg
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        class="shrink-0 text-teal mt-0.5"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M5 12l4 4 10-10"
-                                            stroke="currentColor"
-                                            stroke-width="2.6"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                        /></svg
-                                    ><span>Carpet &amp; mat shampoo</span>
-                                </li>
-                                <li class="flex gap-2">
-                                    <svg
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        class="shrink-0 text-teal mt-0.5"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M5 12l4 4 10-10"
-                                            stroke="currentColor"
-                                            stroke-width="2.6"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                        /></svg
-                                    ><span>Plastic dressing</span>
-                                </li>
-                                <li class="flex gap-2">
-                                    <svg
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        class="shrink-0 text-teal mt-0.5"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M5 12l4 4 10-10"
-                                            stroke="currentColor"
-                                            stroke-width="2.6"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                        /></svg
-                                    ><span>Steam clean</span>
-                                </li>
-                                <li class="flex gap-2">
-                                    <svg
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        class="shrink-0 text-teal mt-0.5"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M5 12l4 4 10-10"
-                                            stroke="currentColor"
-                                            stroke-width="2.6"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                        /></svg
-                                    ><span>Ozone treatment</span>
-                                </li>
-                            
-                                <li class="flex gap-2">
+<li class="flex gap-2">
                                     <svg
                                         width="16"
                                         height="16"
@@ -3835,6 +3795,96 @@
                                     ><span
                                         >Leather clean &amp; condition</span
                                     >
+                                </li>
+<li class="flex gap-2">
+                                    <svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        class="shrink-0 text-teal mt-0.5"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M5 12l4 4 10-10"
+                                            stroke="currentColor"
+                                            stroke-width="2.6"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        /></svg
+                                    ><span>Fabric seats shampoo</span>
+                                </li>
+<li class="flex gap-2">
+                                    <svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        class="shrink-0 text-teal mt-0.5"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M5 12l4 4 10-10"
+                                            stroke="currentColor"
+                                            stroke-width="2.6"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        /></svg
+                                    ><span>Carpet &amp; mat shampoo</span>
+                                </li>
+<li class="flex gap-2">
+                                    <svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        class="shrink-0 text-teal mt-0.5"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M5 12l4 4 10-10"
+                                            stroke="currentColor"
+                                            stroke-width="2.6"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        /></svg
+                                    ><span>Plastic dressing</span>
+                                </li>
+<li class="flex gap-2">
+                                    <svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        class="shrink-0 text-teal mt-0.5"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M5 12l4 4 10-10"
+                                            stroke="currentColor"
+                                            stroke-width="2.6"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        /></svg
+                                    ><span>Steam clean</span>
+                                </li>
+<li class="flex gap-2">
+                                    <svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        class="shrink-0 text-teal mt-0.5"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M5 12l4 4 10-10"
+                                            stroke="currentColor"
+                                            stroke-width="2.6"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        /></svg
+                                    ><span>Ozone treatment</span>
                                 </li></ul>
                             <div
                                 class="mt-4 text-[11px] font-extrabold tracking-[0.12em] uppercase text-teal"
@@ -7273,7 +7323,7 @@
                                 id="f-date"
                                 name="date"
                                 type="date"
-                                class="w-full rounded-lg border border-navy/15 focus:border-teal focus:ring-2 focus:ring-teal/30 px-3.5 py-3 text-[15px] outline-none transition"
+                                class="dd-date w-full max-w-full min-w-0 rounded-lg border border-navy/15 focus:border-teal focus:ring-2 focus:ring-teal/30 px-3.5 py-3 text-[15px] outline-none transition bg-white"
                             />
                         </div>
 
@@ -7512,11 +7562,11 @@
                                 aria-label="Pre-filled SMS message"
                             ></pre>
 
-                            <div class="mt-4 flex flex-nowrap gap-2">
+                                                        <div class="mt-4 flex flex-col sm:flex-row gap-3 handoff-actions">
                                 <a
                                     id="open-sms"
                                     href="sms:0429654427"
-                                    class="flex-1 min-w-0 inline-flex items-center justify-center gap-2 rounded-2xl bg-navy text-white hover:bg-navy-700 transition px-4 py-2 text-xs font-extrabold whitespace-nowrap"
+                                    class="handoff-btn flex-1 min-w-0 inline-flex items-center justify-center gap-2 rounded-2xl bg-navy text-white hover:bg-navy-700 transition px-4 py-3 text-xs font-extrabold box-border border-2 border-navy shadow-sm"
                                 >
                                     <svg
                                         width="14"
@@ -7533,14 +7583,14 @@
                                             stroke-linejoin="round"
                                         />
                                     </svg>
-                                    Send Message
+                                    Send as message
                                 </a>
                                 <a
                                     id="open-wa"
                                     href="https://wa.me/61429654427"
                                     target="_blank"
                                     rel="noopener"
-                                    class="flex-[1.5] min-w-0 inline-flex items-center justify-center gap-2 rounded-2xl bg-[#25D366] text-white hover:bg-[#1FBA57] transition px-4 py-2 text-xs font-extrabold whitespace-nowrap"
+                                    class="handoff-btn flex-1 min-w-0 inline-flex items-center justify-center gap-2 rounded-2xl bg-[#25D366] text-white hover:bg-[#1FBA57] transition px-4 py-3 text-xs font-extrabold box-border border-2 border-[#25D366] shadow-sm"
                                 >
                                     <svg
                                         width="16"
@@ -7787,8 +7837,9 @@
             </div>
             <div class="border-t border-white/10">
                 <div
-                    class="max-w-8xl mx-auto px-4 sm:px-6 py-5 flex flex-wrap items-center justify-between gap-3 text-xs"
+                    class="max-w-8xl mx-auto px-4 sm:px-6 py-5 flex flex-col gap-4"
                 >
+                    <div class="flex flex-wrap items-center justify-between gap-3 text-xs">
                     <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
                         <span
                             >&copy; <span id="year"></span> Driveway
@@ -7805,16 +7856,15 @@
                             >ABN 91 191 146 339</a
                         >
                     </div>
-                    <span class="text-white/45"
-                        >Made with ❤️ by
+                    </div>
+                    <div id="site-credit">
                         <a
                             href="https://skytechlabs.com.au/"
                             target="_blank"
-                            rel="noopener"
-                            class="hover:text-white transition font-semibold"
-                            >Skytech Labs Australia</a
-                        ></span
-                    >
+                            rel="noopener noreferrer"
+                            >Website by Skytech Labs Australia</a
+                        >
+                    </div>
                 </div>
             </div>
         </footer>
