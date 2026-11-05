@@ -508,16 +508,22 @@
                 text-decoration: none;
             }
             #site-credit a:hover { color: #fff; }
+            #site-credit .credit-heart {
+                color: #ef4444;
+                font-style: normal;
+                padding: 0 0.1em;
+            }
             @media (max-width: 1023px) {
                 footer {
-                    padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px));
+                    /* sticky bar (~48px) + bottom-3 (12px) + ~14px gap + safe-area */
+                    padding-bottom: calc(3.375rem + env(safe-area-inset-bottom, 0px));
                 }
                 body {
                     padding-bottom: 0;
                 }
                 #site-credit {
-                    padding-bottom: 0.75rem;
-                    margin-bottom: 0.5rem;
+                    padding-bottom: 0;
+                    margin-bottom: 0;
                 }
                 .handoff-actions {
                     padding-bottom: 2px;
@@ -7859,10 +7865,10 @@
                     </div>
                     <div id="site-credit">
                         <a
-                            href="https://skytechlabs.com.au/"
+                            href="https://skytechlabs.com.au/ai-automation/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            >Website by Skytech Labs Australia</a
+                            >Website made with <span class="credit-heart" aria-label="love">❤</span> by Skytech Labs, Sydney</a
                         >
                     </div>
                 </div>
