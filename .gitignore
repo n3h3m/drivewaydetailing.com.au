@@ -12,3 +12,4 @@ __pycache__/
 
 ### JetBrains (IDEA) ###
 .idea/
+tests/out/
