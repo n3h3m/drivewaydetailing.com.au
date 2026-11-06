@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "test": "node tests/booking-form-regression.mjs",
-    "test:booking": "node tests/booking-form-regression.mjs"
+    "test:booking": "node tests/booking-form-regression.mjs",
+    "test:sms": "node --test tests/sms-handoff.test.mjs"
   },
   "engines": {
     "node": ">=18"
