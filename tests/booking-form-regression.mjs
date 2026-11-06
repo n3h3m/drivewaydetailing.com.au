@@ -826,6 +826,181 @@ async function main() {
     await browser.close();
   }
 
+  // Area-page "Also servicing" links must stay readable on the navy band,
+  // and every area link on the homepage and area pages must clear contrast.
+  const ALSO = [
+    [
+      'car-detailing-western-sydney.html',
+      [
+        ['the Blue Mountains', 'car-detailing-blue-mountains.html'],
+        ['the Central Coast', 'car-detailing-central-coast.html'],
+        ['Sydney', '/#areas'],
+      ],
+    ],
+    [
+      'car-detailing-blue-mountains.html',
+      [
+        ['Western Sydney', 'car-detailing-western-sydney.html'],
+        ['the Central Coast', 'car-detailing-central-coast.html'],
+        ['Sydney', '/#areas'],
+      ],
+    ],
+    [
+      'car-detailing-central-coast.html',
+      [
+        ['Western Sydney', 'car-detailing-western-sydney.html'],
+        ['the Blue Mountains', 'car-detailing-blue-mountains.html'],
+        ['Sydney', '/#areas'],
+      ],
+    ],
+  ];
+  for (const width of [1440, 390]) {
+    for (const [file, expected] of ALSO) {
+      ({ browser, page, errors } = await launch({
+        width,
+        height: width >= 1024 ? 1000 : 844,
+      }));
+      const url = new URL(page.url());
+      await page.goto(url.origin + '/' + file, { waitUntil: 'networkidle' });
+      const row = await page.evaluate(() => {
+        const lum = (rgb) => {
+          const nums = rgb.match(/[\d.]+/g).slice(0, 3).map(Number);
+          const ch = nums.map((v) => {
+            const s = v / 255;
+            return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+          });
+          return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2];
+        };
+        const contrast = (fg, bg) => {
+          const a = lum(fg);
+          const b = lum(bg);
+          const [hi, lo] = a > b ? [a, b] : [b, a];
+          return (hi + 0.05) / (lo + 0.05);
+        };
+        const bgOf = (el) => {
+          let n = el;
+          while (n) {
+            const bg = getComputedStyle(n).backgroundColor;
+            const parts = bg.match(/[\d.]+/g);
+            if (parts && (parts.length < 4 || parseFloat(parts[3]) > 0.4)) return bg;
+            n = n.parentElement;
+          }
+          return 'rgb(255, 255, 255)';
+        };
+        const p = [...document.querySelectorAll('p')].find((el) =>
+          (el.textContent || '').trim().startsWith('Also servicing'),
+        );
+        if (!p) return { missing: true };
+        const links = [...p.querySelectorAll('a')].map((a) => {
+          const cs = getComputedStyle(a);
+          const fg = cs.color;
+          const bg = bgOf(a);
+          const r = a.getBoundingClientRect();
+          return {
+            text: (a.textContent || '').replace(/\s+/g, ' ').trim(),
+            href: a.getAttribute('href'),
+            fg,
+            bg,
+            contrast: contrast(fg, bg),
+            underline: cs.textDecorationLine,
+            w: r.width,
+            h: r.height,
+          };
+        });
+        return { text: (p.textContent || '').replace(/\s+/g, ' ').trim(), links };
+      });
+      const ok =
+        row &&
+        !row.missing &&
+        row.links.length === expected.length &&
+        expected.every(([text, href], i) => {
+          const link = row.links[i];
+          return (
+            link.text === text &&
+            link.href === href &&
+            link.contrast >= 4.5 &&
+            link.underline.includes('underline') &&
+            link.w > 8 &&
+            link.h > 8
+          );
+        }) &&
+        errors.length === 0;
+      check(
+        `also-servicing-${file.replace('car-detailing-', '').replace('.html', '')}-${width}`,
+        ok,
+        JSON.stringify(row),
+      );
+      await browser.close();
+    }
+    ({ browser, page, errors } = await launch({
+      width,
+      height: width >= 1024 ? 1100 : 900,
+    }));
+    const sweepPages = [
+      '',
+      'car-detailing-western-sydney.html',
+      'car-detailing-blue-mountains.html',
+      'car-detailing-central-coast.html',
+    ];
+    const bad = [];
+    for (const file of sweepPages) {
+      const origin = new URL(page.url()).origin;
+      await page.goto(origin + '/' + file, { waitUntil: 'networkidle' });
+      const found = await page.evaluate(() => {
+        const lum = (rgb) => {
+          const nums = (rgb.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+          if (nums.length < 3) return 1;
+          const ch = nums.map((v) => {
+            const s = v / 255;
+            return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+          });
+          return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2];
+        };
+        const contrast = (fg, bg) => {
+          const a = lum(fg);
+          const b = lum(bg);
+          const [hi, lo] = a > b ? [a, b] : [b, a];
+          return (hi + 0.05) / (lo + 0.05);
+        };
+        const bgOf = (el) => {
+          let n = el;
+          while (n) {
+            const bg = getComputedStyle(n).backgroundColor;
+            const parts = bg.match(/[\d.]+/g);
+            if (parts && (parts.length < 4 || parseFloat(parts[3]) > 0.4)) return bg;
+            n = n.parentElement;
+          }
+          return 'rgb(255, 255, 255)';
+        };
+        return [...document.querySelectorAll('a')]
+          .filter((a) => /car-detailing-|#areas/.test(a.getAttribute('href') || ''))
+          .filter((a) => {
+            const cs = getComputedStyle(a);
+            return cs.display !== 'none' && cs.visibility !== 'hidden' && a.getClientRects().length > 0;
+          })
+          .map((a) => {
+            const fg = getComputedStyle(a).color;
+            const bg = bgOf(a);
+            return {
+              text: (a.textContent || '').replace(/\s+/g, ' ').trim(),
+              href: a.getAttribute('href'),
+              contrast: Math.round(contrast(fg, bg) * 100) / 100,
+              w: a.getBoundingClientRect().width,
+            };
+          });
+      });
+      for (const link of found) {
+        if (!link.text || link.contrast < 4.5 || link.w < 4) bad.push({ file, ...link });
+      }
+    }
+    check(
+      `area-link-contrast-${width}`,
+      bad.length === 0 && errors.length === 0,
+      JSON.stringify(bad.slice(0, 4)),
+    );
+    await browser.close();
+  }
+
   // ========== 8) Footer / links + mobile overflow ==========
   ({ browser, page, errors } = await launch({ width: 390, height: 844 }));
   const foot = await page.evaluate(() => {
