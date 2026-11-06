@@ -8395,7 +8395,7 @@
                         if (!silent)
                             b.dispatchEvent(new Event('change', { bubbles: true }));
                     }
-                    if (!silent) refreshCount();
+                    if (!silent) refreshQuoteSelection();
                 }
                 pills.forEach((p) =>
                     p.addEventListener('click', () =>
@@ -8410,7 +8410,7 @@
                                 'aria-pressed',
                                 b.checked ? 'true' : 'false',
                             );
-                        refreshCount();
+                        refreshQuoteSelection();
                     }),
                 );
                 function ensureGeneralEnquiryIfEmpty() {
@@ -8423,6 +8423,12 @@
                         ge.checked = true;
                         ge.dispatchEvent(new Event('change', { bubbles: true }));
                     }
+                }
+                function refreshQuoteSelection() {
+                    // A custom quote needs no package or car: keep enquiry selected
+                    // in both entry routes (pill CTA or booking-form checkbox).
+                    if (selectedQuoteValues().length) ensureGeneralEnquiryIfEmpty();
+                    refreshCount();
                 }
                 if (cta)
                     cta.addEventListener('click', (e) => {
@@ -8439,7 +8445,7 @@
                             }
                         });
                         ensureGeneralEnquiryIfEmpty();
-                        refreshCount();
+                        refreshQuoteSelection();
                         const qs = document.getElementById('quote-services');
                         if (qs) {
                             qs.scrollIntoView({ behavior: 'smooth', block: 'center' });
