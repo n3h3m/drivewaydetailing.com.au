@@ -40,7 +40,7 @@ Exit code `0` = all checks passed. Booking JSON report + screenshot land in `tes
 1. General enquiry auto-select when a custom quote checkbox is ticked (no vehicle required); SMS/WA success hrefs
 2. “Get a quote” CTA selects General enquiry and submits with a pill
 3. Known package (Silver) retained when a quote is also selected; price summary shows package amount
-4. Add-on Services block: order, visibility, prices; summary reflects selected add-ons
+4. Add-on Services block: order, visibility, prices; summary reflects selected add-ons. The quote box is a second collapsed section: each opens on its own, and unticking the last choice leaves that section open
 5. Incomplete submit: compact inline errors (not giant hero cards), fieldset mark, scroll to first error
 6. Sticky/nav **Book** while invalid: preserves filled fields & quote choices; scrolls to first error
 7. Valid in-progress **Book**: preserves package/addons; no error flash; correct SMS/WA success hrefs

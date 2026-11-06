@@ -694,7 +694,8 @@
 
 
             /* summary { display:flex } overrides Chrome's closed-details hiding */
-            #booking-addons:not([open]) > :not(summary) {
+            #booking-addons:not([open]) > :not(summary),
+            #quote-services:not([open]) > :not(summary) {
                 display: none !important;
             }
 
@@ -7668,10 +7669,34 @@
                             </div>
                             </div>
                         </details>
-                        <fieldset id="quote-services" class="md:col-span-2 rounded-lg border border-navy/15 bg-paper/60 px-4 py-3">
-                            <legend class="sr-only">Want a quote on other services?</legend>
-                            <div class="text-sm font-extrabold text-navy" aria-hidden="true">Want a quote on other services? <span class="font-bold text-ink/70">(optional)</span></div>
-                            <p class="mt-0.5 text-xs text-ink/70">These don&rsquo;t have a set price yet &mdash; we&rsquo;ll confirm pricing when we call.</p>
+                        <details
+                            id="quote-services"
+                            class="md:col-span-2 group rounded-lg border border-navy/15 bg-paper/60 open:bg-white open:border-navy/20"
+                        >
+                            <summary
+                                class="cursor-pointer list-none flex items-center justify-between gap-3 px-4 py-3.5 select-none [&::-webkit-details-marker]:hidden"
+                            >
+                                <span class="text-sm font-extrabold text-navy"
+                                    >Want a quote on other services?
+                                    <span class="font-bold text-ink/70">(optional)</span></span
+                                >
+                                <svg
+                                    class="shrink-0 text-navy/50 transition-transform group-open:rotate-180"
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2.4"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M6 9l6 6 6-6" />
+                                </svg>
+                            </summary>
+                            <div class="px-4 pb-4 pt-1 border-t border-navy/10">
+                            <p class="mt-2 text-xs text-ink/70">These don&rsquo;t have a set price yet &mdash; we&rsquo;ll confirm pricing when we call.</p>
                             <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
                                 <label class="inline-flex items-center gap-2 text-sm text-navy cursor-pointer"><input type="checkbox" name="quoteservices" value="Paint Protection (Ceramic Coating)" class="h-4 w-4 accent-teal-600" /> Paint Protection (Ceramic Coating)</label>
                                 <label class="inline-flex items-center gap-2 text-sm text-navy cursor-pointer"><input type="checkbox" name="quoteservices" value="Overspray Removal" class="h-4 w-4 accent-teal-600" /> Overspray Removal</label>
@@ -7680,7 +7705,8 @@
                                 <label class="inline-flex items-center gap-2 text-sm text-navy cursor-pointer"><input type="checkbox" name="quoteservices" value="Odour Removal" class="h-4 w-4 accent-teal-600" /> Odour Removal</label>
                                 <label class="inline-flex items-center gap-2 text-sm text-navy cursor-pointer"><input type="checkbox" name="quoteservices" value="Multiple Vehicle / Fleet Detail" class="h-4 w-4 accent-teal-600" /> Multiple Vehicle / Fleet Detail</label>
                             </div>
-                        </fieldset>
+                            </div>
+                        </details>
                         <!-- Live price for the chosen vehicle + package -->
                         <div
                             id="price-summary"
@@ -8575,15 +8601,38 @@
                 if (!f) return;
                 const hasDate = !!(f.elements.date && f.elements.date.value);
                 const hasMsg = !!(f.elements.message && f.elements.message.value);
-                const hasAddons = !!f.querySelector('input[name="addons"]:checked');
-                if (hasDate || hasMsg || hasAddons) openBookingMore();
+                if (hasDate || hasMsg) openBookingMore();
+            }
+            // A ticked add-on or quote opens only its own box. Unticking never closes it.
+            function openDetailsForSelection(input) {
+                if (!input || !input.checked) return;
+                const details = input.closest('details');
+                if (details && !details.open) details.open = true;
+            }
+            function openSectionsWithSelections() {
+                const f = document.getElementById('booking-form');
+                if (!f) return;
+                f.querySelectorAll(
+                    'input[name="addons"]:checked, input[name="quoteservices"]:checked',
+                ).forEach(openDetailsForSelection);
             }
             document.querySelectorAll('[data-open-more]').forEach((a) => {
                 a.addEventListener('click', () => openBookingMore());
             });
             if (/[?&]more=1(?:&|$)/.test(location.search)) openBookingMore();
             maybeOpenBookingMore();
-            [bookingMore, document.getElementById('booking-addons')].forEach((el) => {
+            openSectionsWithSelections();
+            const bookingFormEl = document.getElementById('booking-form');
+            if (bookingFormEl) {
+                bookingFormEl.addEventListener('change', (e) => {
+                    const t = e.target;
+                    if (!t || !t.name) return;
+                    if (t.name === 'addons' || t.name === 'quoteservices') {
+                        openDetailsForSelection(t);
+                    }
+                });
+            }
+            [bookingMore, document.getElementById('booking-addons'), document.getElementById('quote-services')].forEach((el) => {
                 if (!el || el.tagName !== 'DETAILS') return;
                 const apply = () => {
                     const sum = el.querySelector('summary');
