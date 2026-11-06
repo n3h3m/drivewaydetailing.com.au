@@ -304,17 +304,74 @@ async function main() {
   );
   await browser.close();
 
-  // ========== 4) Addons: order, visible, prices ==========
+  // ========== 4) Addons: after package, collapsed until opened, prices inside ==========
   ({ browser, page, errors } = await launch());
   const addonInfo = await page.evaluate(() => {
     const box = document.getElementById('booking-addons');
-    const style = box ? getComputedStyle(box) : null;
+    const summary = box?.querySelector('summary');
+    const pkg = document.querySelector('[data-err="package"]')?.closest('fieldset');
+    const style = summary ? getComputedStyle(summary) : null;
+    const inputs = [
+      ...document.querySelectorAll('#booking-addons input[name="addons"]'),
+    ];
+    const grid = box?.querySelector('.grid');
+    const gridBox = grid?.getBoundingClientRect();
+    return {
+      summaryVisible: !!(
+        summary &&
+        style &&
+        style.display !== 'none' &&
+        style.visibility !== 'hidden'
+      ),
+      collapsed: box?.tagName === 'DETAILS' && box.open === false,
+      expanded: summary?.getAttribute('aria-expanded') || '',
+      summaryText: (summary?.textContent || '').replace(/\s+/g, ' ').trim(),
+      afterPackage: !!(
+        pkg &&
+        box &&
+        pkg.compareDocumentPosition(box) & Node.DOCUMENT_POSITION_FOLLOWING
+      ),
+      optionsHidden: !gridBox || gridBox.height === 0,
+      values: inputs.map((i) => i.value),
+    };
+  });
+  check(
+    'addons-summary-visible',
+    addonInfo.summaryVisible && /Add-on Services/.test(addonInfo.summaryText),
+    JSON.stringify(addonInfo),
+  );
+  check(
+    'addons-collapsed-by-default',
+    addonInfo.collapsed &&
+      addonInfo.expanded === 'false' &&
+      addonInfo.optionsHidden,
+    JSON.stringify(addonInfo),
+  );
+  check(
+    'addons-after-package',
+    addonInfo.afterPackage === true,
+    JSON.stringify(addonInfo),
+  );
+  check(
+    'addons-order',
+    JSON.stringify(addonInfo.values) === JSON.stringify(ADDON_ORDER),
+    JSON.stringify(addonInfo.values),
+  );
+  await page.locator('#booking-addons summary').click();
+  await page.waitForFunction(
+    () =>
+      document.querySelector('#booking-addons summary')?.getAttribute('aria-expanded') ===
+      'true',
+  );
+  const opened = await page.evaluate(() => {
+    const box = document.getElementById('booking-addons');
+    const summary = box.querySelector('summary');
     const inputs = [
       ...document.querySelectorAll('#booking-addons input[name="addons"]'),
     ];
     return {
-      visible: !!(box && style && style.display !== 'none' && style.visibility !== 'hidden'),
-      values: inputs.map((i) => i.value),
+      open: box.open === true,
+      expanded: summary.getAttribute('aria-expanded'),
       labels: inputs.map((i) => {
         const lab = i.closest('label');
         return {
@@ -324,18 +381,17 @@ async function main() {
       }),
     };
   });
-  check('addons-visible', addonInfo.visible, '');
-  check(
-    'addons-order',
-    JSON.stringify(addonInfo.values) === JSON.stringify(ADDON_ORDER),
-    JSON.stringify(addonInfo.values),
-  );
   const pricesOk = ADDON_ORDER.every((v) => {
     const m = v.match(/\$(\d+)/);
-    const row = addonInfo.labels.find((l) => l.value === v);
+    const row = opened.labels.find((l) => l.value === v);
     return row && m && row.text.includes('$' + m[1]);
   });
-  check('addons-prices-shown', pricesOk, JSON.stringify(addonInfo.labels.slice(0, 3)));
+  check(
+    'addons-open-accessible',
+    opened.open && opened.expanded === 'true',
+    JSON.stringify({ open: opened.open, expanded: opened.expanded }),
+  );
+  check('addons-prices-shown', pricesOk, JSON.stringify(opened.labels.slice(0, 3)));
   // Select two addons + package, confirm summary mentions add-ons
   await clearPackagesQuotes(page);
   await selectRadio(page, 'vehicletype', 'data-size', 'hatch');
@@ -353,6 +409,103 @@ async function main() {
       /add-on/i.test(sum.text) &&
       /\$100|from \$100/i.test(sum.amt),
     JSON.stringify(sum),
+  );
+  await page.locator('#booking-addons summary').click();
+  await page.waitForFunction(
+    () =>
+      document.querySelector('#booking-addons summary')?.getAttribute('aria-expanded') ===
+      'false',
+  );
+  const closed = await page.evaluate(() => {
+    const box = document.getElementById('booking-addons');
+    const checked = [
+      ...document.querySelectorAll('#booking-form input[name="addons"]:checked'),
+    ].map((c) => c.value);
+    return {
+      open: box.open,
+      expanded: box.querySelector('summary')?.getAttribute('aria-expanded'),
+      checked,
+      price: document.getElementById('price-summary-text')?.textContent || '',
+    };
+  });
+  check(
+    'addons-close-keeps-selection',
+    closed.open === false &&
+      closed.expanded === 'false' &&
+      closed.checked.includes('Engine Bay Rinse (from $60)') &&
+      closed.checked.includes('Pet Hair Removal (from $40)') &&
+      /Gold/i.test(closed.price) &&
+      /2 add-ons/.test(closed.price),
+    JSON.stringify(closed),
+  );
+  await page.locator('#booking-addons summary').click();
+  await selectRadio(page, 'package', 'data-pkg', 'platinum');
+  await page.waitForTimeout(80);
+  const switched = await page.evaluate(() => ({
+    pkg: document.querySelector('input[name="package"]:checked')?.value || '',
+    checked: [
+      ...document.querySelectorAll('#booking-form input[name="addons"]:checked'),
+    ].map((c) => c.value),
+    price: document.getElementById('price-summary-text')?.textContent || '',
+    amt: document.getElementById('price-summary-amount')?.textContent || '',
+    open: document.getElementById('booking-addons')?.open,
+  }));
+  check(
+    'addons-survive-package-switch',
+    /Platinum/i.test(switched.pkg) &&
+      switched.checked.includes('Engine Bay Rinse (from $60)') &&
+      switched.checked.includes('Pet Hair Removal (from $40)') &&
+      /Platinum/i.test(switched.price) &&
+      /2 add-ons/.test(switched.price) &&
+      /\$100|from \$100/i.test(switched.amt) &&
+      switched.open === true,
+    JSON.stringify(switched),
+  );
+  const hours = await page.locator('#business-hours').innerText();
+  check(
+    'hours-seven-days',
+    hours.trim() === '7 days a week' && !/9:00|5:00|Mon|Sunday/.test(hours),
+    hours,
+  );
+  check('addons-no-console', errors.length === 0, JSON.stringify(errors.slice(0, 5)));
+  await browser.close();
+
+  ({ browser, page, errors } = await launch({ width: 1280, height: 900 }));
+  const desk = await page.evaluate(() => {
+    const box = document.getElementById('booking-addons');
+    const summary = box?.querySelector('summary');
+    return {
+      collapsed: box?.open === false,
+      expanded: summary?.getAttribute('aria-expanded') || '',
+      hours: document.getElementById('business-hours')?.textContent?.trim() || '',
+    };
+  });
+  await page.locator('#booking-addons summary').focus();
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(
+    () =>
+      document.querySelector('#booking-addons summary')?.getAttribute('aria-expanded') ===
+      'true',
+  );
+  const deskOpen = await page.evaluate(() => {
+    const box = document.getElementById('booking-addons');
+    const label = box.querySelector('input[name="addons"]')?.closest('label');
+    return {
+      open: box.open === true,
+      expanded: box.querySelector('summary')?.getAttribute('aria-expanded'),
+      price: (label?.innerText || '').replace(/\s+/g, ' '),
+    };
+  });
+  check(
+    'addons-desktop-keyboard',
+    desk.collapsed &&
+      desk.expanded === 'false' &&
+      desk.hours === '7 days a week' &&
+      deskOpen.open &&
+      deskOpen.expanded === 'true' &&
+      /\$60/.test(deskOpen.price) &&
+      errors.length === 0,
+    JSON.stringify({ desk, deskOpen, errors }),
   );
   await browser.close();
 
@@ -605,6 +758,248 @@ async function main() {
     }),
   );
   await browser.close();
+
+  // Map card keeps the 640×420 artwork. Desktop must not letterbox it
+  // inside a column stretched to the suburb list.
+  const MAP_WIDTHS = [360, 375, 390, 768, 1280, 1440];
+  for (const width of MAP_WIDTHS) {
+    ({ browser, page, errors } = await launch({
+      width,
+      height: width >= 1024 ? 1100 : 844,
+    }));
+    const map = await page.evaluate(() => {
+      const svg = document.querySelector('#map-scroll svg');
+      const fig = svg.closest('figure');
+      const cap = fig.querySelector('figcaption');
+      const r = svg.getBoundingClientRect();
+      const fr = fig.getBoundingClientRect();
+      const cr = cap.getBoundingClientRect();
+      const labelInArt = (name) => {
+        const el = [...svg.querySelectorAll('text')].find((t) =>
+          (t.textContent || '').includes(name),
+        );
+        if (!el) return false;
+        const b = el.getBoundingClientRect();
+        return (
+          b.width > 2 &&
+          b.left >= r.left - 1 &&
+          b.right <= r.right + 1 &&
+          b.top >= r.top - 1 &&
+          b.bottom <= r.bottom + 1
+        );
+      };
+      return {
+        aspect: r.width / r.height,
+        gap: cr.top - r.bottom,
+        padTop: r.top - fr.top,
+        padBot: fr.bottom - cr.bottom,
+        katoomba: labelInArt('Katoomba'),
+        blackwall: labelInArt('Blackwall'),
+        legend: (cap.textContent || '').replace(/\s+/g, ' ').trim(),
+      };
+    });
+    const natural = 640 / 420;
+    check(
+      `map-aspect-${width}`,
+      Math.abs(map.aspect - natural) < 0.04 &&
+        map.gap > 0 &&
+        map.gap < 20 &&
+        map.padTop < 28 &&
+        map.padBot < 28 &&
+        map.katoomba &&
+        map.blackwall &&
+        /Suburb we service/.test(map.legend) &&
+        /Confirmed recent job/.test(map.legend) &&
+        /illustrative, not to scale/.test(map.legend) &&
+        errors.length === 0,
+      JSON.stringify({
+        aspect: +map.aspect.toFixed(3),
+        natural: +natural.toFixed(3),
+        gap: Math.round(map.gap),
+        padTop: Math.round(map.padTop),
+        padBot: Math.round(map.padBot),
+        katoomba: map.katoomba,
+        blackwall: map.blackwall,
+        errors,
+      }),
+    );
+    await browser.close();
+  }
+
+  // Area-page "Also servicing" links must stay readable on the navy band,
+  // and every area link on the homepage and area pages must clear contrast.
+  const ALSO = [
+    [
+      'car-detailing-western-sydney.html',
+      [
+        ['the Blue Mountains', 'car-detailing-blue-mountains.html'],
+        ['the Central Coast', 'car-detailing-central-coast.html'],
+        ['Sydney', '/#areas'],
+      ],
+    ],
+    [
+      'car-detailing-blue-mountains.html',
+      [
+        ['Western Sydney', 'car-detailing-western-sydney.html'],
+        ['the Central Coast', 'car-detailing-central-coast.html'],
+        ['Sydney', '/#areas'],
+      ],
+    ],
+    [
+      'car-detailing-central-coast.html',
+      [
+        ['Western Sydney', 'car-detailing-western-sydney.html'],
+        ['the Blue Mountains', 'car-detailing-blue-mountains.html'],
+        ['Sydney', '/#areas'],
+      ],
+    ],
+  ];
+  for (const width of [1440, 390]) {
+    for (const [file, expected] of ALSO) {
+      ({ browser, page, errors } = await launch({
+        width,
+        height: width >= 1024 ? 1000 : 844,
+      }));
+      const url = new URL(page.url());
+      await page.goto(url.origin + '/' + file, { waitUntil: 'networkidle' });
+      const row = await page.evaluate(() => {
+        const lum = (rgb) => {
+          const nums = rgb.match(/[\d.]+/g).slice(0, 3).map(Number);
+          const ch = nums.map((v) => {
+            const s = v / 255;
+            return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+          });
+          return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2];
+        };
+        const contrast = (fg, bg) => {
+          const a = lum(fg);
+          const b = lum(bg);
+          const [hi, lo] = a > b ? [a, b] : [b, a];
+          return (hi + 0.05) / (lo + 0.05);
+        };
+        const bgOf = (el) => {
+          let n = el;
+          while (n) {
+            const bg = getComputedStyle(n).backgroundColor;
+            const parts = bg.match(/[\d.]+/g);
+            if (parts && (parts.length < 4 || parseFloat(parts[3]) > 0.4)) return bg;
+            n = n.parentElement;
+          }
+          return 'rgb(255, 255, 255)';
+        };
+        const p = [...document.querySelectorAll('p')].find((el) =>
+          (el.textContent || '').trim().startsWith('Also servicing'),
+        );
+        if (!p) return { missing: true };
+        const links = [...p.querySelectorAll('a')].map((a) => {
+          const cs = getComputedStyle(a);
+          const fg = cs.color;
+          const bg = bgOf(a);
+          const r = a.getBoundingClientRect();
+          return {
+            text: (a.textContent || '').replace(/\s+/g, ' ').trim(),
+            href: a.getAttribute('href'),
+            fg,
+            bg,
+            contrast: contrast(fg, bg),
+            underline: cs.textDecorationLine,
+            w: r.width,
+            h: r.height,
+          };
+        });
+        return { text: (p.textContent || '').replace(/\s+/g, ' ').trim(), links };
+      });
+      const ok =
+        row &&
+        !row.missing &&
+        row.links.length === expected.length &&
+        expected.every(([text, href], i) => {
+          const link = row.links[i];
+          return (
+            link.text === text &&
+            link.href === href &&
+            link.contrast >= 4.5 &&
+            link.underline.includes('underline') &&
+            link.w > 8 &&
+            link.h > 8
+          );
+        }) &&
+        errors.length === 0;
+      check(
+        `also-servicing-${file.replace('car-detailing-', '').replace('.html', '')}-${width}`,
+        ok,
+        JSON.stringify(row),
+      );
+      await browser.close();
+    }
+    ({ browser, page, errors } = await launch({
+      width,
+      height: width >= 1024 ? 1100 : 900,
+    }));
+    const sweepPages = [
+      '',
+      'car-detailing-western-sydney.html',
+      'car-detailing-blue-mountains.html',
+      'car-detailing-central-coast.html',
+    ];
+    const bad = [];
+    for (const file of sweepPages) {
+      const origin = new URL(page.url()).origin;
+      await page.goto(origin + '/' + file, { waitUntil: 'networkidle' });
+      const found = await page.evaluate(() => {
+        const lum = (rgb) => {
+          const nums = (rgb.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+          if (nums.length < 3) return 1;
+          const ch = nums.map((v) => {
+            const s = v / 255;
+            return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+          });
+          return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2];
+        };
+        const contrast = (fg, bg) => {
+          const a = lum(fg);
+          const b = lum(bg);
+          const [hi, lo] = a > b ? [a, b] : [b, a];
+          return (hi + 0.05) / (lo + 0.05);
+        };
+        const bgOf = (el) => {
+          let n = el;
+          while (n) {
+            const bg = getComputedStyle(n).backgroundColor;
+            const parts = bg.match(/[\d.]+/g);
+            if (parts && (parts.length < 4 || parseFloat(parts[3]) > 0.4)) return bg;
+            n = n.parentElement;
+          }
+          return 'rgb(255, 255, 255)';
+        };
+        return [...document.querySelectorAll('a')]
+          .filter((a) => /car-detailing-|#areas/.test(a.getAttribute('href') || ''))
+          .filter((a) => {
+            const cs = getComputedStyle(a);
+            return cs.display !== 'none' && cs.visibility !== 'hidden' && a.getClientRects().length > 0;
+          })
+          .map((a) => {
+            const fg = getComputedStyle(a).color;
+            const bg = bgOf(a);
+            return {
+              text: (a.textContent || '').replace(/\s+/g, ' ').trim(),
+              href: a.getAttribute('href'),
+              contrast: Math.round(contrast(fg, bg) * 100) / 100,
+              w: a.getBoundingClientRect().width,
+            };
+          });
+      });
+      for (const link of found) {
+        if (!link.text || link.contrast < 4.5 || link.w < 4) bad.push({ file, ...link });
+      }
+    }
+    check(
+      `area-link-contrast-${width}`,
+      bad.length === 0 && errors.length === 0,
+      JSON.stringify(bad.slice(0, 4)),
+    );
+    await browser.close();
+  }
 
   // ========== 8) Footer / links + mobile overflow ==========
   ({ browser, page, errors } = await launch({ width: 390, height: 844 }));

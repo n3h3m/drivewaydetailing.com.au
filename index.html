@@ -101,21 +101,6 @@
                       "url": "https://drivewaydetailing.com.au/car-detailing-central-coast.html"
                     }
                   ],
-                  "openingHoursSpecification": [
-                    {
-                      "@type": "OpeningHoursSpecification",
-                      "dayOfWeek": [
-                        "Monday",
-                        "Tuesday",
-                        "Wednesday",
-                        "Thursday",
-                        "Friday",
-                        "Saturday"
-                      ],
-                      "opens": "09:00",
-                      "closes": "17:00"
-                    }
-                  ],
                   "sameAs": [
                     "https://www.facebook.com/profile.php?id=61590132262669",
                     "https://www.instagram.com/drivewaydetailingnsw/",
@@ -708,6 +693,11 @@
             }
 
 
+            /* summary { display:flex } overrides Chrome's closed-details hiding */
+            #booking-addons:not([open]) > :not(summary) {
+                display: none !important;
+            }
+
             /* iOS date input fit */
             input[type="date"].dd-date {
                 width: 100%;
@@ -893,6 +883,9 @@
                 #map-scroll {
                     -webkit-overflow-scrolling: touch;
                 }
+            }
+            @media (min-width: 1024px) {
+                #areas .map-column { align-self: start; }
             }
 
         </style>
@@ -5890,15 +5883,15 @@
                         </svg>
                     </a>
                 </div>
-                <div class="lg:col-span-7 min-w-0 reveal lg:flex lg:flex-col">
+                <div class="map-column lg:col-span-7 min-w-0 reveal">
                     <figure
-                        class="bg-white rounded-lg border border-navy/10 shadow-card p-3 md:p-4 lg:flex-1 lg:flex lg:flex-col"
+                        class="bg-white rounded-lg border border-navy/10 shadow-card p-3 md:p-4"
                     >
-                        <div id="map-scroll" class="overflow-x-auto -mx-1 px-1 lg:overflow-visible lg:relative lg:flex-1 lg:min-h-[320px]">
+                        <div id="map-scroll" class="overflow-x-auto -mx-1 px-1 lg:overflow-visible">
                             <svg
                                 viewBox="0 0 640 420"
                                 preserveAspectRatio="xMidYMid meet"
-                                class="w-full h-auto min-w-[520px] lg:min-w-0 lg:absolute lg:inset-0 lg:h-full"
+                                class="w-full h-auto min-w-[520px] lg:min-w-0"
                                 role="img"
                                 aria-labelledby="map-title map-desc"
                             >
@@ -6954,8 +6947,7 @@
                         Call, text, or fill in the form.
                     </h2>
                     <p class="mt-3 text-white/75">
-                        Send a quick message or give us a call. Most enquiries
-                        get a reply within the hour during business hours.
+                        Call or message us. We&rsquo;re available 7 days a week.
                     </p>
 
                     <a
@@ -7057,11 +7049,8 @@
                                 >
                                     Hours
                                 </div>
-                                <div class="font-bold">
-                                    Mon–Sat · 9:00 AM – 5:00 PM
-                                </div>
-                                <div class="text-xs text-white/55">
-                                    Sunday closed
+                                <div class="font-bold" id="business-hours">
+                                    7 days a week
                                 </div>
                             </div>
                         </li>
@@ -7480,15 +7469,34 @@
                                 Pick a package.
                             </p>
                         </fieldset>
-                        <!-- Add-on Services (always visible, after package) -->
-                        <div
+                        <!-- Add-on Services: collapsed until clicked, after the package choice -->
+                        <details
                             id="booking-addons"
-                            class="md:col-span-2 rounded-lg border border-navy/15 bg-paper/60 px-4 py-3"
+                            class="md:col-span-2 group rounded-lg border border-navy/15 bg-paper/60 open:bg-white open:border-navy/20"
                         >
-                            <div class="text-sm font-extrabold text-navy">
-                                Add-on Services
-                            </div>
-                            <p class="mt-0.5 text-xs text-ink/70">
+                            <summary
+                                class="cursor-pointer list-none flex items-center justify-between gap-3 px-4 py-3.5 select-none [&::-webkit-details-marker]:hidden"
+                            >
+                                <span class="text-sm font-extrabold text-navy"
+                                    >Add-on Services</span
+                                >
+                                <svg
+                                    class="shrink-0 text-navy/50 transition-transform group-open:rotate-180"
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2.4"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M6 9l6 6 6-6" />
+                                </svg>
+                            </summary>
+                            <div class="px-4 pb-4 pt-1 border-t border-navy/10">
+                            <p class="mt-2 text-xs text-ink/70">
                                 Optional extras — prices match the add-ons listed above.
                             </p>
                             <div
@@ -7593,7 +7601,8 @@
                                     <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $50</span>
                                 </label>
                             </div>
-                        </div>
+                            </div>
+                        </details>
                         <fieldset id="quote-services" class="md:col-span-2 rounded-lg border border-navy/15 bg-paper/60 px-4 py-3">
                             <legend class="sr-only">Want a quote on other services?</legend>
                             <div class="text-sm font-extrabold text-navy" aria-hidden="true">Want a quote on other services? <span class="font-bold text-ink/70">(optional)</span></div>
@@ -8509,14 +8518,17 @@
             });
             if (/[?&]more=1(?:&|$)/.test(location.search)) openBookingMore();
             maybeOpenBookingMore();
-            if (bookingMore) {
-                bookingMore.addEventListener('toggle', () => {
-                    const sum = bookingMore.querySelector('summary');
-                    if (sum) sum.setAttribute('aria-expanded', String(bookingMore.open));
-                });
-                const sum0 = bookingMore.querySelector('summary');
-                if (sum0) sum0.setAttribute('aria-expanded', String(bookingMore.open));
-            }
+            [bookingMore, document.getElementById('booking-addons')].forEach((el) => {
+                if (!el || el.tagName !== 'DETAILS') return;
+                const apply = () => {
+                    const sum = el.querySelector('summary');
+                    if (sum) sum.setAttribute('aria-expanded', el.open ? 'true' : 'false');
+                };
+                const soon = () => setTimeout(apply, 0);
+                el.addEventListener('toggle', soon);
+                el.querySelector('summary')?.addEventListener('click', soon);
+                apply();
+            });
 
 
             // ---------- Add-on card toggles (sync with form checkboxes) ----------
