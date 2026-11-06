@@ -1,10 +1,9 @@
 /**
  * Booking success SMS handoff.
  *
- * Loads buildMessage and bookingSmsHref from index.html and checks the
- * Android (?body=) and iPhone (?&body=) links for the recorded enquiry.
- * Destination is the business mobile 0429654427. This does not open
- * Google Messages or any other native SMS app.
+ * Loads buildMessage from index.html and DDEnquiry.buildSmsUri from
+ * assets/enquiry-utils.js. Android and desktop use ?body=. iPhone keeps
+ * ?&body=. Destination is 0429654427. This does not open a native SMS app.
  *
  * Run: node --test tests/sms-handoff.test.mjs
  */
@@ -14,6 +13,7 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const helperSrc = readFileSync(new URL('../assets/enquiry-utils.js', import.meta.url), 'utf8');
 
 function extract(start, end) {
   const s = html.indexOf(start);
@@ -27,13 +27,14 @@ const sandbox = {};
 vm.createContext(sandbox);
 vm.runInContext(
   `${extract('/* booking-message-body */', '/* /booking-message-body */')}
-${extract('/* booking-sms-href */', '/* /booking-sms-href */')}
-globalThis.buildMessage = buildMessage;
-globalThis.bookingSmsHref = bookingSmsHref;`,
+globalThis.buildMessage = buildMessage;`,
   sandbox,
 );
+const helperWindow = {};
+vm.runInNewContext(helperSrc, { window: helperWindow }, { filename: 'enquiry-utils.js' });
 
-const { buildMessage, bookingSmsHref } = sandbox;
+const { buildMessage } = sandbox;
+const buildSmsUri = helperWindow.DDEnquiry.buildSmsUri;
 
 const PHONE = '0429654427';
 const ANDROID_CHROME =
@@ -70,7 +71,7 @@ const EXPECTED_BODY = [
 ].join('\n');
 
 function hrefFor(userAgent) {
-  return bookingSmsHref(PHONE, buildMessage(enquiry), userAgent);
+  return buildSmsUri(PHONE, buildMessage(enquiry), userAgent);
 }
 
 function roundTrip(href, separator) {
@@ -136,29 +137,31 @@ test('word Android inside the message does not change the iPhone separator', () 
   });
   assert.equal(body.includes('Android'), true);
   assert.equal(body.includes("don't"), true);
-  const href = bookingSmsHref(PHONE, body, IPHONE_SAFARI);
+  const href = buildSmsUri(PHONE, body, IPHONE_SAFARI);
   const prefix = `sms:${PHONE}?&body=`;
   assert.equal(href.slice(0, prefix.length), prefix);
   assert.equal(href.includes('?body='), false);
   assert.equal(decodeURIComponent(href.slice(prefix.length)), body);
 });
 
-test('desktop Chrome keeps the existing ?&body= link the booking regression expects', () => {
+test('desktop Chrome uses standard ?body= and does not use the iPhone separator', () => {
   const href = hrefFor(DESKTOP_CHROME);
-  roundTrip(href, '?&body=');
-  assert.equal(href.startsWith('sms:0429654427?&body='), true);
+  roundTrip(href, '?body=');
+  assert.equal(href.includes('?&body='), false);
+  assert.equal(href.startsWith('sms:0429654427?body='), true);
 });
 
-test('booking success paths call bookingSmsHref and WhatsApp text links stay', () => {
+test('booking success paths call DDEnquiry through smsHref and WhatsApp text links stay', () => {
   assert.equal(html.includes("const PHONE_LOCAL = '0429654427';"), true);
-  assert.equal(
-    html.split('bookingSmsHref(PHONE_LOCAL, body, navigator.userAgent)').length - 1,
-    2,
-  );
+  assert.equal(html.includes('function bookingSmsHref'), false);
+  assert.equal(html.includes('window.DDEnquiry.buildSmsUri(PHONE_LOCAL, body, navigator.userAgent)'), true);
+  assert.equal(html.includes('window.DDEnquiry.normalizeSmsHref('), true);
+  assert.equal((html.match(/smsHref\(body\)/g) || []).length >= 2, true);
+  assert.equal(html.includes('const smsUrl = smsHref(body);'), true);
   assert.equal(html.includes('window.location.href = smsUrl;'), true);
+  assert.equal(html.includes("setAttribute('href', smsHref(body))"), true);
   assert.equal(html.includes('sms:${PHONE_LOCAL}?&body='), false);
   assert.equal(html.includes('?&body=${encoded}'), false);
-  assert.equal(html.includes('sms:${PHONE_LOCAL}?body='), false);
   assert.equal(
     html.includes('const waUrl = `https://wa.me/${PHONE_INTL}?text=${encoded}`;'),
     true,

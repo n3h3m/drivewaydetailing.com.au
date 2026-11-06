@@ -1,0 +1,5 @@
+# drivewaydetailing.com.au
+User-agent: *
+Allow: /
+
+Sitemap: https://drivewaydetailing.com.au/sitemap.xml
