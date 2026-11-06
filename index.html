@@ -8387,6 +8387,24 @@
                     if (typeof updateFormPrice === 'function') updateFormPrice();
                     if (window.refreshBookingPreview) window.refreshBookingPreview();
                 }
+                function ensureGeneralEnquiryIfEmpty() {
+                    const pk = formEl.querySelector('input[name="package"]:checked');
+                    if (pk) return;
+                    const ge = formEl.querySelector(
+                        'input[name="package"][value="General enquiry"]',
+                    );
+                    if (ge) {
+                        ge.checked = true;
+                        ge.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                }
+                // Defined before listeners so any call path is safe (no TDZ).
+                function refreshQuoteSelection() {
+                    // Custom quote needs no package or car: auto-select General enquiry
+                    // for both entry routes (pill CTA or booking-form checkbox).
+                    if (selectedQuoteValues().length) ensureGeneralEnquiryIfEmpty();
+                    refreshCount();
+                }
                 function setPill(p, on, silent) {
                     p.setAttribute('aria-pressed', on ? 'true' : 'false');
                     const b = boxFor(p.dataset.quoteValue);
@@ -8413,23 +8431,6 @@
                         refreshQuoteSelection();
                     }),
                 );
-                function ensureGeneralEnquiryIfEmpty() {
-                    const pk = formEl.querySelector('input[name="package"]:checked');
-                    if (pk) return;
-                    const ge = formEl.querySelector(
-                        'input[name="package"][value="General enquiry"]',
-                    );
-                    if (ge) {
-                        ge.checked = true;
-                        ge.dispatchEvent(new Event('change', { bubbles: true }));
-                    }
-                }
-                function refreshQuoteSelection() {
-                    // A custom quote needs no package or car: keep enquiry selected
-                    // in both entry routes (pill CTA or booking-form checkbox).
-                    if (selectedQuoteValues().length) ensureGeneralEnquiryIfEmpty();
-                    refreshCount();
-                }
                 if (cta)
                     cta.addEventListener('click', (e) => {
                         // Additive: never clear package / add-ons / vehicle.
@@ -8453,6 +8454,7 @@
                     });
                 refreshCount();
             })();
+
 
             // ---------- Lightbox ----------
             const items = Array.from(
