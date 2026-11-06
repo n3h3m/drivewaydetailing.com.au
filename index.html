@@ -8591,6 +8591,7 @@
                 };
             }
 
+            /* booking-message-body */
             function buildMessage(d) {
                 const lines = [];
                 const quoteOnly =
@@ -8634,6 +8635,21 @@
                 if (firstName) lines.push(firstName);
                 return lines.join('\n');
             }
+            /* /booking-message-body */
+
+            /* booking-sms-href */
+            // Google Messages rejects sms:<number>?&body= and opens with an empty
+            // recipient ("Entered recipient is invalid"). Android's sms: URI uses
+            // ?body=. iPhone Messages only prefills the body from ?&body=, so that
+            // form stays for every non-Android browser.
+            function bookingSmsHref(phone, body, userAgent) {
+                const encoded = encodeURIComponent(body);
+                const separator = /Android/i.test(String(userAgent || ''))
+                    ? '?body='
+                    : '?&body=';
+                return `sms:${phone}${separator}${encoded}`;
+            }
+            /* /booking-sms-href */
 
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -8658,7 +8674,7 @@
                 // Build the pre-filled SMS body
                 const body = buildMessage(d);
                 const encoded = encodeURIComponent(body);
-                const smsUrl = `sms:${PHONE_LOCAL}?&body=${encoded}`;
+                const smsUrl = bookingSmsHref(PHONE_LOCAL, body, navigator.userAgent);
                 const waUrl = `https://wa.me/${PHONE_INTL}?text=${encoded}`;
 
                 // Populate the fallback panel BEFORE trying to open SMS
@@ -8683,7 +8699,7 @@
                 const body = buildMessage(gather());
                 const encoded = encodeURIComponent(body);
                 document.getElementById('sms-preview').textContent = body;
-                document.getElementById('open-sms').setAttribute('href', `sms:${PHONE_LOCAL}?&body=${encoded}`);
+                document.getElementById('open-sms').setAttribute('href', bookingSmsHref(PHONE_LOCAL, body, navigator.userAgent));
                 document.getElementById('open-wa').setAttribute('href', `https://wa.me/${PHONE_INTL}?text=${encoded}`);
             }
             window.refreshBookingPreview = () => setTimeout(refreshPreview, 0);
