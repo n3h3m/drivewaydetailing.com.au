@@ -509,6 +509,168 @@ async function main() {
   );
   await browser.close();
 
+  // ========== 4b) Two independent add-on boxes: collapsed, expand, stay open ==========
+  ({ browser, page, errors } = await launch({ width: 390, height: 844 }));
+  const boxes = () =>
+    page.evaluate(() => {
+      const addons = document.getElementById('booking-addons');
+      const quotes = document.getElementById('quote-services');
+      const hidden = (el) => {
+        const grid = el?.querySelector('.grid');
+        if (!grid) return true;
+        const r = grid.getBoundingClientRect();
+        return r.height === 0;
+      };
+      return {
+        addonsTag: addons?.tagName || '',
+        quotesTag: quotes?.tagName || '',
+        addonsOpen: addons?.open === true,
+        quotesOpen: quotes?.open === true,
+        addonsHidden: hidden(addons),
+        quotesHidden: hidden(quotes),
+        addonChecked: [
+          ...document.querySelectorAll('#booking-form input[name="addons"]:checked'),
+        ].map((c) => c.value),
+        quoteChecked: [
+          ...document.querySelectorAll(
+            '#booking-form input[name="quoteservices"]:checked',
+          ),
+        ].map((c) => c.value),
+        moreOpen: document.getElementById('booking-more')?.open === true,
+        quoteCopy: (quotes?.textContent || '').replace(/\s+/g, ' ').trim(),
+      };
+    });
+  const initialBoxes = await boxes();
+  check(
+    'both-addon-boxes-collapsed',
+    initialBoxes.addonsTag === 'DETAILS' &&
+      initialBoxes.quotesTag === 'DETAILS' &&
+      initialBoxes.addonsOpen === false &&
+      initialBoxes.quotesOpen === false &&
+      initialBoxes.addonsHidden &&
+      initialBoxes.quotesHidden &&
+      initialBoxes.moreOpen === false &&
+      /Want a quote on other services\?/.test(initialBoxes.quoteCopy) &&
+      /don.?t have a set price yet/.test(initialBoxes.quoteCopy) &&
+      /Paint Protection \(Ceramic Coating\)/.test(initialBoxes.quoteCopy),
+    JSON.stringify(initialBoxes),
+  );
+  await page.locator('#quote-services summary').click();
+  await page.waitForFunction(() => document.getElementById('quote-services')?.open === true);
+  let boxState = await boxes();
+  check(
+    'manual-expand-quotes-only',
+    boxState.quotesOpen === true &&
+      boxState.quotesHidden === false &&
+      boxState.addonsOpen === false &&
+      boxState.moreOpen === false,
+    JSON.stringify(boxState),
+  );
+  await page.locator('#quote-services summary').click();
+  await page.waitForFunction(() => document.getElementById('quote-services')?.open === false);
+  await page.locator('#booking-addons summary').click();
+  await page.waitForFunction(() => document.getElementById('booking-addons')?.open === true);
+  boxState = await boxes();
+  check(
+    'manual-expand-addons-only',
+    boxState.addonsOpen === true &&
+      boxState.addonsHidden === false &&
+      boxState.quotesOpen === false &&
+      boxState.moreOpen === false,
+    JSON.stringify(boxState),
+  );
+  await page.locator('#booking-addons summary').click();
+  await page.waitForFunction(() => document.getElementById('booking-addons')?.open === false);
+  await page.locator('.addon-toggle[data-addon-value="Engine Bay Rinse (from $60)"]').click();
+  await page.waitForFunction(() => document.getElementById('booking-addons')?.open === true);
+  boxState = await boxes();
+  check(
+    'select-addon-opens-only-addons',
+    boxState.addonsOpen === true &&
+      boxState.quotesOpen === false &&
+      boxState.moreOpen === false &&
+      boxState.addonChecked.length === 1 &&
+      /Engine Bay Rinse/.test(boxState.addonChecked[0]) &&
+      boxState.quoteChecked.length === 0,
+    JSON.stringify(boxState),
+  );
+  await page.locator('.addon-toggle[data-addon-value="Engine Bay Rinse (from $60)"]').click();
+  await page.waitForTimeout(80);
+  boxState = await boxes();
+  check(
+    'untick-last-addon-stays-open',
+    boxState.addonsOpen === true &&
+      boxState.addonsHidden === false &&
+      boxState.quotesOpen === false &&
+      boxState.addonChecked.length === 0,
+    JSON.stringify(boxState),
+  );
+  await page.locator('#booking-addons summary').click();
+  await page.waitForFunction(() => document.getElementById('booking-addons')?.open === false);
+  await page.locator('.quote-pill[data-quote-value="Odour Removal"]').click();
+  await page.waitForFunction(() => document.getElementById('quote-services')?.open === true);
+  boxState = await boxes();
+  check(
+    'select-quote-opens-only-quotes',
+    boxState.quotesOpen === true &&
+      boxState.quotesHidden === false &&
+      boxState.addonsOpen === false &&
+      boxState.moreOpen === false &&
+      boxState.quoteChecked.includes('Odour Removal') &&
+      boxState.addonChecked.length === 0,
+    JSON.stringify(boxState),
+  );
+  await page.locator('.quote-pill[data-quote-value="Odour Removal"]').click();
+  await page.waitForTimeout(80);
+  boxState = await boxes();
+  check(
+    'untick-last-quote-stays-open',
+    boxState.quotesOpen === true &&
+      boxState.addonsOpen === false &&
+      boxState.quoteChecked.length === 0 &&
+      boxState.addonChecked.length === 0,
+    JSON.stringify(boxState),
+  );
+  // A tick made inside the closed form box also opens only that box, then stays open.
+  await page.locator('#quote-services summary').click();
+  await page.waitForFunction(() => document.getElementById('quote-services')?.open === false);
+  await selectCheckbox(page, 'addons', 'Pet Hair Removal (from $40)');
+  await page.waitForFunction(() => document.getElementById('booking-addons')?.open === true);
+  await page.evaluate(() => {
+    const el = document.querySelector(
+      '#booking-form input[name="addons"][value="Pet Hair Removal (from $40)"]',
+    );
+    el.checked = false;
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  await page.waitForTimeout(50);
+  boxState = await boxes();
+  check(
+    'form-untick-last-addon-stays-open',
+    boxState.addonsOpen === true &&
+      boxState.quotesOpen === false &&
+      boxState.addonChecked.length === 0,
+    JSON.stringify(boxState),
+  );
+  check(
+    'addon-boxes-no-console',
+    errors.length === 0,
+    JSON.stringify(errors.slice(0, 4)),
+  );
+  await browser.close();
+
+  ({ browser, page, errors } = await launch({ width: 1280, height: 900 }));
+  const deskBoxes = await page.evaluate(() => ({
+    addonsOpen: document.getElementById('booking-addons')?.open === true,
+    quotesOpen: document.getElementById('quote-services')?.open === true,
+  }));
+  check(
+    'addon-boxes-collapsed-desktop',
+    deskBoxes.addonsOpen === false && deskBoxes.quotesOpen === false && errors.length === 0,
+    JSON.stringify({ deskBoxes, errors }),
+  );
+  await browser.close();
+
   // ========== 5) Incomplete submit → compact inline errors + scroll ==========
   ({ browser, page, errors } = await launch({ width: 390, height: 844 }));
   await page.locator('#booking-form').scrollIntoViewIfNeeded();
@@ -997,6 +1159,65 @@ async function main() {
       `area-link-contrast-${width}`,
       bad.length === 0 && errors.length === 0,
       JSON.stringify(bad.slice(0, 4)),
+    );
+    await browser.close();
+  }
+
+  // ========== 7b) Service-area suburbs: exactly 3 per row, no overflow ==========
+  const SUBURB_WIDTHS = [320, 360, 375, 390, 414, 430, 640, 768, 1024, 1280, 1440];
+  for (const width of SUBURB_WIDTHS) {
+    ({ browser, page, errors } = await launch({
+      width,
+      height: width >= 1024 ? 1100 : 900,
+    }));
+    const suburb = await page.evaluate(() => {
+      const lists = [...document.querySelectorAll('#areas .suburb-list')];
+      const problems = [];
+      if (lists.length !== 7) problems.push('lists ' + lists.length);
+      lists.forEach((ul, i) => {
+        const items = [...ul.querySelectorAll(':scope > li')];
+        if (items.length !== 6) problems.push(`list${i} count ${items.length}`);
+        const rows = [];
+        items.forEach((li) => {
+          const chip = li.querySelector('.suburb-chip');
+          const top = Math.round(li.getBoundingClientRect().top);
+          let row = rows.find((r) => Math.abs(r.top - top) < 3);
+          if (!row) {
+            row = { top, n: 0 };
+            rows.push(row);
+          }
+          row.n += 1;
+          const text = (chip?.innerText || '').replace(/\s+/g, ' ').trim();
+          if (!chip) {
+            problems.push('no chip');
+            return;
+          }
+          if (chip.scrollWidth > chip.clientWidth + 1) {
+            problems.push(`overflow ${text} ${chip.scrollWidth}>${chip.clientWidth}`);
+          }
+          const br = chip.getBoundingClientRect();
+          const ur = ul.getBoundingClientRect();
+          if (br.left < ur.left - 1 || br.right > ur.right + 1) problems.push('clip ' + text);
+          if (br.height < 24 || br.width < 36) problems.push('tiny ' + text);
+          if (!text) problems.push('empty chip');
+        });
+        const sig = rows.map((r) => r.n).join('+');
+        if (sig !== '3+3') problems.push(`list${i} rows ${sig}`);
+      });
+      const doc = document.documentElement;
+      return {
+        problems,
+        pageOverflow: doc.scrollWidth - doc.clientWidth,
+      };
+    });
+    check(
+      `suburbs-3-per-row-${width}`,
+      suburb.problems.length === 0 && suburb.pageOverflow <= 1 && errors.length === 0,
+      JSON.stringify({
+        problems: suburb.problems,
+        pageOverflow: suburb.pageOverflow,
+        errors: errors.slice(0, 3),
+      }),
     );
     await browser.close();
   }

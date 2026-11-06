@@ -40,12 +40,13 @@ Exit code `0` = all checks passed. Booking JSON report + screenshot land in `tes
 1. General enquiry auto-select when a custom quote checkbox is ticked (no vehicle required); SMS/WA success hrefs
 2. “Get a quote” CTA selects General enquiry and submits with a pill
 3. Known package (Silver) retained when a quote is also selected; price summary shows package amount
-4. Add-on Services block: order, visibility, prices; summary reflects selected add-ons
+4. Add-on Services block: order, visibility, prices; summary reflects selected add-ons. The quote box is a second collapsed section: each opens on its own, and unticking the last choice leaves that section open
 5. Incomplete submit: compact inline errors (not giant hero cards), fieldset mark, scroll to first error
 6. Sticky/nav **Book** while invalid: preserves filled fields & quote choices; scrolls to first error
 7. Valid in-progress **Book**: preserves package/addons; no error flash; correct SMS/WA success hrefs
 8. Footer ABN + credit link; mobile horizontal overflow; console errors
-9. SMS links per device (Android Chrome UA and iPhone Safari UA): nav link and submit/live-preview
+9. Service-area suburb chips: exactly 3 per row from 320px through 1440px, with no chip or page overflow
+10. SMS links per device (Android Chrome UA and iPhone Safari UA): nav link and submit/live-preview
    `#open-sms` hrefs are exact — Android `sms:0429654427?body=…`, iPhone `sms:0429654427?&body=…`
    (desktop/unknown also `?body=`); body decodes to the preview text; WhatsApp href unchanged.
    This checks the link contract only; it cannot open a real phone's SMS app.
