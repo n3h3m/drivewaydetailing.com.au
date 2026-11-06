@@ -888,6 +888,69 @@
                 #areas .map-column { align-self: start; }
             }
 
+            /* Service-area suburbs: exactly three per row at every width.
+               Region cards stay side by side only when each card is wide
+               enough for three unbroken suburb names. */
+            #areas .area-cards-wrap {
+                container-type: inline-size;
+                container-name: area-cards;
+            }
+            #areas .area-cards {
+                display: grid;
+                gap: 0.75rem;
+                grid-template-columns: minmax(0, 1fr);
+            }
+            @container area-cards (min-width: 36rem) {
+                #areas .area-cards {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+            }
+            #areas .area-card {
+                container-type: inline-size;
+                container-name: area-card;
+                min-width: 0;
+            }
+            #areas .suburb-list {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 0.375rem;
+                margin-top: 0.625rem;
+            }
+            #areas .suburb-list > li {
+                min-width: 0;
+                display: flex;
+            }
+            #areas .suburb-chip {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                width: 100%;
+                height: 100%;
+                min-width: 0;
+                box-sizing: border-box;
+                min-height: 2rem;
+                padding: 0.3rem 0.15rem;
+                font-size: 11px;
+                line-height: 1.15;
+                white-space: normal;
+                overflow-wrap: normal;
+                word-break: keep-all;
+                hyphens: none;
+            }
+            @container area-card (min-width: 18rem) {
+                #areas .suburb-chip {
+                    font-size: 13px;
+                    padding: 0.35rem 0.25rem;
+                }
+            }
+            @container area-card (min-width: 19rem) {
+                #areas .suburb-chip {
+                    font-size: 14px;
+                    padding: 0.375rem 0.3rem;
+                }
+            }
+
         </style>
         <link rel="stylesheet" href="./assets/site.css" />
     </head>
@@ -5767,84 +5830,85 @@
                     </p>
                 </div>
                 <div class="lg:col-span-5 min-w-0 reveal">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
+                    <div class="area-cards-wrap">
+                    <div class="area-cards">
+                        <div class="area-card rounded-lg bg-white border border-navy/10 px-4 py-3.5">
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal-700 leading-snug">Western Sydney</h3>
-                            <ul class="mt-2.5 flex flex-wrap gap-2">
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Auburn</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Parramatta</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Blacktown</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Penrith</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Merrylands</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Lidcombe</span></li>
+                            <ul class="suburb-list">
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Auburn</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Parramatta</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Blacktown</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Penrith</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Merrylands</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Lidcombe</span></li>
                             </ul>
                             <a href="car-detailing-western-sydney.html" class="mt-2.5 inline-flex items-center gap-1 text-xs font-extrabold text-navy underline underline-offset-4 decoration-teal/60 hover:text-teal-700 transition">Car detailing in Western Sydney &rarr;</a>
                         </div>
-                        <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
+                        <div class="area-card rounded-lg bg-white border border-navy/10 px-4 py-3.5">
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal-700 leading-snug">Inner West</h3>
-                            <ul class="mt-2.5 flex flex-wrap gap-2">
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Strathfield</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Burwood</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Ashfield</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Concord</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Homebush</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Croydon</span></li>
+                            <ul class="suburb-list">
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Strathfield</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Burwood</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Ashfield</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Concord</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Homebush</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Croydon</span></li>
                             </ul>
                         </div>
-                        <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
+                        <div class="area-card rounded-lg bg-white border border-navy/10 px-4 py-3.5">
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal-700 leading-snug">Hills &amp; North</h3>
-                            <ul class="mt-2.5 flex flex-wrap gap-2">
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Castle Hill</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Hornsby</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Ryde</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Chatswood</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Baulkham Hills</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Epping</span></li>
+                            <ul class="suburb-list">
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Castle Hill</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Hornsby</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Ryde</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Chatswood</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Baulkham Hills</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Epping</span></li>
                             </ul>
                         </div>
-                        <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
+                        <div class="area-card rounded-lg bg-white border border-navy/10 px-4 py-3.5">
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal-700 leading-snug">South West</h3>
-                            <ul class="mt-2.5 flex flex-wrap gap-2">
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Bankstown</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Liverpool</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-teal/60 text-navy px-3 py-1.5 text-sm font-bold">Glenfield ✓</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Fairfield</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Cabramatta</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Prestons</span></li>
+                            <ul class="suburb-list">
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Bankstown</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Liverpool</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-teal/60 text-navy px-3 py-1.5 text-sm font-bold">Glenfield ✓</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Fairfield</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Cabramatta</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Prestons</span></li>
                             </ul>
                         </div>
-                        <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
+                        <div class="area-card rounded-lg bg-white border border-navy/10 px-4 py-3.5">
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal-700 leading-snug">Sutherland Shire</h3>
-                            <ul class="mt-2.5 flex flex-wrap gap-2">
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-teal/60 text-navy px-3 py-1.5 text-sm font-bold">Menai ✓</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Sutherland</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Cronulla</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Miranda</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Engadine</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Kirrawee</span></li>
+                            <ul class="suburb-list">
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-teal/60 text-navy px-3 py-1.5 text-sm font-bold">Menai ✓</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Sutherland</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Cronulla</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Miranda</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Engadine</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Kirrawee</span></li>
                             </ul>
                         </div>
-                        <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
+                        <div class="area-card rounded-lg bg-white border border-navy/10 px-4 py-3.5">
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal-700 leading-snug">Blue Mountains</h3>
-                            <ul class="mt-2.5 flex flex-wrap gap-2">
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-teal/60 text-navy px-3 py-1.5 text-sm font-bold">Katoomba ✓</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Springwood</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Blaxland</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Glenbrook</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Leura</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Wentworth Falls</span></li>
+                            <ul class="suburb-list">
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-teal/60 text-navy px-3 py-1.5 text-sm font-bold">Katoomba ✓</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Springwood</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Blaxland</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Glenbrook</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Leura</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Wentworth Falls</span></li>
                             </ul>
                             <a href="car-detailing-blue-mountains.html" class="mt-2.5 inline-flex items-center gap-1 text-xs font-extrabold text-navy underline underline-offset-4 decoration-teal/60 hover:text-teal-700 transition">Car detailing in the Blue Mountains &rarr;</a>
                         </div>
-                        <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
+                        <div class="area-card rounded-lg bg-white border border-navy/10 px-4 py-3.5">
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal-700 leading-snug">Central Coast</h3>
-                            <ul class="mt-2.5 flex flex-wrap gap-2">
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-teal/60 text-navy px-3 py-1.5 text-sm font-bold">Blackwall ✓</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Gosford</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Woy Woy</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Erina</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Terrigal</span></li>
-                                <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Umina Beach</span></li>
+                            <ul class="suburb-list">
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-teal/60 text-navy px-3 py-1.5 text-sm font-bold">Blackwall ✓</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Gosford</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Woy Woy</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Erina</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Terrigal</span></li>
+                                <li><span class="suburb-chip inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Umina Beach</span></li>
                             </ul>
                             <a href="car-detailing-central-coast.html" class="mt-2.5 inline-flex items-center gap-1 text-xs font-extrabold text-navy underline underline-offset-4 decoration-teal/60 hover:text-teal-700 transition">Car detailing in the Central Coast &rarr;</a>
                         </div>
@@ -5852,6 +5916,7 @@
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal leading-snug">And more</h3>
                             <p class="mt-2 text-sm font-extrabold">+ Surrounding suburbs</p>
                         </div>
+                    </div>
                     </div>
                     <p class="mt-5 text-xs leading-relaxed text-ink/55">
                         <strong class="text-navy"

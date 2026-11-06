@@ -1001,6 +1001,65 @@ async function main() {
     await browser.close();
   }
 
+  // ========== 7b) Service-area suburbs: exactly 3 per row, no overflow ==========
+  const SUBURB_WIDTHS = [320, 360, 375, 390, 414, 430, 640, 768, 1024, 1280, 1440];
+  for (const width of SUBURB_WIDTHS) {
+    ({ browser, page, errors } = await launch({
+      width,
+      height: width >= 1024 ? 1100 : 900,
+    }));
+    const suburb = await page.evaluate(() => {
+      const lists = [...document.querySelectorAll('#areas .suburb-list')];
+      const problems = [];
+      if (lists.length !== 7) problems.push('lists ' + lists.length);
+      lists.forEach((ul, i) => {
+        const items = [...ul.querySelectorAll(':scope > li')];
+        if (items.length !== 6) problems.push(`list${i} count ${items.length}`);
+        const rows = [];
+        items.forEach((li) => {
+          const chip = li.querySelector('.suburb-chip');
+          const top = Math.round(li.getBoundingClientRect().top);
+          let row = rows.find((r) => Math.abs(r.top - top) < 3);
+          if (!row) {
+            row = { top, n: 0 };
+            rows.push(row);
+          }
+          row.n += 1;
+          const text = (chip?.innerText || '').replace(/\s+/g, ' ').trim();
+          if (!chip) {
+            problems.push('no chip');
+            return;
+          }
+          if (chip.scrollWidth > chip.clientWidth + 1) {
+            problems.push(`overflow ${text} ${chip.scrollWidth}>${chip.clientWidth}`);
+          }
+          const br = chip.getBoundingClientRect();
+          const ur = ul.getBoundingClientRect();
+          if (br.left < ur.left - 1 || br.right > ur.right + 1) problems.push('clip ' + text);
+          if (br.height < 24 || br.width < 36) problems.push('tiny ' + text);
+          if (!text) problems.push('empty chip');
+        });
+        const sig = rows.map((r) => r.n).join('+');
+        if (sig !== '3+3') problems.push(`list${i} rows ${sig}`);
+      });
+      const doc = document.documentElement;
+      return {
+        problems,
+        pageOverflow: doc.scrollWidth - doc.clientWidth,
+      };
+    });
+    check(
+      `suburbs-3-per-row-${width}`,
+      suburb.problems.length === 0 && suburb.pageOverflow <= 1 && errors.length === 0,
+      JSON.stringify({
+        problems: suburb.problems,
+        pageOverflow: suburb.pageOverflow,
+        errors: errors.slice(0, 3),
+      }),
+    );
+    await browser.close();
+  }
+
   // ========== 8) Footer / links + mobile overflow ==========
   ({ browser, page, errors } = await launch({ width: 390, height: 844 }));
   const foot = await page.evaluate(() => {

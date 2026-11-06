@@ -45,7 +45,8 @@ Exit code `0` = all checks passed. Booking JSON report + screenshot land in `tes
 6. Sticky/nav **Book** while invalid: preserves filled fields & quote choices; scrolls to first error
 7. Valid in-progress **Book**: preserves package/addons; no error flash; correct SMS/WA success hrefs
 8. Footer ABN + credit link; mobile horizontal overflow; console errors
-9. SMS links per device (Android Chrome UA and iPhone Safari UA): nav link and submit/live-preview
+9. Service-area suburb chips: exactly 3 per row from 320px through 1440px, with no chip or page overflow
+10. SMS links per device (Android Chrome UA and iPhone Safari UA): nav link and submit/live-preview
    `#open-sms` hrefs are exact — Android `sms:0429654427?body=…`, iPhone `sms:0429654427?&body=…`
    (desktop/unknown also `?body=`); body decodes to the preview text; WhatsApp href unchanged.
    This checks the link contract only; it cannot open a real phone's SMS app.
