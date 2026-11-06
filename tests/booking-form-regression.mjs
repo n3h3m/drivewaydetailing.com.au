@@ -76,6 +76,15 @@ async function launch(vp = { width: 390, height: 844 }, userAgent = undefined) {
   });
   await ctx.route('**/sms:**', (r) => r.abort());
   await ctx.route('**/wa.me/**', (r) => r.abort());
+  // Keep booking checks offline from GA/Clarity. Empty script bodies avoid
+  // console network errors and avoid sending regression traffic to production.
+  await ctx.route(/googletagmanager\.com|google-analytics\.com|clarity\.ms|doubleclick\.net/, (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/javascript; charset=utf-8',
+      body: '/* analytics stub for booking regression */',
+    }),
+  );
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push(String(e)));

@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/sms-uri.test.mjs tests/sms-handoff.test.mjs && node tests/seo-static.mjs && node tests/booking-form-regression.mjs",
+    "test": "node --test tests/sms-uri.test.mjs tests/sms-handoff.test.mjs tests/analytics.test.mjs && node tests/seo-static.mjs && node tests/booking-form-regression.mjs && node tests/analytics-browser.mjs",
+    "test:analytics": "node --test tests/analytics.test.mjs && node tests/analytics-browser.mjs",
     "test:seo": "node tests/seo-static.mjs",
     "test:booking": "node tests/booking-form-regression.mjs",
     "test:sms": "node --test tests/sms-uri.test.mjs tests/sms-handoff.test.mjs",
@@ -11,5 +12,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "playwright-core": "^1.65.0"
   }
 }

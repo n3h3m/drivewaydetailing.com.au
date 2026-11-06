@@ -1,14 +1,15 @@
 # Site tests
 
-Three dependency-free suites (no npm install needed):
+Dependency-free suites (no npm install needed), plus one Playwright analytics check:
 
 | Script | What | Needs |
 | --- | --- | --- |
 | `node --test tests/sms-uri.test.mjs` (`npm run test:sms`) | Unit tests for the SMS link builder in `assets/enquiry-utils.js` | Node 18+ only |
 | `node tests/seo-static.mjs` (`npm run test:seo`) | Static SEO checks on every HTML page | Node 18+ only |
 | `node tests/booking-form-regression.mjs` (`npm run test:booking`) | Booking form regression in a real browser | Node 18+, `playwright-core`, Chrome |
+| `node --test tests/analytics.test.mjs` and `node tests/analytics-browser.mjs` (`npm run test:analytics`) | GA4 + Clarity installed once on each public page, event guards, and a browser network check | Node 18+; browser file also needs `playwright-core` and Chrome |
 
-`npm test` runs all three (SMS unit tests, SEO, then booking).
+`npm test` runs SMS, analytics unit tests, SEO, booking, then the analytics browser check.
 
 ## Requirements
 
