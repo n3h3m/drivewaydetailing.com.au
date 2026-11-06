@@ -197,10 +197,10 @@ for (const cls of ['.hidden', '.flex', '.border-teal', '.bg-teal-50', '.border-r
   check(`site.css has ${cls}`, css.includes(cls));
 }
 
-const CLOCK = /9:00\s*AM|5:00\s*PM|09:00|17:00|Mon–Sat|Sunday closed/;
+const BANNED_COPY = /within the hour|during business hours|\bbusiness hours\b|reply within|get a reply|Mon–Sat|Monday to Saturday|Sunday closed|9:00\s*AM|5:00\s*PM|\b09:00\b|\b17:00\b/i;
 for (const f of htmlFiles.filter((x) => !isVerification(x))) {
   const visible = noScripts(pages[f]);
-  check(`${f}: no obsolete opening clock`, !CLOCK.test(visible), visible.match(CLOCK)?.[0] || '');
+  check(`${f}: no obsolete opening clock or reply promise`, !BANNED_COPY.test(visible), visible.match(BANNED_COPY)?.[0] || '');
 }
 for (const f of ['index.html', 'car-detailing-western-sydney.html', 'car-detailing-blue-mountains.html', 'car-detailing-central-coast.html']) {
   check(`${f}: says 7 days a week`, pages[f].includes('7 days a week'));
