@@ -759,6 +759,73 @@ async function main() {
   );
   await browser.close();
 
+  // Map card keeps the 640×420 artwork. Desktop must not letterbox it
+  // inside a column stretched to the suburb list.
+  const MAP_WIDTHS = [360, 375, 390, 768, 1280, 1440];
+  for (const width of MAP_WIDTHS) {
+    ({ browser, page, errors } = await launch({
+      width,
+      height: width >= 1024 ? 1100 : 844,
+    }));
+    const map = await page.evaluate(() => {
+      const svg = document.querySelector('#map-scroll svg');
+      const fig = svg.closest('figure');
+      const cap = fig.querySelector('figcaption');
+      const r = svg.getBoundingClientRect();
+      const fr = fig.getBoundingClientRect();
+      const cr = cap.getBoundingClientRect();
+      const labelInArt = (name) => {
+        const el = [...svg.querySelectorAll('text')].find((t) =>
+          (t.textContent || '').includes(name),
+        );
+        if (!el) return false;
+        const b = el.getBoundingClientRect();
+        return (
+          b.width > 2 &&
+          b.left >= r.left - 1 &&
+          b.right <= r.right + 1 &&
+          b.top >= r.top - 1 &&
+          b.bottom <= r.bottom + 1
+        );
+      };
+      return {
+        aspect: r.width / r.height,
+        gap: cr.top - r.bottom,
+        padTop: r.top - fr.top,
+        padBot: fr.bottom - cr.bottom,
+        katoomba: labelInArt('Katoomba'),
+        blackwall: labelInArt('Blackwall'),
+        legend: (cap.textContent || '').replace(/\s+/g, ' ').trim(),
+      };
+    });
+    const natural = 640 / 420;
+    check(
+      `map-aspect-${width}`,
+      Math.abs(map.aspect - natural) < 0.04 &&
+        map.gap > 0 &&
+        map.gap < 20 &&
+        map.padTop < 28 &&
+        map.padBot < 28 &&
+        map.katoomba &&
+        map.blackwall &&
+        /Suburb we service/.test(map.legend) &&
+        /Confirmed recent job/.test(map.legend) &&
+        /illustrative, not to scale/.test(map.legend) &&
+        errors.length === 0,
+      JSON.stringify({
+        aspect: +map.aspect.toFixed(3),
+        natural: +natural.toFixed(3),
+        gap: Math.round(map.gap),
+        padTop: Math.round(map.padTop),
+        padBot: Math.round(map.padBot),
+        katoomba: map.katoomba,
+        blackwall: map.blackwall,
+        errors,
+      }),
+    );
+    await browser.close();
+  }
+
   // ========== 8) Footer / links + mobile overflow ==========
   ({ browser, page, errors } = await launch({ width: 390, height: 844 }));
   const foot = await page.evaluate(() => {

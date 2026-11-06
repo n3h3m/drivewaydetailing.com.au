@@ -884,6 +884,9 @@
                     -webkit-overflow-scrolling: touch;
                 }
             }
+            @media (min-width: 1024px) {
+                #areas .map-column { align-self: start; }
+            }
 
         </style>
         <link rel="stylesheet" href="./assets/site.css" />
@@ -5880,15 +5883,15 @@
                         </svg>
                     </a>
                 </div>
-                <div class="lg:col-span-7 min-w-0 reveal lg:flex lg:flex-col">
+                <div class="map-column lg:col-span-7 min-w-0 reveal">
                     <figure
-                        class="bg-white rounded-lg border border-navy/10 shadow-card p-3 md:p-4 lg:flex-1 lg:flex lg:flex-col"
+                        class="bg-white rounded-lg border border-navy/10 shadow-card p-3 md:p-4"
                     >
-                        <div id="map-scroll" class="overflow-x-auto -mx-1 px-1 lg:overflow-visible lg:relative lg:flex-1 lg:min-h-[320px]">
+                        <div id="map-scroll" class="overflow-x-auto -mx-1 px-1 lg:overflow-visible">
                             <svg
                                 viewBox="0 0 640 420"
                                 preserveAspectRatio="xMidYMid meet"
-                                class="w-full h-auto min-w-[520px] lg:min-w-0 lg:absolute lg:inset-0 lg:h-full"
+                                class="w-full h-auto min-w-[520px] lg:min-w-0"
                                 role="img"
                                 aria-labelledby="map-title map-desc"
                             >
