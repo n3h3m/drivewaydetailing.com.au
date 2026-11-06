@@ -304,17 +304,74 @@ async function main() {
   );
   await browser.close();
 
-  // ========== 4) Addons: order, visible, prices ==========
+  // ========== 4) Addons: after package, collapsed until opened, prices inside ==========
   ({ browser, page, errors } = await launch());
   const addonInfo = await page.evaluate(() => {
     const box = document.getElementById('booking-addons');
-    const style = box ? getComputedStyle(box) : null;
+    const summary = box?.querySelector('summary');
+    const pkg = document.querySelector('[data-err="package"]')?.closest('fieldset');
+    const style = summary ? getComputedStyle(summary) : null;
+    const inputs = [
+      ...document.querySelectorAll('#booking-addons input[name="addons"]'),
+    ];
+    const grid = box?.querySelector('.grid');
+    const gridBox = grid?.getBoundingClientRect();
+    return {
+      summaryVisible: !!(
+        summary &&
+        style &&
+        style.display !== 'none' &&
+        style.visibility !== 'hidden'
+      ),
+      collapsed: box?.tagName === 'DETAILS' && box.open === false,
+      expanded: summary?.getAttribute('aria-expanded') || '',
+      summaryText: (summary?.textContent || '').replace(/\s+/g, ' ').trim(),
+      afterPackage: !!(
+        pkg &&
+        box &&
+        pkg.compareDocumentPosition(box) & Node.DOCUMENT_POSITION_FOLLOWING
+      ),
+      optionsHidden: !gridBox || gridBox.height === 0,
+      values: inputs.map((i) => i.value),
+    };
+  });
+  check(
+    'addons-summary-visible',
+    addonInfo.summaryVisible && /Add-on Services/.test(addonInfo.summaryText),
+    JSON.stringify(addonInfo),
+  );
+  check(
+    'addons-collapsed-by-default',
+    addonInfo.collapsed &&
+      addonInfo.expanded === 'false' &&
+      addonInfo.optionsHidden,
+    JSON.stringify(addonInfo),
+  );
+  check(
+    'addons-after-package',
+    addonInfo.afterPackage === true,
+    JSON.stringify(addonInfo),
+  );
+  check(
+    'addons-order',
+    JSON.stringify(addonInfo.values) === JSON.stringify(ADDON_ORDER),
+    JSON.stringify(addonInfo.values),
+  );
+  await page.locator('#booking-addons summary').click();
+  await page.waitForFunction(
+    () =>
+      document.querySelector('#booking-addons summary')?.getAttribute('aria-expanded') ===
+      'true',
+  );
+  const opened = await page.evaluate(() => {
+    const box = document.getElementById('booking-addons');
+    const summary = box.querySelector('summary');
     const inputs = [
       ...document.querySelectorAll('#booking-addons input[name="addons"]'),
     ];
     return {
-      visible: !!(box && style && style.display !== 'none' && style.visibility !== 'hidden'),
-      values: inputs.map((i) => i.value),
+      open: box.open === true,
+      expanded: summary.getAttribute('aria-expanded'),
       labels: inputs.map((i) => {
         const lab = i.closest('label');
         return {
@@ -324,18 +381,17 @@ async function main() {
       }),
     };
   });
-  check('addons-visible', addonInfo.visible, '');
-  check(
-    'addons-order',
-    JSON.stringify(addonInfo.values) === JSON.stringify(ADDON_ORDER),
-    JSON.stringify(addonInfo.values),
-  );
   const pricesOk = ADDON_ORDER.every((v) => {
     const m = v.match(/\$(\d+)/);
-    const row = addonInfo.labels.find((l) => l.value === v);
+    const row = opened.labels.find((l) => l.value === v);
     return row && m && row.text.includes('$' + m[1]);
   });
-  check('addons-prices-shown', pricesOk, JSON.stringify(addonInfo.labels.slice(0, 3)));
+  check(
+    'addons-open-accessible',
+    opened.open && opened.expanded === 'true',
+    JSON.stringify({ open: opened.open, expanded: opened.expanded }),
+  );
+  check('addons-prices-shown', pricesOk, JSON.stringify(opened.labels.slice(0, 3)));
   // Select two addons + package, confirm summary mentions add-ons
   await clearPackagesQuotes(page);
   await selectRadio(page, 'vehicletype', 'data-size', 'hatch');
@@ -353,6 +409,103 @@ async function main() {
       /add-on/i.test(sum.text) &&
       /\$100|from \$100/i.test(sum.amt),
     JSON.stringify(sum),
+  );
+  await page.locator('#booking-addons summary').click();
+  await page.waitForFunction(
+    () =>
+      document.querySelector('#booking-addons summary')?.getAttribute('aria-expanded') ===
+      'false',
+  );
+  const closed = await page.evaluate(() => {
+    const box = document.getElementById('booking-addons');
+    const checked = [
+      ...document.querySelectorAll('#booking-form input[name="addons"]:checked'),
+    ].map((c) => c.value);
+    return {
+      open: box.open,
+      expanded: box.querySelector('summary')?.getAttribute('aria-expanded'),
+      checked,
+      price: document.getElementById('price-summary-text')?.textContent || '',
+    };
+  });
+  check(
+    'addons-close-keeps-selection',
+    closed.open === false &&
+      closed.expanded === 'false' &&
+      closed.checked.includes('Engine Bay Rinse (from $60)') &&
+      closed.checked.includes('Pet Hair Removal (from $40)') &&
+      /Gold/i.test(closed.price) &&
+      /2 add-ons/.test(closed.price),
+    JSON.stringify(closed),
+  );
+  await page.locator('#booking-addons summary').click();
+  await selectRadio(page, 'package', 'data-pkg', 'platinum');
+  await page.waitForTimeout(80);
+  const switched = await page.evaluate(() => ({
+    pkg: document.querySelector('input[name="package"]:checked')?.value || '',
+    checked: [
+      ...document.querySelectorAll('#booking-form input[name="addons"]:checked'),
+    ].map((c) => c.value),
+    price: document.getElementById('price-summary-text')?.textContent || '',
+    amt: document.getElementById('price-summary-amount')?.textContent || '',
+    open: document.getElementById('booking-addons')?.open,
+  }));
+  check(
+    'addons-survive-package-switch',
+    /Platinum/i.test(switched.pkg) &&
+      switched.checked.includes('Engine Bay Rinse (from $60)') &&
+      switched.checked.includes('Pet Hair Removal (from $40)') &&
+      /Platinum/i.test(switched.price) &&
+      /2 add-ons/.test(switched.price) &&
+      /\$100|from \$100/i.test(switched.amt) &&
+      switched.open === true,
+    JSON.stringify(switched),
+  );
+  const hours = await page.locator('#business-hours').innerText();
+  check(
+    'hours-seven-days',
+    hours.trim() === '7 days a week' && !/9:00|5:00|Mon|Sunday/.test(hours),
+    hours,
+  );
+  check('addons-no-console', errors.length === 0, JSON.stringify(errors.slice(0, 5)));
+  await browser.close();
+
+  ({ browser, page, errors } = await launch({ width: 1280, height: 900 }));
+  const desk = await page.evaluate(() => {
+    const box = document.getElementById('booking-addons');
+    const summary = box?.querySelector('summary');
+    return {
+      collapsed: box?.open === false,
+      expanded: summary?.getAttribute('aria-expanded') || '',
+      hours: document.getElementById('business-hours')?.textContent?.trim() || '',
+    };
+  });
+  await page.locator('#booking-addons summary').focus();
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(
+    () =>
+      document.querySelector('#booking-addons summary')?.getAttribute('aria-expanded') ===
+      'true',
+  );
+  const deskOpen = await page.evaluate(() => {
+    const box = document.getElementById('booking-addons');
+    const label = box.querySelector('input[name="addons"]')?.closest('label');
+    return {
+      open: box.open === true,
+      expanded: box.querySelector('summary')?.getAttribute('aria-expanded'),
+      price: (label?.innerText || '').replace(/\s+/g, ' '),
+    };
+  });
+  check(
+    'addons-desktop-keyboard',
+    desk.collapsed &&
+      desk.expanded === 'false' &&
+      desk.hours === '7 days a week' &&
+      deskOpen.open &&
+      deskOpen.expanded === 'true' &&
+      /\$60/.test(deskOpen.price) &&
+      errors.length === 0,
+    JSON.stringify({ desk, deskOpen, errors }),
   );
   await browser.close();
 

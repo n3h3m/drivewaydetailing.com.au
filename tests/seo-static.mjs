@@ -197,6 +197,15 @@ for (const cls of ['.hidden', '.flex', '.border-teal', '.bg-teal-50', '.border-r
   check(`site.css has ${cls}`, css.includes(cls));
 }
 
+const CLOCK = /9:00\s*AM|5:00\s*PM|09:00|17:00|Mon–Sat|Sunday closed/;
+for (const f of htmlFiles.filter((x) => !isVerification(x))) {
+  const visible = noScripts(pages[f]);
+  check(`${f}: no obsolete opening clock`, !CLOCK.test(visible), visible.match(CLOCK)?.[0] || '');
+}
+for (const f of ['index.html', 'car-detailing-western-sydney.html', 'car-detailing-blue-mountains.html', 'car-detailing-central-coast.html']) {
+  check(`${f}: says 7 days a week`, pages[f].includes('7 days a week'));
+}
+
 const failed = results.filter((r) => !r.pass);
 console.log(`\n=== SEO STATIC ${failed.length ? 'FAIL' : 'PASS'} ${results.length - failed.length}/${results.length} ===`);
 process.exit(failed.length ? 1 : 0);
