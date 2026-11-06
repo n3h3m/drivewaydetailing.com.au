@@ -1,92 +1,241 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-AU">
     <head>
         <meta charset="utf-8" />
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
-        <title>
-            Driveway Detailing Sydney · Mobile Car Detailing · From $129 · 0429
-            654 427
-        </title>
+        <title>Mobile Car Detailing Sydney | Driveway Detailing</title>
         <meta
             name="description"
-            content="Sydney's mobile car detailing · we come to your driveway. Silver Basic Detail from $129, Gold Standard from $249, Platinum Pre-Sale from $349, Diamond Ultimate from $799, Interior Detail from $199. Call/text 0429 654 427."
+            content="Mobile car detailing at your Sydney home or workplace. Interior and exterior packages from $129, pre-sale details and cut &amp; polish. Call 0429 654 427."
         />
+        <link rel="canonical" href="https://drivewaydetailing.com.au/" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta name="theme-color" content="#0E2A57" />
 
         <meta property="og:type" content="website" />
-        <meta
-            property="og:title"
-            content="Driveway Detailing Sydney · Mobile Car Detailing from $129"
-        />
-        <meta
-            property="og:description"
-            content="Quality service. Premium results. Every time. Call or text 0429 654 427."
-        />
-        <meta property="og:image" content="./assets/processed/hero-bmw.jpg" />
+        <meta property="og:site_name" content="Driveway Detailing" />
+        <meta property="og:locale" content="en_AU" />
+        <meta property="og:url" content="https://drivewaydetailing.com.au/" />
+        <meta property="og:title" content="Mobile Car Detailing Sydney | Driveway Detailing" />
+        <meta property="og:description" content="Hand-detailed at your home or office across Sydney, the Blue Mountains and the Central Coast. Interior and exterior packages from $129." />
+        <meta property="og:image" content="https://drivewaydetailing.com.au/assets/processed/hero-bmw.jpg" />
+        <meta property="og:image:width" content="1920" />
+        <meta property="og:image:height" content="1440" />
+        <meta property="og:image:alt" content="BMW M-Sport sedan freshly detailed on a driveway" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Mobile Car Detailing Sydney | Driveway Detailing" />
+        <meta name="twitter:description" content="Hand-detailed at your home or office across Sydney, the Blue Mountains and the Central Coast. Interior and exterior packages from $129." />
+        <meta name="twitter:image" content="https://drivewaydetailing.com.au/assets/processed/hero-bmw.jpg" />
+        <meta name="twitter:image:alt" content="BMW M-Sport sedan freshly detailed on a driveway" />
 
         <link rel="icon" type="image/png" href="./assets/processed/logo.png" />
         <link rel="apple-touch-icon" href="./assets/processed/logo.png" />
 
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <!-- Self-hosted Inter + Caveat (latin, OFL); no third-party font requests -->
+        <link rel="preload" href="./assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin />
+        <!-- Hero photo is the desktop LCP; on phones it sits below the headline -->
         <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Caveat:wght@600;700&display=swap"
-            rel="stylesheet"
+            rel="preload"
+            as="image"
+            type="image/webp"
+            href="./assets/processed/hero-bmw-800.webp"
+            imagesrcset="./assets/processed/hero-bmw-800.webp 800w, ./assets/processed/hero-bmw-1280.webp 1280w"
+            imagesizes="(min-width: 1408px) 660px, (min-width: 1024px) calc(50vw - 44px), calc(100vw - 32px)"
+            media="(min-width: 1024px)"
+            fetchpriority="high"
         />
 
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        colors: {
-                            navy: {
-                                DEFAULT: '#0E2A57',
-                                50: '#E8EDF5',
-                                100: '#CCD5E5',
-                                600: '#0E2A57',
-                                700: '#0A2046',
-                                800: '#071834',
-                                900: '#04102A',
-                            },
-                            teal: {
-                                DEFAULT: '#14C5BD',
-                                50: '#E2FAF8',
-                                100: '#BFF3EF',
-                                600: '#14C5BD',
-                                700: '#0FA39C',
-                            },
-                            gold: {
-                                DEFAULT: '#C9A45D',
-                                600: '#C9A45D',
-                                700: '#A8884B',
-                            },
-                            ink: '#1A1A1A',
-                            paper: '#F5F7FA',
-                            cream: '#FAF8F2',
-                        },
-                        fontFamily: {
-                            sans: [
-                                'Inter',
-                                'ui-sans-serif',
-                                'system-ui',
-                                'sans-serif',
-                            ],
-                            script: ['Caveat', 'cursive'],
-                        },
-                        maxWidth: { '8xl': '88rem' },
-                        boxShadow: {
-                            card: '0 1px 2px rgba(14,42,87,0.06), 0 8px 24px -8px rgba(14,42,87,0.18)',
-                            cardLg: '0 6px 16px -4px rgba(14,42,87,0.10), 0 24px 48px -12px rgba(14,42,87,0.28)',
-                            ring: '0 0 0 4px rgba(20,197,189,0.18)',
-                        },
+        <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "AutomotiveBusiness",
+                  "@id": "https://drivewaydetailing.com.au/#business",
+                  "name": "Driveway Detailing",
+                  "url": "https://drivewaydetailing.com.au/",
+                  "description": "Sydney based mobile car detailing. Interior and exterior detailing at your home or workplace across Sydney, the Blue Mountains and the Central Coast.",
+                  "telephone": "+61429654427",
+                  "image": "https://drivewaydetailing.com.au/assets/processed/hero-bmw.jpg",
+                  "logo": "https://drivewaydetailing.com.au/assets/processed/logo.png",
+                  "taxID": "91 191 146 339",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Sydney",
+                    "addressRegion": "NSW",
+                    "addressCountry": "AU"
+                  },
+                  "areaServed": [
+                    {
+                      "@type": "Place",
+                      "name": "Western Sydney, NSW",
+                      "url": "https://drivewaydetailing.com.au/car-detailing-western-sydney.html"
                     },
+                    {
+                      "@type": "Place",
+                      "name": "Inner West, Sydney, NSW"
+                    },
+                    {
+                      "@type": "Place",
+                      "name": "Hills District and northern suburbs, Sydney, NSW"
+                    },
+                    {
+                      "@type": "Place",
+                      "name": "South West Sydney, NSW"
+                    },
+                    {
+                      "@type": "Place",
+                      "name": "Sutherland Shire, NSW"
+                    },
+                    {
+                      "@type": "Place",
+                      "name": "Blue Mountains, NSW",
+                      "url": "https://drivewaydetailing.com.au/car-detailing-blue-mountains.html"
+                    },
+                    {
+                      "@type": "Place",
+                      "name": "Central Coast, NSW",
+                      "url": "https://drivewaydetailing.com.au/car-detailing-central-coast.html"
+                    }
+                  ],
+                  "openingHoursSpecification": [
+                    {
+                      "@type": "OpeningHoursSpecification",
+                      "dayOfWeek": [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday"
+                      ],
+                      "opens": "09:00",
+                      "closes": "17:00"
+                    }
+                  ],
+                  "sameAs": [
+                    "https://www.facebook.com/profile.php?id=61590132262669",
+                    "https://www.instagram.com/drivewaydetailingnsw/",
+                    "https://www.oneflare.com.au/b/driveway-detailing-515"
+                  ],
+                  "hasOfferCatalog": {
+                    "@type": "OfferCatalog",
+                    "name": "Mobile car detailing packages",
+                    "itemListElement": [
+                      {
+                        "@type": "Offer",
+                        "url": "https://drivewaydetailing.com.au/#pkg-silver",
+                        "priceCurrency": "AUD",
+                        "priceSpecification": {
+                          "@type": "PriceSpecification",
+                          "minPrice": 129,
+                          "priceCurrency": "AUD",
+                          "description": "From price for a hatch or sedan. Larger vehicles cost more and the final quote depends on vehicle size and condition."
+                        },
+                        "itemOffered": {
+                          "@type": "Service",
+                          "name": "Silver Basic Detail",
+                          "description": "Regular maintenance detail covering the essential interior and exterior clean."
+                        }
+                      },
+                      {
+                        "@type": "Offer",
+                        "url": "https://drivewaydetailing.com.au/#pkg-gold",
+                        "priceCurrency": "AUD",
+                        "priceSpecification": {
+                          "@type": "PriceSpecification",
+                          "minPrice": 249,
+                          "priceCurrency": "AUD",
+                          "description": "From price for a hatch or sedan. Larger vehicles cost more and the final quote depends on vehicle size and condition."
+                        },
+                        "itemOffered": {
+                          "@type": "Service",
+                          "name": "Gold Standard Detail",
+                          "description": "Adds fabric seat and carpet shampooing, interior plastic dressing and a protective exterior wax."
+                        }
+                      },
+                      {
+                        "@type": "Offer",
+                        "url": "https://drivewaydetailing.com.au/#pkg-platinum",
+                        "priceCurrency": "AUD",
+                        "priceSpecification": {
+                          "@type": "PriceSpecification",
+                          "minPrice": 349,
+                          "priceCurrency": "AUD",
+                          "description": "From price for a hatch or sedan. Larger vehicles cost more and the final quote depends on vehicle size and condition."
+                        },
+                        "itemOffered": {
+                          "@type": "Service",
+                          "name": "Platinum Pre-Sale Detail",
+                          "description": "Adds leather care, steam cleaning, clay bar spot treatment and a light machine polish before a sale."
+                        }
+                      },
+                      {
+                        "@type": "Offer",
+                        "url": "https://drivewaydetailing.com.au/#pkg-diamond",
+                        "priceCurrency": "AUD",
+                        "priceSpecification": {
+                          "@type": "PriceSpecification",
+                          "minPrice": 799,
+                          "priceCurrency": "AUD",
+                          "description": "From price for a hatch or sedan. Larger vehicles cost more and the final quote depends on vehicle size and condition."
+                        },
+                        "itemOffered": {
+                          "@type": "Service",
+                          "name": "Diamond Ultimate Detail",
+                          "description": "Adds ozone treatment, full clay bar decontamination, a two-stage cut and polish and headlight restoration."
+                        }
+                      },
+                      {
+                        "@type": "Offer",
+                        "url": "https://drivewaydetailing.com.au/#pkg-interior",
+                        "priceCurrency": "AUD",
+                        "priceSpecification": {
+                          "@type": "PriceSpecification",
+                          "minPrice": 199,
+                          "priceCurrency": "AUD",
+                          "description": "From price for a hatch or sedan. Larger vehicles cost more and the final quote depends on vehicle size and condition."
+                        },
+                        "itemOffered": {
+                          "@type": "Service",
+                          "name": "Interior Detail",
+                          "description": "Standalone deep clean of the interior only."
+                        }
+                      },
+                      {
+                        "@type": "Offer",
+                        "url": "https://drivewaydetailing.com.au/#pkg-cutpolish",
+                        "priceCurrency": "AUD",
+                        "priceSpecification": {
+                          "@type": "PriceSpecification",
+                          "minPrice": 349,
+                          "priceCurrency": "AUD",
+                          "description": "From price. Final quote confirmed when you book."
+                        },
+                        "itemOffered": {
+                          "@type": "Service",
+                          "name": "Cut & Polish",
+                          "description": "Two-stage machine paint correction."
+                        }
+                      }
+                    ]
+                  }
                 },
-            };
+                {
+                  "@type": "WebSite",
+                  "@id": "https://drivewaydetailing.com.au/#website",
+                  "url": "https://drivewaydetailing.com.au/",
+                  "name": "Driveway Detailing",
+                  "inLanguage": "en-AU",
+                  "publisher": {
+                    "@id": "https://drivewaydetailing.com.au/#business"
+                  }
+                }
+              ]
+            }
         </script>
 
         <style>
@@ -398,7 +547,7 @@
             .form-chip .chip-face .chip-meta {
                 margin-left: auto;
                 font-weight: 600;
-                color: rgba(26, 26, 26, 0.55);
+                color: rgba(26, 26, 26, 0.7);
                 font-size: 12px;
                 letter-spacing: 0.02em;
             }
@@ -662,7 +811,7 @@
                     font-size: 11px; font-weight: 800; line-height: 1.2; color: #0E2A57;
                 }
                 #size-switcher .size-card .sc-desc {
-                    font-size: 9px; font-weight: 600; line-height: 1.25; color: rgba(14,42,87,0.55);
+                    font-size: 9px; font-weight: 600; line-height: 1.25; color: rgba(14,42,87,0.78);
                 }
                 #size-switcher .size-card[aria-pressed="true"] {
                     border-color: #14C5BD;
@@ -747,9 +896,11 @@
             }
 
         </style>
+        <link rel="stylesheet" href="./assets/site.css" />
     </head>
 
     <body class="bg-paper text-ink">
+        <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-navy focus:shadow-card">Skip to content</a>
         <!-- ============ MAIN NAV ============ -->
         <nav
             id="nav"
@@ -764,8 +915,10 @@
                     aria-label="Driveway Detailing · home"
                 >
                     <img
-                        src="./assets/processed/logo.png"
+                        src="./assets/processed/logo-nav.png"
                         alt="Driveway Detailing"
+                        width="314"
+                        height="120"
                         class="h-10 w-auto"
                     />
                 </a>
@@ -952,6 +1105,7 @@
             <div
                 id="mobile-menu"
                 class="lg:hidden bg-white border-t border-navy/10"
+                inert
             >
                 <ul
                     class="px-4 py-3 grid grid-cols-2 gap-2 text-sm font-semibold text-navy"
@@ -1009,6 +1163,7 @@
             </div>
         </nav>
 
+        <main id="main">
         <!-- ============ HERO ============ -->
         <header id="top" class="relative bg-navy text-white overflow-hidden">
             <div
@@ -1029,11 +1184,7 @@
                 <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
                     <!-- LEFT: copy block -->
                     <div class="lg:col-span-6">
-                        <div
-                            class="hero-tagline"
-                            role="text"
-                            aria-label="Bringing showroom shine to your driveway"
-                        >
+                        <div class="hero-tagline">
                             <span
                                 class="hero-tagline-rule"
                                 aria-hidden="true"
@@ -1064,11 +1215,16 @@
                             </div>
                         </div>
 
-                        <h1
-                            class="mt-5 text-5xl sm:text-6xl md:text-7xl xl:text-[5.75rem] font-black leading-[0.95] tracking-tight"
-                        >
-                            More than<br />just a
-                            <span class="text-teal">wash.</span>
+                        <h1 class="mt-5 font-black tracking-tight">
+                            <span
+                                class="block text-sm sm:text-base font-extrabold uppercase tracking-[0.14em] leading-snug text-teal"
+                                >Mobile car detailing in Sydney.</span
+                            >
+                            <span
+                                class="mt-3 block text-5xl sm:text-6xl md:text-7xl xl:text-[5.75rem] leading-[0.95]"
+                                >More than<br />just a
+                                <span class="text-teal">wash.</span></span
+                            >
                         </h1>
 
                         <p
@@ -1257,12 +1413,22 @@
                         <div
                             class="relative aspect-[5/4] rounded-lg overflow-hidden shadow-cardLg"
                         >
-                            <img
-                                src="./assets/processed/hero-bmw.jpg"
-                                alt="BMW M-Sport sedan freshly detailed on a driveway"
-                                class="w-full h-full object-cover"
-                                fetchpriority="high"
-                            />
+                            <picture>
+                                <source
+                                    type="image/webp"
+                                    srcset="./assets/processed/hero-bmw-800.webp 800w, ./assets/processed/hero-bmw-1280.webp 1280w"
+                                    sizes="(min-width: 1408px) 660px, (min-width: 1024px) calc(50vw - 44px), calc(100vw - 32px)"
+                                />
+                                <img
+                                    src="./assets/processed/hero-bmw.jpg"
+                                    alt="BMW M-Sport sedan freshly detailed on a driveway"
+                                    width="1920"
+                                    height="1440"
+                                    class="w-full h-full object-cover"
+                                    fetchpriority="high"
+                                    decoding="async"
+                                />
+                            </picture>
                             <div
                                 class="absolute inset-0"
                                 style="
@@ -1397,8 +1563,9 @@
         </header>
 
         <!-- ============ 4 SERVICE PILLARS ============ -->
-        <section id="pillars" class="py-12 md:py-16 bg-white">
+        <section id="pillars" class="py-12 md:py-16 bg-white" aria-labelledby="pillars-title">
             <div class="max-w-8xl mx-auto px-4 sm:px-6">
+                <h2 id="pillars-title" class="sr-only">Mobile detailing services: exterior, interior, paint protection</h2>
                 <div class="reveal grid md:grid-cols-4 gap-4 md:gap-5">
                     <article
                         class="group rounded-lg border border-navy/10 hover:border-teal hover:shadow-card transition p-5 flex gap-4 items-start"
@@ -1584,7 +1751,7 @@
                     <h2
                         class="mt-3 text-3xl md:text-5xl font-black tracking-tight text-navy"
                     >
-                        Packages &amp; Pricing
+                        Car detailing packages &amp; prices
                     </h2>
                     <p class="mt-3 text-ink/70">
                         Choose the right detailing package for your vehicle.
@@ -1599,7 +1766,7 @@
                     <div id="size-switcher" class="flex flex-col items-center gap-2">
                     <span
                         id="size-switch-label"
-                        class="size-switch-heading text-[11px] font-extrabold tracking-[0.14em] uppercase text-navy/60"
+                        class="size-switch-heading text-[11px] font-extrabold tracking-[0.14em] uppercase text-navy/80"
                         >Your vehicle</span
                     >
                     <div
@@ -1694,14 +1861,10 @@
                                 </svg>
                             </div>
                             <div>
-                                <div
-                                    class="text-[11px] font-extrabold tracking-[0.16em] uppercase text-teal-700"
-                                >
-                                    Silver
-                                </div>
                                 <h3
                                     class="text-base font-extrabold text-navy tracking-tight uppercase"
                                 >
+                                    <span class="block leading-normal text-[11px] font-extrabold tracking-[0.16em] uppercase text-teal-700">Silver</span>
                                     Basic Detail
                                 </h3>
                                 <p class="text-xs text-ink/65">
@@ -2355,14 +2518,10 @@
                                 </svg>
                             </div>
                             <div>
-                                <div
-                                    class="text-[11px] font-extrabold tracking-[0.16em] uppercase text-teal-700"
-                                >
-                                    Gold
-                                </div>
                                 <h3
                                     class="text-base font-extrabold text-navy tracking-tight uppercase"
                                 >
+                                    <span class="block leading-normal text-[11px] font-extrabold tracking-[0.16em] uppercase text-teal-700">Gold</span>
                                     Standard Detail
                                 </h3>
                                 <p class="text-xs text-ink/65">
@@ -2999,14 +3158,10 @@
                                 </svg>
                             </div>
                             <div>
-                                <div
-                                    class="text-[11px] font-extrabold tracking-[0.16em] uppercase text-teal-700"
-                                >
-                                    Platinum
-                                </div>
                                 <h3
                                     class="text-base font-extrabold text-navy tracking-tight uppercase"
                                 >
+                                    <span class="block leading-normal text-[11px] font-extrabold tracking-[0.16em] uppercase text-teal-700">Platinum</span>
                                     Pre-Sale Detail
                                 </h3>
                                 <p class="text-xs text-ink/65">
@@ -3614,14 +3769,10 @@
                                 </svg>
                             </div>
                             <div>
-                                <div
-                                    class="text-[11px] font-extrabold tracking-[0.16em] uppercase text-teal"
-                                >
-                                    Diamond
-                                </div>
                                 <h3
                                     class="text-base font-extrabold tracking-tight uppercase"
                                 >
+                                    <span class="block leading-normal text-[11px] font-extrabold tracking-[0.16em] uppercase text-teal">Diamond</span>
                                     Ultimate Detail
                                 </h3>
                                 <p class="text-xs text-white/70">
@@ -4182,7 +4333,7 @@
                     </article>
                 </div>
 
-                <p class="mt-5 text-center text-xs text-ink/55">
+                <p class="mt-5 text-center text-xs text-ink/70">
                     * Engine bay rinse is available upon customer request and is
                     subject to vehicle suitability.
                 </p>
@@ -4230,11 +4381,11 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3
+                                <h4
                                     class="text-base font-extrabold text-navy tracking-tight uppercase"
                                 >
                                     Interior Detail
-                                </h3>
+                                </h4>
                                 <p class="text-xs text-ink/65">
                                     Deep clean inside only
                                 </p>
@@ -4565,11 +4716,11 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3
+                                <h4
                                     class="text-base font-extrabold text-navy tracking-tight uppercase"
                                 >
                                     Cut &amp; Polish
-                                </h3>
+                                </h4>
                                 <p class="text-xs text-ink/65">
                                     Two-stage machine paint correction
                                 </p>
@@ -4850,7 +5001,7 @@
                     </article>
                 </div>
 
-                <p class="mt-6 text-center text-xs text-ink/55">
+                <p class="mt-6 text-center text-xs text-ink/70">
                     Prices in AUD and shown as &ldquo;from&rdquo; prices. Final
                     quote confirmed when you book · minor variation may apply
                     for heavily soiled vehicles.
@@ -5306,8 +5457,11 @@
                 src="./assets/processed/gallery-05.jpg"
                 alt=""
                 aria-hidden="true"
+                width="1200"
+                height="900"
                 class="absolute inset-0 w-full h-full object-cover opacity-25"
                 loading="lazy"
+                decoding="async"
             />
             <div
                 class="absolute inset-0"
@@ -5440,12 +5594,18 @@
                         data-alt="Black BMW M-Sport sedan freshly detailed"
                         aria-label="Open photo: BMW M-Sport"
                     >
-                        <img
-                            loading="lazy"
-                            src="./assets/processed/gallery-01.jpg"
-                            alt="Black BMW M-Sport sedan freshly detailed"
-                            class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                        />
+                        <picture>
+                            <source type="image/webp" srcset="./assets/processed/gallery-01-640.webp" />
+                            <img
+                                loading="lazy"
+                                decoding="async"
+                                src="./assets/processed/gallery-01.jpg"
+                                alt="Black BMW M-Sport sedan freshly detailed"
+                                width="1200"
+                                height="900"
+                                class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                            />
+                        </picture>
                     </button>
                     <button
                         class="gallery-item group relative aspect-[4/3] overflow-hidden rounded-lg reveal"
@@ -5453,12 +5613,18 @@
                         data-alt="White Mercedes-AMG GLC detailed at home"
                         aria-label="Open photo: Mercedes-AMG GLC"
                     >
-                        <img
-                            loading="lazy"
-                            src="./assets/processed/gallery-02.jpg"
-                            alt="White Mercedes-AMG GLC detailed at home"
-                            class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                        />
+                        <picture>
+                            <source type="image/webp" srcset="./assets/processed/gallery-02-640.webp" />
+                            <img
+                                loading="lazy"
+                                decoding="async"
+                                src="./assets/processed/gallery-02.jpg"
+                                alt="White Mercedes-AMG GLC detailed at home"
+                                width="1200"
+                                height="900"
+                                class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                            />
+                        </picture>
                     </button>
                     <button
                         class="gallery-item group relative aspect-[4/3] overflow-hidden rounded-lg reveal"
@@ -5466,12 +5632,18 @@
                         data-alt="White Nissan Skyline detailed"
                         aria-label="Open photo: Nissan Skyline"
                     >
-                        <img
-                            loading="lazy"
-                            src="./assets/processed/gallery-03.jpg"
-                            alt="White Nissan Skyline detailed"
-                            class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                        />
+                        <picture>
+                            <source type="image/webp" srcset="./assets/processed/gallery-03-640.webp" />
+                            <img
+                                loading="lazy"
+                                decoding="async"
+                                src="./assets/processed/gallery-03.jpg"
+                                alt="White Nissan Skyline detailed"
+                                width="1200"
+                                height="900"
+                                class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                            />
+                        </picture>
                     </button>
                     <button
                         class="gallery-item group relative aspect-[4/3] overflow-hidden rounded-lg reveal"
@@ -5479,12 +5651,18 @@
                         data-alt="Red Porsche Macan freshly detailed"
                         aria-label="Open photo: Porsche Macan"
                     >
-                        <img
-                            loading="lazy"
-                            src="./assets/processed/gallery-04.jpg"
-                            alt="Red Porsche Macan freshly detailed"
-                            class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                        />
+                        <picture>
+                            <source type="image/webp" srcset="./assets/processed/gallery-04-640.webp" />
+                            <img
+                                loading="lazy"
+                                decoding="async"
+                                src="./assets/processed/gallery-04.jpg"
+                                alt="Red Porsche Macan freshly detailed"
+                                width="1200"
+                                height="900"
+                                class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                            />
+                        </picture>
                     </button>
                     <button
                         class="gallery-item group relative aspect-[4/3] overflow-hidden rounded-lg reveal"
@@ -5492,12 +5670,18 @@
                         data-alt="Mercedes-AMG C63"
                         aria-label="Open photo: Mercedes-AMG C63"
                     >
-                        <img
-                            loading="lazy"
-                            src="./assets/processed/gallery-05.jpg"
-                            alt="Black Mercedes-AMG C63"
-                            class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                        />
+                        <picture>
+                            <source type="image/webp" srcset="./assets/processed/gallery-05-640.webp" />
+                            <img
+                                loading="lazy"
+                                decoding="async"
+                                src="./assets/processed/gallery-05.jpg"
+                                alt="Black Mercedes-AMG C63"
+                                width="1200"
+                                height="900"
+                                class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                            />
+                        </picture>
                     </button>
                     <button
                         class="gallery-item group relative aspect-[4/3] overflow-hidden rounded-lg reveal"
@@ -5505,12 +5689,18 @@
                         data-alt="BMW interior leather"
                         aria-label="Open photo: BMW interior"
                     >
-                        <img
-                            loading="lazy"
-                            src="./assets/processed/gallery-06.jpg"
-                            alt="BMW interior leather"
-                            class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                        />
+                        <picture>
+                            <source type="image/webp" srcset="./assets/processed/gallery-06-640.webp" />
+                            <img
+                                loading="lazy"
+                                decoding="async"
+                                src="./assets/processed/gallery-06.jpg"
+                                alt="BMW interior leather"
+                                width="1200"
+                                height="900"
+                                class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                            />
+                        </picture>
                     </button>
                     <button
                         class="gallery-item group relative aspect-[4/3] overflow-hidden rounded-lg reveal"
@@ -5518,12 +5708,18 @@
                         data-alt="Ford Ranger interior"
                         aria-label="Open photo: Ford Ranger interior"
                     >
-                        <img
-                            loading="lazy"
-                            src="./assets/processed/gallery-07.jpg"
-                            alt="Ford Ranger interior"
-                            class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                        />
+                        <picture>
+                            <source type="image/webp" srcset="./assets/processed/gallery-07-640.webp" />
+                            <img
+                                loading="lazy"
+                                decoding="async"
+                                src="./assets/processed/gallery-07.jpg"
+                                alt="Ford Ranger interior"
+                                width="1200"
+                                height="900"
+                                class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                            />
+                        </picture>
                     </button>
                     <button
                         class="gallery-item group relative aspect-[4/3] overflow-hidden rounded-lg reveal"
@@ -5531,12 +5727,18 @@
                         data-alt="Toyota Camry interior"
                         aria-label="Open photo: Toyota Camry interior"
                     >
-                        <img
-                            loading="lazy"
-                            src="./assets/processed/gallery-08.jpg"
-                            alt="Toyota Camry interior"
-                            class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                        />
+                        <picture>
+                            <source type="image/webp" srcset="./assets/processed/gallery-08-640.webp" />
+                            <img
+                                loading="lazy"
+                                decoding="async"
+                                src="./assets/processed/gallery-08.jpg"
+                                alt="Toyota Camry interior"
+                                width="1200"
+                                height="900"
+                                class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                            />
+                        </picture>
                     </button>
                 </div>
             </div>
@@ -5583,6 +5785,7 @@
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Merrylands</span></li>
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Lidcombe</span></li>
                             </ul>
+                            <a href="car-detailing-western-sydney.html" class="mt-2.5 inline-flex items-center gap-1 text-xs font-extrabold text-navy underline underline-offset-4 decoration-teal/60 hover:text-teal-700 transition">Car detailing in Western Sydney &rarr;</a>
                         </div>
                         <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal-700 leading-snug">Inner West</h3>
@@ -5638,6 +5841,7 @@
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Leura</span></li>
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Wentworth Falls</span></li>
                             </ul>
+                            <a href="car-detailing-blue-mountains.html" class="mt-2.5 inline-flex items-center gap-1 text-xs font-extrabold text-navy underline underline-offset-4 decoration-teal/60 hover:text-teal-700 transition">Car detailing in the Blue Mountains &rarr;</a>
                         </div>
                         <div class="rounded-lg bg-white border border-navy/10 px-4 py-3.5">
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal-700 leading-snug">Central Coast</h3>
@@ -5649,6 +5853,7 @@
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Terrigal</span></li>
                                 <li><span class="inline-flex items-center rounded-full bg-white border border-navy/15 text-navy px-3 py-1.5 text-sm font-bold">Umina Beach</span></li>
                             </ul>
+                            <a href="car-detailing-central-coast.html" class="mt-2.5 inline-flex items-center gap-1 text-xs font-extrabold text-navy underline underline-offset-4 decoration-teal/60 hover:text-teal-700 transition">Car detailing in the Central Coast &rarr;</a>
                         </div>
                         <div class="rounded-lg bg-navy text-white px-4 py-3.5 flex flex-col justify-center">
                             <h3 class="text-[11px] uppercase tracking-[0.12em] font-bold text-teal leading-snug">And more</h3>
@@ -6273,7 +6478,7 @@
                             </svg>
                         </div>
                         <figcaption
-                            class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink/60"
+                            class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink/70"
                         >
                             <span class="inline-flex items-center gap-1.5"
                                 ><span
@@ -6489,7 +6694,7 @@
                     </figure>
                 </div>
 
-                <p class="mt-6 text-center text-xs text-ink/55">
+                <p class="mt-6 text-center text-xs text-ink/70">
                     Reviews collected via
                     <a
                         href="https://www.oneflare.com.au/b/driveway-detailing-515"
@@ -6722,7 +6927,10 @@
                         <p class="mt-3 text-sm text-ink/75">
                             Sydney metro &amp; surrounding suburbs · see the
                             Service Areas section. Outside that zone, a small
-                            fuel surcharge may apply.
+                            fuel surcharge may apply. Local guides:
+                            <a href="car-detailing-western-sydney.html" class="font-bold text-navy underline underline-offset-2">Western Sydney</a>,
+                            <a href="car-detailing-blue-mountains.html" class="font-bold text-navy underline underline-offset-2">Blue Mountains</a> and
+                            <a href="car-detailing-central-coast.html" class="font-bold text-navy underline underline-offset-2">Central Coast</a>.
                         </p>
                     </details>
                 </div>
@@ -7280,7 +7488,7 @@
                             <div class="text-sm font-extrabold text-navy">
                                 Add-on Services
                             </div>
-                            <p class="mt-0.5 text-xs text-ink/60">
+                            <p class="mt-0.5 text-xs text-ink/70">
                                 Optional extras — prices match the add-ons listed above.
                             </p>
                             <div
@@ -7298,7 +7506,7 @@
                                     />
                                     <span class="text-sm text-navy leading-snug">Engine Bay Rinse</span>
                                     </span>
-                                    <span class="shrink-0 text-xs font-extrabold text-teal-700 whitespace-nowrap">from $60</span>
+                                    <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $60</span>
                                 </label>
                                 <label
                                     class="flex items-center justify-between gap-2 rounded-lg border border-navy/15 px-3 py-2.5 cursor-pointer hover:border-teal transition min-w-0"
@@ -7312,7 +7520,7 @@
                                     />
                                     <span class="text-sm text-navy leading-snug">Headlight Restoration x2</span>
                                     </span>
-                                    <span class="shrink-0 text-xs font-extrabold text-teal-700 whitespace-nowrap">from $100</span>
+                                    <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $100</span>
                                 </label>
                                 <label
                                     class="flex items-center justify-between gap-2 rounded-lg border border-navy/15 px-3 py-2.5 cursor-pointer hover:border-teal transition min-w-0"
@@ -7326,7 +7534,7 @@
                                     />
                                     <span class="text-sm text-navy leading-snug">Plastic Trim Dye</span>
                                     </span>
-                                    <span class="shrink-0 text-xs font-extrabold text-teal-700 whitespace-nowrap">from $50</span>
+                                    <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $50</span>
                                 </label>
                                 <label
                                     class="flex items-center justify-between gap-2 rounded-lg border border-navy/15 px-3 py-2.5 cursor-pointer hover:border-teal transition min-w-0"
@@ -7340,7 +7548,7 @@
                                     />
                                     <span class="text-sm text-navy leading-snug">Carpet &amp; Floor Mat Shampoo</span>
                                     </span>
-                                    <span class="shrink-0 text-xs font-extrabold text-teal-700 whitespace-nowrap">from $50</span>
+                                    <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $50</span>
                                 </label>
                                 <label
                                     class="flex items-center justify-between gap-2 rounded-lg border border-navy/15 px-3 py-2.5 cursor-pointer hover:border-teal transition min-w-0"
@@ -7354,7 +7562,7 @@
                                     />
                                     <span class="text-sm text-navy leading-snug">Pet Hair Removal</span>
                                     </span>
-                                    <span class="shrink-0 text-xs font-extrabold text-teal-700 whitespace-nowrap">from $40</span>
+                                    <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $40</span>
                                 </label>
                                 <label
                                     class="flex items-center justify-between gap-2 rounded-lg border border-navy/15 px-3 py-2.5 cursor-pointer hover:border-teal transition min-w-0"
@@ -7368,7 +7576,7 @@
                                     />
                                     <span class="text-sm text-navy leading-snug">Ozone Treatment (30 min)</span>
                                     </span>
-                                    <span class="shrink-0 text-xs font-extrabold text-teal-700 whitespace-nowrap">from $50</span>
+                                    <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $50</span>
                                 </label>
                                 <label
                                     class="flex items-center justify-between gap-2 rounded-lg border border-navy/15 px-3 py-2.5 cursor-pointer hover:border-teal transition min-w-0"
@@ -7382,14 +7590,14 @@
                                     />
                                     <span class="text-sm text-navy leading-snug">Child Seat Clean</span>
                                     </span>
-                                    <span class="shrink-0 text-xs font-extrabold text-teal-700 whitespace-nowrap">from $50</span>
+                                    <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $50</span>
                                 </label>
                             </div>
                         </div>
                         <fieldset id="quote-services" class="md:col-span-2 rounded-lg border border-navy/15 bg-paper/60 px-4 py-3">
                             <legend class="sr-only">Want a quote on other services?</legend>
-                            <div class="text-sm font-extrabold text-navy" aria-hidden="true">Want a quote on other services? <span class="font-bold text-ink/55">(optional)</span></div>
-                            <p class="mt-0.5 text-xs text-ink/60">These don&rsquo;t have a set price yet &mdash; we&rsquo;ll confirm pricing when we call.</p>
+                            <div class="text-sm font-extrabold text-navy" aria-hidden="true">Want a quote on other services? <span class="font-bold text-ink/70">(optional)</span></div>
+                            <p class="mt-0.5 text-xs text-ink/70">These don&rsquo;t have a set price yet &mdash; we&rsquo;ll confirm pricing when we call.</p>
                             <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
                                 <label class="inline-flex items-center gap-2 text-sm text-navy cursor-pointer"><input type="checkbox" name="quoteservices" value="Paint Protection (Ceramic Coating)" class="h-4 w-4 accent-teal-600" /> Paint Protection (Ceramic Coating)</label>
                                 <label class="inline-flex items-center gap-2 text-sm text-navy cursor-pointer"><input type="checkbox" name="quoteservices" value="Overspray Removal" class="h-4 w-4 accent-teal-600" /> Overspray Removal</label>
@@ -7407,7 +7615,7 @@
                         >
                             <div class="min-w-0">
                                 <div
-                                    class="text-[11px] font-extrabold uppercase tracking-[0.12em] text-navy/60"
+                                    class="text-[11px] font-extrabold uppercase tracking-[0.12em] text-navy/80"
                                 >
                                     Your price
                                 </div>
@@ -7436,7 +7644,7 @@
                                     class="text-sm font-extrabold text-navy"
                                     >More details
                                     <span
-                                        class="text-ink/40 font-semibold"
+                                        class="text-ink/65 font-semibold"
                                         >(optional)</span
                                     ></span
                                 >
@@ -7462,7 +7670,7 @@
                                 class="block text-xs font-extrabold uppercase tracking-[0.12em] text-navy mb-1.5"
                                 >Preferred date
                                 <span
-                                    class="text-ink/40 font-semibold normal-case tracking-normal"
+                                    class="text-ink/65 font-semibold normal-case tracking-normal"
                                     >(optional)</span
                                 ></label
                             >
@@ -7480,7 +7688,7 @@
                                 class="block text-xs font-extrabold uppercase tracking-[0.12em] text-navy mb-1.5"
                                 >Notes
                                 <span
-                                    class="text-ink/40 font-semibold normal-case tracking-normal"
+                                    class="text-ink/65 font-semibold normal-case tracking-normal"
                                     >(optional)</span
                                 ></label
                             >
@@ -7621,6 +7829,7 @@
                                 <a
                                     id="open-sms"
                                     href="sms:0429654427"
+                                    aria-label="Send as message (SMS) to 0429 654 427"
                                     class="handoff-btn flex-1 min-w-0 inline-flex items-center justify-center gap-2 rounded-2xl bg-navy text-white hover:bg-navy-700 transition px-4 py-3 text-xs font-extrabold box-border border-2 border-navy shadow-sm"
                                 >
                                     <svg
@@ -7643,6 +7852,7 @@
                                 <a
                                     id="open-wa"
                                     href="https://wa.me/61429654427"
+                                    aria-label="Send in WhatsApp to 0429 654 427"
                                     target="_blank"
                                     rel="noopener"
                                     class="handoff-btn flex-1 min-w-0 inline-flex items-center justify-center gap-2 rounded-2xl bg-[#25D366] text-white hover:bg-[#1FBA57] transition px-4 py-3 text-xs font-extrabold box-border border-2 border-[#25D366] shadow-sm"
@@ -7681,6 +7891,8 @@
             </div>
         </section>
 
+        </main>
+
         <!-- ============ FOOTER ============ -->
         <footer class="bg-navy-900 text-white/70">
             <div
@@ -7688,8 +7900,12 @@
             >
                 <div class="md:col-span-2">
                     <img
-                        src="./assets/processed/logo-white.png"
+                        src="./assets/processed/logo-white-nav.png"
                         alt="Driveway Detailing"
+                        width="314"
+                        height="120"
+                        loading="lazy"
+                        decoding="async"
                         class="h-10 w-auto"
                     />
                     <p class="mt-4 text-sm max-w-md">
@@ -7721,35 +7937,35 @@
                 </div>
                 <div>
                     <div
-                        class="text-xs uppercase tracking-[0.14em] font-bold text-white/45"
+                        class="text-xs uppercase tracking-[0.14em] font-bold text-white/60"
                     >
                         Packages
                     </div>
                     <ul class="mt-3 space-y-1.5 text-sm">
                         <li>
                             <a
-                                href="#packages"
+                                href="#pkg-silver"
                                 class="hover:text-teal transition"
                                 >Silver · Basic · from $129</a
                             >
                         </li>
                         <li>
                             <a
-                                href="#packages"
+                                href="#pkg-gold"
                                 class="hover:text-teal transition"
                                 >Gold · Standard · from $249</a
                             >
                         </li>
                         <li>
                             <a
-                                href="#packages"
+                                href="#pkg-platinum"
                                 class="hover:text-teal transition"
                                 >Platinum · Pre-Sale · from $349</a
                             >
                         </li>
                         <li>
                             <a
-                                href="#packages"
+                                href="#pkg-diamond"
                                 class="hover:text-teal transition"
                                 >Diamond · Ultimate · from $799</a
                             >
@@ -7770,7 +7986,7 @@
                 </div>
                 <div>
                     <div
-                        class="text-xs uppercase tracking-[0.14em] font-bold text-white/45"
+                        class="text-xs uppercase tracking-[0.14em] font-bold text-white/60"
                     >
                         Explore
                     </div>
@@ -7797,6 +8013,21 @@
                         <li>
                             <a href="#faq" class="hover:text-teal transition"
                                 >FAQ</a
+                            >
+                        </li>
+                        <li>
+                            <a href="car-detailing-western-sydney.html" class="hover:text-teal transition"
+                                >Western Sydney detailing</a
+                            >
+                        </li>
+                        <li>
+                            <a href="car-detailing-blue-mountains.html" class="hover:text-teal transition"
+                                >Blue Mountains detailing</a
+                            >
+                        </li>
+                        <li>
+                            <a href="car-detailing-central-coast.html" class="hover:text-teal transition"
+                                >Central Coast detailing</a
                             >
                         </li>
                         <li>
@@ -7924,7 +8155,7 @@
         </footer>
 
         <!-- ============ STICKY MOBILE CALL BAR ============ -->
-        <div id="mobile-sticky-bar" class="lg:hidden fixed bottom-3 left-3 right-3 z-40 flex gap-2" aria-hidden="true">
+        <div id="mobile-sticky-bar" class="lg:hidden fixed bottom-3 left-3 right-3 z-40 flex gap-2" aria-hidden="true" inert>
             <a
                 href="tel:0429654427"
                 class="call-glow flex-1 inline-flex items-center justify-center gap-2 rounded-2xl text-white px-4 py-3 text-sm font-extrabold shadow-cardLg"
@@ -8030,6 +8261,7 @@
             ></div>
         </div>
 
+        <script src="./assets/enquiry-utils.js"></script>
         <script>
             // ---------- Mobile menu ----------
             const burger = document.getElementById('nav-toggle');
@@ -8038,6 +8270,7 @@
             const iconC = document.getElementById('icon-close');
             burger.addEventListener('click', () => {
                 const open = menu.classList.toggle('open');
+                menu.inert = !open;
                 burger.setAttribute('aria-expanded', String(open));
                 iconB.classList.toggle('hidden', open);
                 iconC.classList.toggle('hidden', !open);
@@ -8045,6 +8278,7 @@
             document.querySelectorAll('.mobile-link').forEach((a) =>
                 a.addEventListener('click', () => {
                     menu.classList.remove('open');
+                    menu.inert = true;
                     burger.setAttribute('aria-expanded', 'false');
                     iconB.classList.remove('hidden');
                     iconC.classList.add('hidden');
@@ -8533,6 +8767,16 @@
             const phoneRe = /^[0-9 ()+\-]{7,}$/;
             const PHONE_LOCAL = '0429654427';
             const PHONE_INTL = '61429654427'; // +61 AU, drop leading 0
+            // sms: link for this device (Android: ?body=, iPhone: ?&body=) · see assets/enquiry-utils.js
+            function smsHref(body) {
+                return window.DDEnquiry.buildSmsUri(PHONE_LOCAL, body, navigator.userAgent);
+            }
+            // Static sms: links with a pre-filled body are written in iPhone form; re-target per device.
+            document.querySelectorAll('a[href^="sms:"]').forEach((a) => {
+                const h = a.getAttribute('href');
+                const n = window.DDEnquiry.normalizeSmsHref(h, navigator.userAgent);
+                if (n !== h) a.setAttribute('href', n);
+            });
 
             function showErr(name, show) {
                 const el = form.querySelector(`[data-err="${name}"]`);
@@ -8658,7 +8902,7 @@
                 // Build the pre-filled SMS body
                 const body = buildMessage(d);
                 const encoded = encodeURIComponent(body);
-                const smsUrl = `sms:${PHONE_LOCAL}?&body=${encoded}`;
+                const smsUrl = smsHref(body);
                 const waUrl = `https://wa.me/${PHONE_INTL}?text=${encoded}`;
 
                 // Populate the fallback panel BEFORE trying to open SMS
@@ -8683,7 +8927,7 @@
                 const body = buildMessage(gather());
                 const encoded = encodeURIComponent(body);
                 document.getElementById('sms-preview').textContent = body;
-                document.getElementById('open-sms').setAttribute('href', `sms:${PHONE_LOCAL}?&body=${encoded}`);
+                document.getElementById('open-sms').setAttribute('href', smsHref(body));
                 document.getElementById('open-wa').setAttribute('href', `https://wa.me/${PHONE_INTL}?text=${encoded}`);
             }
             window.refreshBookingPreview = () => setTimeout(refreshPreview, 0);
@@ -8751,6 +8995,7 @@
                     const on = window.scrollY > THRESH;
                     bar.classList.toggle('is-visible', on);
                     bar.setAttribute('aria-hidden', on ? 'false' : 'true');
+                    bar.inert = !on;
                 }
                 window.addEventListener('scroll', sync, { passive: true });
                 sync();
@@ -8804,7 +9049,7 @@
                 }
                 window.addEventListener('scroll', update, { passive: true });
                 window.addEventListener('resize', update);
-                update();
+                requestAnimationFrame(update);
             })();
 
             // ---------- Map: CBD at right-third on mobile ----------

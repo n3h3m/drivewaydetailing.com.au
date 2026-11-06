@@ -3,8 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/booking-form-regression.mjs",
-    "test:booking": "node tests/booking-form-regression.mjs"
+    "test": "node --test tests/sms-uri.test.mjs && node tests/seo-static.mjs && node tests/booking-form-regression.mjs",
+    "test:seo": "node tests/seo-static.mjs",
+    "test:booking": "node tests/booking-form-regression.mjs",
+    "build:css": "/workspace/perf-tools/node_modules/.bin/tailwindcss -c tools/tailwind.config.cjs -i tools/tailwind.input.css -o assets/site.css --minify",
+    "test:sms": "node --test tests/sms-uri.test.mjs"
   },
   "engines": {
     "node": ">=18"
