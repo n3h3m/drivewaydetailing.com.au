@@ -22,7 +22,24 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-const PAGE = 'file://' + path.join(ROOT, 'index.html');
+// Page under test. Default: serve the repo root over a local http server
+// (pages use self-hosted fonts, which browsers refuse over file://).
+//   --base=http://127.0.0.1:8765   test an already-running server / URL
+//   --file                         legacy file:// mode
+import { startStaticServer } from './static-server.mjs';
+const ARG_BASE = (process.argv.find((a) => a.startsWith('--base=')) || '').slice(7) || process.env.BASE_URL || '';
+let PAGE = 'file://' + path.join(ROOT, 'index.html');
+let staticServer = null;
+async function resolvePage() {
+  if (process.argv.includes('--file')) return;
+  if (ARG_BASE) {
+    PAGE = ARG_BASE.replace(/\/+$/, '') + '/index.html';
+    return;
+  }
+  const { server, base } = await startStaticServer(ROOT);
+  staticServer = server;
+  PAGE = base + '/index.html';
+}
 const OUT = path.join(ROOT, 'tests', 'out');
 mkdirSync(OUT, { recursive: true });
 
@@ -43,7 +60,7 @@ function check(name, cond, detail = '') {
   if (!cond) report.ok = false;
 }
 
-async function launch(vp = { width: 390, height: 844 }) {
+async function launch(vp = { width: 390, height: 844 }, userAgent = undefined) {
   const browser = await chromium.launch({
     executablePath: '/usr/bin/google-chrome',
     headless: true,
@@ -55,6 +72,7 @@ async function launch(vp = { width: 390, height: 844 }) {
     isMobile: vp.width <= 430,
     hasTouch: vp.width <= 430,
     reducedMotion: 'reduce',
+    ...(userAgent ? { userAgent } : {}),
   });
   await ctx.route('**/sms:**', (r) => r.abort());
   await ctx.route('**/wa.me/**', (r) => r.abort());
@@ -132,6 +150,8 @@ async function selectCheckbox(page, name, value) {
 
 
 async function main() {
+  await resolvePage();
+  console.log('Testing', PAGE);
   // ========== 1) General enquiry via quoteservice (no vehicle needed) ==========
   let { browser, page, errors } = await launch();
   await page.locator('#booking-form').scrollIntoViewIfNeeded();
@@ -573,7 +593,8 @@ async function main() {
   }));
   check(
     'valid-sms-wa-hrefs',
-    /^sms:0429654427\?&body=/.test(okHref.sms) &&
+    /^sms:0429654427\?body=/.test(okHref.sms) && // desktop UA: standard form (iPhone form tested in 9)
+      !okHref.sms.includes('?&body=') &&
       /^https:\/\/wa\.me\/61429654427\?text=/.test(okHref.wa) &&
       /Platinum/.test(okHref.preview) &&
       /Child Seat Clean/.test(okHref.preview),
@@ -627,6 +648,75 @@ async function main() {
   );
   await browser.close();
 
+  // ========== 9) SMS link per device: Android ?body=, iPhone ?&body= ==========
+  const UAS = {
+    android:
+      'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    iphone:
+      'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1',
+  };
+  for (const [dev, ua] of Object.entries(UAS)) {
+    ({ browser, page, errors } = await launch({ width: 390, height: 844 }, ua));
+    const sep = dev === 'android' ? '?body=' : '?&body=';
+    const navSms = await page.evaluate(
+      () => document.querySelector('#nav a[href^="sms:"]')?.getAttribute('href') || '',
+    );
+    check(
+      `${dev}-nav-sms-href`,
+      navSms.startsWith('sms:0429654427' + sep + 'Hi%20Driveway') &&
+        (dev !== 'android' || !navSms.includes('?&body=')),
+      navSms.slice(0, 90),
+    );
+    await page.locator('#booking-form').scrollIntoViewIfNeeded();
+    await fillContact(page, "Siobhán O'Neill");
+    await clearPackagesQuotes(page);
+    await selectRadio(page, 'vehicletype', 'data-size', 'suv');
+    await selectRadio(page, 'package', 'data-pkg', 'gold');
+    await selectCheckbox(page, 'addons', 'Pet Hair Removal (from $40)');
+    await page.click('#booking-form button[type="submit"]');
+    await page.waitForSelector('#form-success:not(.hidden)', { timeout: 8000 }).catch(() => {});
+    const dv = await page.evaluate(() => ({
+      preview: document.getElementById('sms-preview')?.textContent || '',
+      sms: document.getElementById('open-sms')?.getAttribute('href') || '',
+      wa: document.getElementById('open-wa')?.getAttribute('href') || '',
+    }));
+    check(
+      `${dev}-submit-sms-href-exact`,
+      dv.preview.length > 50 &&
+        dv.sms === 'sms:0429654427' + sep + encodeURIComponent(dv.preview) &&
+        (dev !== 'android' || !dv.sms.includes('?&body=')),
+      dv.sms.slice(0, 100),
+    );
+    check(
+      `${dev}-sms-body-roundtrip`,
+      decodeURIComponent(dv.sms.split('body=')[1] || '') === dv.preview &&
+        /Gold – Standard Detail/.test(dv.preview) &&
+        /Siobhán O'Neill/.test(dv.preview) &&
+        /Pet Hair Removal \(from \$40\)/.test(dv.preview),
+      dv.preview.slice(0, 120),
+    );
+    check(
+      `${dev}-wa-href-unchanged`,
+      dv.wa === 'https://wa.me/61429654427?text=' + encodeURIComponent(dv.preview),
+      dv.wa.slice(0, 90),
+    );
+    // live preview refresh keeps the device format
+    await page.fill('#f-suburb', 'Umina Beach');
+    await page.waitForTimeout(150);
+    const live = await page.evaluate(() => ({
+      preview: document.getElementById('sms-preview')?.textContent || '',
+      sms: document.getElementById('open-sms')?.getAttribute('href') || '',
+    }));
+    check(
+      `${dev}-live-preview-sms-href`,
+      /Umina Beach/.test(live.preview) &&
+        live.sms === 'sms:0429654427' + sep + encodeURIComponent(live.preview),
+      live.sms.slice(0, 100),
+    );
+    check(`${dev}-no-console-errors`, errors.length === 0, JSON.stringify(errors.slice(0, 3)));
+    await browser.close();
+  }
+
   // Write report
   report.finished = new Date().toISOString();
   report.passed = report.checks.filter((c) => c.pass).length;
@@ -640,6 +730,7 @@ async function main() {
     report.ok ? 'PASS' : 'FAIL',
     `${report.passed}/${report.checks.length} ===`,
   );
+  if (staticServer) staticServer.close();
   process.exit(report.ok ? 0 : 1);
 }
 

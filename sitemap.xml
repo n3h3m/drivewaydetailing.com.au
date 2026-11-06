@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  One <url> per real, indexable HTML page (canonical URLs only).
+  Not listed on purpose: #fragments, 404.html (noindex), search-engine
+  verification files and image/CSS/font assets.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://drivewaydetailing.com.au/</loc>
+    <lastmod>2026-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://drivewaydetailing.com.au/car-detailing-western-sydney.html</loc>
+    <lastmod>2026-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://drivewaydetailing.com.au/car-detailing-blue-mountains.html</loc>
+    <lastmod>2026-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://drivewaydetailing.com.au/car-detailing-central-coast.html</loc>
+    <lastmod>2026-11-06</lastmod>
+  </url>
+</urlset>
