@@ -1,4 +1,24 @@
 /* Self-hosted fonts (Google Fonts latin subsets, SIL Open Font License). */
+/* Archivo variable (wght 100-900, wdth 62-125): body copy at normal width,
+   display headings at the condensed end of the width axis. */
+@font-face {
+    font-family: 'Archivo';
+    font-style: normal;
+    font-weight: 100 900;
+    font-stretch: 62% 125%;
+    font-display: swap;
+    src: url('./fonts/archivo-latin-var.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Metric-matched local fallback so the swap does not shift layout much. */
+@font-face {
+    font-family: 'Archivo Fallback';
+    src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+    size-adjust: 98%;
+    ascent-override: 92%;
+    descent-override: 22%;
+    line-gap-override: 0%;
+}
 @font-face {
     font-family: 'Inter';
     font-style: normal;
@@ -19,3 +39,234 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* =====================================================================
+   nehem.dev-style visual system (Nov 2026 restyle)
+   Light canvas + contour lines, ink type, teal / coral / violet / amber
+   accents, oversized condensed display headings, monospaced labels,
+   hairline rules, square cards and pill CTAs.
+   Purely presentational: no content, IDs, data attributes or behaviour.
+   ===================================================================== */
+:root {
+    --dd-ink: #0a0a0a;
+    --dd-pencil: #1a1a1a;
+    --dd-body: #3a3a3a;
+    --dd-hair: #e2e2e2;
+    --dd-tint: #f5f5f3;
+    --dd-indigo: #3b36b8;
+    --dd-coral: #e4533b;
+    --dd-teal: #11968a;
+    --dd-teal-t: #0b6f66;
+    --dd-amber: #e9a321;
+    --dd-sans: 'Archivo', 'Archivo Fallback', Arial, sans-serif;
+    --dd-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+}
+html { background: #fff; }
+body {
+    font-family: var(--dd-sans);
+    color: var(--dd-pencil);
+    background: transparent;
+    position: relative;
+    isolation: isolate;
+}
+/* Contour-line canvas, fixed behind everything (decorative only). */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: #fff url('./contours.svg') center / cover no-repeat;
+}
+::selection { background: var(--dd-indigo); color: #fff; }
+
+/* Four-colour hairline across the very top of the sticky nav. */
+#nav, body > header:first-of-type { border-bottom-color: var(--dd-pencil) !important; }
+#nav::before, body > header:first-of-type::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--dd-indigo) 0 25%, var(--dd-coral) 25% 50%, var(--dd-teal) 50% 75%, var(--dd-amber) 75% 100%);
+    pointer-events: none;
+}
+body > header:first-of-type { position: relative; }
+body > header.sticky:first-of-type { position: sticky; }
+
+/* Light sections sit on the contour canvas instead of flat fills. */
+main > section.bg-white,
+main > section.bg-paper,
+main > section:not([class*="bg-"]) { background-color: transparent; }
+
+/* ---------- Type ---------- */
+h1, h2,
+.font-black {
+    font-family: var(--dd-sans);
+    font-stretch: 66%;
+    font-weight: 800;
+    letter-spacing: -0.005em;
+}
+h1, h2 {
+    text-transform: uppercase;
+    line-height: 0.92;
+}
+h3, h4 { font-family: var(--dd-sans); letter-spacing: -0.01em; }
+/* Display numerals (prices, counters) use tabular, condensed figures. */
+.font-black { font-variant-numeric: tabular-nums; }
+
+/* Monospaced kicker labels (small uppercase tracked text). */
+[class*="tracking-[0."].uppercase:not(h1):not(h2):not(.marquee):not(.marquee *),
+.hero-tagline-eyebrow {
+    font-family: var(--dd-mono);
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0.02em;
+}
+/* Pill kickers become plain mono labels with a coloured dot. */
+.rounded-full.bg-teal-50[class*="tracking-[0."] {
+    background: transparent;
+    border: 0;
+    padding-left: 0;
+    padding-right: 0;
+    color: var(--dd-pencil);
+}
+.rounded-full.bg-teal-50[class*="tracking-[0."]::before {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 9999px;
+    background: var(--dd-teal);
+    flex-shrink: 0;
+}
+
+/* ---------- Hairline section rules with a short accent segment ---------- */
+main > section > .max-w-8xl:first-child,
+main > section > [class*="max-w-"]:first-child {
+    position: relative;
+}
+main > section:not(#pillars):not(.hero-light):not(.bg-teal):not(.dd-no-rule) > [class*="max-w-"]:first-child::before {
+    content: '';
+    display: block;
+    height: 3px;
+    margin: 0 0 2.25rem;
+    background:
+        linear-gradient(var(--dd-accent, var(--dd-indigo)), var(--dd-accent, var(--dd-indigo))) 0 0 / 56px 2px no-repeat,
+        linear-gradient(var(--dd-rule, var(--dd-pencil)), var(--dd-rule, var(--dd-pencil))) 0 100% / 100% 1px no-repeat;
+}
+/* In grid containers the rule spans the full row; the grid gap spaces it. */
+main > section > .grid[class*="max-w-"]:first-child::before { grid-column: 1 / -1; margin-bottom: 0.25rem; }
+main > section:nth-of-type(4n+1) { --dd-accent: var(--dd-indigo); }
+main > section:nth-of-type(4n+2) { --dd-accent: var(--dd-coral); }
+main > section:nth-of-type(4n+3) { --dd-accent: var(--dd-teal); }
+main > section:nth-of-type(4n+4) { --dd-accent: var(--dd-amber); }
+main > section.bg-navy { --dd-rule: rgba(255,255,255,0.35); }
+main > section.border-y { border-top-color: transparent; border-bottom-color: transparent; }
+
+/* ---------- Square cards, hairline borders, no shadows ---------- */
+.shadow-card, .shadow-cardLg, .shadow-sm, .shadow, .shadow-md, .shadow-lg, .shadow-xl { box-shadow: none !important; }
+.form-chip .chip-face,
+#booking-form fieldset.is-invalid,
+#size-switcher .size-card,
+.sms-preview,
+:focus-visible { border-radius: 0; }
+.form-chip input:checked + .chip-face,
+.size-btn[aria-pressed='true'] { box-shadow: none; }
+div.sticky.rounded-2xl { border-radius: 0; }
+.tier-row { background: var(--dd-tint); }
+.stamp, .stamp::before, .stamp::after { border-radius: 9999px; }
+
+/* Pill CTAs: tighter, heavier label like the reference. */
+a.rounded-2xl, button.rounded-2xl {
+    letter-spacing: 0.005em;
+}
+
+/* Section ribbon ("Best deal") in coral. */
+.ribbon { background: var(--dd-coral); color: var(--dd-ink); box-shadow: none; }
+
+/* Script accents ("Book Now!") rendered as condensed display caps. */
+.font-script {
+    font-stretch: 66%;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+}
+
+/* Accent underline / tagline in the new palette. */
+.accent-underline { background-size: 100% 6px; }
+
+/* Corner-bracket frame (from the reference stats block). */
+.dd-brackets {
+    background:
+        linear-gradient(var(--dd-pencil), var(--dd-pencil)) 0 0 / 14px 1px no-repeat,
+        linear-gradient(var(--dd-pencil), var(--dd-pencil)) 0 0 / 1px 14px no-repeat,
+        linear-gradient(var(--dd-pencil), var(--dd-pencil)) 100% 100% / 14px 1px no-repeat,
+        linear-gradient(var(--dd-pencil), var(--dd-pencil)) 100% 100% / 1px 14px no-repeat;
+    padding: 10px;
+}
+
+/* ---------- Light hero (was navy) ---------- */
+.hero-light.bg-navy { background-color: transparent; color: var(--dd-ink); }
+.hero-light .text-white { color: var(--dd-ink); }
+.hero-light [class*="text-white/"] { color: var(--dd-body); }
+.hero-light a[class*="text-white/"]:hover { color: var(--dd-ink); }
+.hero-light .bg-white\/10,
+.hero-light .bg-white\/5 { background-color: rgba(255,255,255,0.85); }
+.hero-light .hover\:bg-white\/20:hover { background-color: var(--dd-tint); }
+.hero-light .border-white\/25 { border-color: var(--dd-pencil); }
+.hero-light .border-white\/10 { border-color: var(--dd-hair); }
+.hero-light .text-teal { color: var(--dd-teal-t); }
+.hero-light .hover\:text-white:hover { color: var(--dd-ink); }
+.hero-light .hero-tagline-eyebrow { color: var(--dd-body); }
+.hero-light .hero-tagline-text { color: var(--dd-pencil); }
+.hero-light .hero-tagline-text .accent,
+.hero-light .hero-tagline-text .end-dot { color: var(--dd-teal-t); }
+/* Anything placed over the photo keeps light-on-dark colours. */
+.hero-light .hero-media .text-white { color: #fff; }
+.hero-light .hero-media [class*="text-white/"] { color: rgba(255,255,255,0.85); }
+.hero-light .hero-media .text-teal { color: #7fd6cc; }
+.hero-light .bg-navy:not(.hero-light) .text-teal,
+.hero-light .stamp { color: #7fd6cc; }
+
+/* Hero headline: oversized condensed caps with a coral full stop. */
+.hero-display {
+    font-stretch: 62%;
+    font-weight: 800;
+    line-height: 0.86;
+    letter-spacing: -0.01em;
+    font-size: clamp(3.4rem, 15.5vw, 9.25rem);
+}
+@media (min-width: 1024px) {
+    .hero-display { font-size: clamp(5.5rem, 8.6vw, 9.25rem); }
+}
+.dd-dot { color: var(--dd-coral); }
+.hero-kicker::before {
+    content: '';
+    display: inline-block;
+    width: 8px; height: 8px;
+    margin-right: 0.6em;
+    border-radius: 9999px;
+    background: var(--dd-teal);
+    vertical-align: 0.05em;
+}
+
+/* Marquee: oversized display caps between hairlines, like the reference. */
+.hero-light .marquee-strip { background: transparent; border-top: 1px solid var(--dd-pencil); border-bottom: 1px solid var(--dd-pencil); }
+.hero-light .marquee {
+    font-family: var(--dd-sans);
+    font-stretch: 66%;
+    font-weight: 800;
+    letter-spacing: 0;
+    font-size: 1.35rem;
+    color: var(--dd-ink);
+}
+.hero-light .marquee .text-teal { color: var(--dd-coral); font-size: 0.6em; }
+@media (min-width: 768px) { .hero-light .marquee { font-size: 1.7rem; } }
+
+/* Teal band under the contact block: ink on teal reads as a label strip. */
+section.bg-teal { color: var(--dd-ink); }
+.hero-light .bg-navy.text-white,
+.hero-light .bg-navy .text-white { color: #fff; }
+
+/* Large numerals: package "from" prices. */
+.tier-row .text-3xl.font-black { font-size: 2.75rem; line-height: 0.9; font-stretch: 62%; }
+@media (max-width: 359px) { #nav .nav-actions { gap: 0.3rem; } }

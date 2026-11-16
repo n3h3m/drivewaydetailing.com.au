@@ -50,7 +50,7 @@
         <link rel="apple-touch-icon" href="./assets/processed/logo.png" />
 
         <!-- Self-hosted Inter + Caveat (latin, OFL); no third-party font requests -->
-        <link rel="preload" href="./assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="./assets/fonts/archivo-latin-var.woff2" as="font" type="font/woff2" crossorigin />
         <!-- Hero photo is the desktop LCP; on phones it sits below the headline -->
         <link
             rel="preload"
@@ -241,26 +241,26 @@
         <style>
 
             .addon-toggle[aria-pressed="true"] {
-                border-color: #14C5BD;
-                background: #E2FAF8;
-                box-shadow: 0 0 0 1px rgba(20,197,189,0.35);
+                border-color: #11968A;
+                background: #E8F5F3;
+                box-shadow: 0 0 0 1px rgba(17,150,138,0.35);
             }
             .addon-toggle[aria-pressed="true"] .addon-icon {
-                background: #14C5BD;
-                color: #0E2A57;
+                background: #11968A;
+                color: #0A0A0A;
             }
             .addon-icon-check { display: none; }
             .quote-pill{cursor:pointer;transition:background .15s,border-color .15s}
-            .quote-pill:hover{border-color:#14C5BD}
-            .quote-pill:focus-visible{outline:2px solid #14C5BD;outline-offset:2px}
-            .quote-pill .qp-icon{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:9999px;background:#E2FAF8;color:#0E2A57;font-size:12px;font-weight:900;line-height:1}
-            .quote-pill[aria-pressed="true"]{border-color:#14C5BD;background:#E2FAF8;box-shadow:0 0 0 1px rgba(20,197,189,0.35)}
-            .quote-pill[aria-pressed="true"] .qp-icon{background:#14C5BD}
+            .quote-pill:hover{border-color:#11968A}
+            .quote-pill:focus-visible{outline:2px solid #11968A;outline-offset:2px}
+            .quote-pill .qp-icon{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:9999px;background:#E8F5F3;color:#0A0A0A;font-size:12px;font-weight:900;line-height:1}
+            .quote-pill[aria-pressed="true"]{border-color:#11968A;background:#E8F5F3;box-shadow:0 0 0 1px rgba(17,150,138,0.35)}
+            .quote-pill[aria-pressed="true"] .qp-icon{background:#11968A}
             .quote-pill .qp-check{display:none}
             .quote-pill[aria-pressed="true"] .qp-plus{display:none}
             .quote-pill[aria-pressed="true"] .qp-check{display:inline}
             #quote-services{transition:border-color .15s,background .15s}
-            #booking-form.has-quotes #quote-services{border-color:#14C5BD;background:#E2FAF8}
+            #booking-form.has-quotes #quote-services{border-color:#11968A;background:#E8F5F3}
 
             .addon-toggle[aria-pressed="true"] .addon-icon-plus { display: none; }
             .addon-toggle[aria-pressed="true"] .addon-icon-check { display: block; }
@@ -272,9 +272,9 @@
                 }
             }
             body {
-                font-family: Inter, system-ui, sans-serif;
+                font-family: 'Archivo', 'Archivo Fallback', Arial, sans-serif;
                 color: #1a1a1a;
-                background: #f5f7fa;
+                background: #f5f5f3;
                 -webkit-font-smoothing: antialiased;
             }
 
@@ -294,7 +294,7 @@
                 right: -52px;
                 transform: rotate(45deg);
                 transform-origin: center;
-                background: linear-gradient(180deg, #d9b870 0%, #b4863a 100%);
+                background: linear-gradient(180deg, #e4533b 0%, #e4533b 100%);
                 color: #1a1a1a;
                 font-weight: 900;
                 font-size: 11px;
@@ -370,7 +370,7 @@
                 outline: none;
             }
             :focus-visible {
-                outline: 2px solid #14c5bd;
+                outline: 2px solid #11968a;
                 outline-offset: 3px;
                 border-radius: 4px;
             }
@@ -412,12 +412,12 @@
 
             /* Price tier strip background */
             .tier-row {
-                background: linear-gradient(90deg, #e8edf5 0%, #ffffff 100%);
+                background: linear-gradient(90deg, #f2f2f0 0%, #ffffff 100%);
             }
 
             /* "deserves" underline accent */
             .accent-underline {
-                background-image: linear-gradient(90deg, #14c5bd, #14c5bd);
+                background-image: linear-gradient(90deg, #11968a, #11968a);
                 background-repeat: no-repeat;
                 background-size: 100% 8px;
                 background-position: 0 92%;
@@ -441,8 +441,8 @@
                 background-image: linear-gradient(
                     180deg,
                     transparent 0%,
-                    #14c5bd 18%,
-                    #14c5bd 82%,
+                    #11968a 18%,
+                    #11968a 82%,
                     transparent 100%
                 );
                 position: relative;
@@ -455,9 +455,9 @@
                 width: 7px;
                 height: 7px;
                 border-radius: 9999px;
-                background: #14c5bd;
+                background: #11968a;
                 transform: translateX(-50%);
-                box-shadow: 0 0 0 3px rgba(20, 197, 189, 0.18);
+                box-shadow: 0 0 0 3px rgba(17, 150, 138, 0.18);
             }
             .hero-tagline-rule::before {
                 top: -3px;
@@ -478,7 +478,7 @@
                 gap: 8px;
             }
             .hero-tagline-eyebrow svg {
-                color: #14c5bd;
+                color: #11968a;
             }
 
             .hero-tagline-text {
@@ -489,16 +489,16 @@
                 letter-spacing: 0.005em;
             }
             .hero-tagline-text .accent {
-                color: #14c5bd;
+                color: #11968a;
                 font-weight: 700;
                 background-image: linear-gradient(
                     transparent 78%,
-                    rgba(20, 197, 189, 0.3) 78%
+                    rgba(17, 150, 138, 0.3) 78%
                 );
                 padding: 0 1px;
             }
             .hero-tagline-text .end-dot {
-                color: #14c5bd;
+                color: #11968a;
                 font-weight: 800;
             }
 
@@ -534,10 +534,10 @@
                 align-items: center;
                 gap: 8px;
                 border-radius: 8px;
-                border: 1.5px solid rgba(14, 42, 87, 0.15);
+                border: 1.5px solid rgba(10, 10, 10, 0.15);
                 padding: 0.7rem 0.85rem;
                 background: #fff;
-                color: #0e2a57;
+                color: #0a0a0a;
                 font-weight: 700;
                 font-size: 14px;
                 transition: all 0.18s ease;
@@ -552,28 +552,28 @@
                 letter-spacing: 0.02em;
             }
             .form-chip:hover .chip-face {
-                border-color: #14c5bd;
+                border-color: #11968a;
                 transform: translateY(-1px);
             }
             .form-chip input:checked + .chip-face {
-                background: #0e2a57;
+                background: #0a0a0a;
                 color: #fff;
-                border-color: #0e2a57;
-                box-shadow: 0 6px 16px -6px rgba(14, 42, 87, 0.45);
+                border-color: #0a0a0a;
+                box-shadow: 0 6px 16px -6px rgba(10, 10, 10, 0.45);
             }
             .form-chip input:checked + .chip-face .chip-meta {
-                color: #14c5bd;
+                color: #11968a;
             }
             .form-chip input:focus-visible + .chip-face {
                 outline: none;
-                box-shadow: 0 0 0 4px rgba(20, 197, 189, 0.28);
+                box-shadow: 0 0 0 4px rgba(17, 150, 138, 0.28);
             }
             .form-chip .chip-icon {
                 flex-shrink: 0;
                 opacity: 0.85;
             }
             .form-chip input:checked + .chip-face .chip-icon {
-                color: #14c5bd;
+                color: #11968a;
                 opacity: 1;
             }
 
@@ -586,15 +586,15 @@
             .call-glow {
                 position: relative;
                 background:
-                    linear-gradient(#0e2a57, #0e2a57) padding-box,
+                    linear-gradient(#0a0a0a, #0a0a0a) padding-box,
                     conic-gradient(
                             from var(--call-angle),
-                            #14c5bd 0deg,
+                            #11968a 0deg,
                             #9dd8c5 80deg,
                             #ffffff 140deg,
-                            #14c5bd 220deg,
+                            #11968a 220deg,
                             #9dd8c5 300deg,
-                            #14c5bd 360deg
+                            #11968a 360deg
                         )
                         border-box;
                 border: 2px solid transparent;
@@ -624,7 +624,7 @@
 
             /* SMS draft preview block */
             .sms-preview {
-                background: #0e2a57;
+                background: #0a0a0a;
                 color: #fff;
                 border-radius: 8px;
                 padding: 14px 16px;
@@ -637,19 +637,19 @@
             }
             /* Package size switcher + live price highlight */
             .size-btn {
-                color: #0e2a57;
+                color: #0a0a0a;
             }
             .size-btn:hover {
-                background: #e8edf5;
+                background: #f2f2f0;
             }
             .size-btn[aria-pressed='true'] {
-                background: #0e2a57;
+                background: #0a0a0a;
                 color: #fff;
-                box-shadow: 0 6px 16px -6px rgba(14, 42, 87, 0.45);
+                box-shadow: 0 6px 16px -6px rgba(10, 10, 10, 0.45);
             }
             .price-row.is-active {
-                background: rgba(20, 197, 189, 0.16);
-                color: #0e2a57;
+                background: rgba(17, 150, 138, 0.16);
+                color: #0a0a0a;
             }
             .bg-navy .price-row.is-active {
                 color: #fff;
@@ -677,13 +677,13 @@
                 color: rgba(255,255,255,0.55);
             }
             #site-credit a {
-                color: #14C5BD;
+                color: #11968A;
                 font-weight: 400;
                 text-decoration: underline;
                 text-underline-offset: 3px;
                 text-decoration-thickness: 1px;
             }
-            #site-credit a:hover { color: #5EEAE2; }
+            #site-credit a:hover { color: #7FD6CC; }
             #site-credit .credit-heart {
                 color: #ef4444;
                 font-style: normal;
@@ -800,31 +800,31 @@
                     gap: 0.35rem;
                     text-align: center;
                     border-radius: 0.9rem;
-                    border: 1.5px solid rgba(14,42,87,0.12);
+                    border: 1.5px solid rgba(10,10,10,0.12);
                     background: #fff;
                     padding: 0.7rem 0.35rem 0.65rem;
                     min-width: 0;
-                    box-shadow: 0 1px 2px rgba(14,42,87,0.04);
+                    box-shadow: 0 1px 2px rgba(10,10,10,0.04);
                     transition: border-color .15s, background .15s, box-shadow .15s;
                 }
                 #size-switcher .size-card .sc-icon {
                     width: 40px; height: 28px;
                     display: flex; align-items: center; justify-content: center;
-                    color: #0E2A57;
+                    color: #0A0A0A;
                 }
                 #size-switcher .size-card .sc-icon svg { width: 100%; height: auto; }
                 #size-switcher .size-card .sc-label {
-                    font-size: 11px; font-weight: 800; line-height: 1.2; color: #0E2A57;
+                    font-size: 11px; font-weight: 800; line-height: 1.2; color: #0A0A0A;
                 }
                 #size-switcher .size-card .sc-desc {
-                    font-size: 9px; font-weight: 600; line-height: 1.25; color: rgba(14,42,87,0.78);
+                    font-size: 9px; font-weight: 600; line-height: 1.25; color: rgba(10,10,10,0.78);
                 }
                 #size-switcher .size-card[aria-pressed="true"] {
-                    border-color: #14C5BD;
-                    background: #E2FAF8;
-                    box-shadow: 0 0 0 1px rgba(20,197,189,0.35);
+                    border-color: #11968A;
+                    background: #E8F5F3;
+                    box-shadow: 0 0 0 1px rgba(17,150,138,0.35);
                 }
-                #size-switcher .size-card[aria-pressed="true"] .sc-icon { color: #0B7F7A; }
+                #size-switcher .size-card[aria-pressed="true"] .sc-icon { color: #0B6F66; }
 
                 #size-switcher.is-stuck {
                     position: fixed;
@@ -839,8 +839,8 @@
                     background: rgba(255,255,255,0.97);
                     backdrop-filter: blur(8px);
                     -webkit-backdrop-filter: blur(8px);
-                    border-bottom: 1px solid rgba(14,42,87,0.1);
-                    box-shadow: 0 6px 18px rgba(14,42,87,0.08);
+                    border-bottom: 1px solid rgba(10,10,10,0.1);
+                    box-shadow: 0 6px 18px rgba(10,10,10,0.08);
                 }
                 #size-switcher.is-stuck .size-switch-heading { display: none; }
                 #size-switcher.is-stuck .size-card {
@@ -852,7 +852,7 @@
                 #size-switcher.is-stuck .size-card .sc-desc { display: none; }
 
                 #contact {
-                    background-color: #0E2A57 !important;
+                    background-color: #0A0A0A !important;
                     background-image: none !important;
                     overflow-x: clip;
                 }
@@ -1237,18 +1237,7 @@
 
         <main id="main">
         <!-- ============ HERO ============ -->
-        <header id="top" class="relative bg-navy text-white overflow-hidden">
-            <div
-                aria-hidden="true"
-                class="pointer-events-none absolute -top-32 -left-32 w-[36rem] h-[36rem] rounded-full opacity-30 blur-3xl"
-                style="
-                    background: radial-gradient(
-                        closest-side,
-                        #14c5bd 0%,
-                        transparent 70%
-                    );
-                "
-            ></div>
+        <header id="top" class="hero-light relative bg-navy text-white overflow-hidden">
 
             <div
                 class="relative max-w-8xl mx-auto px-4 sm:px-6 pt-10 md:pt-14 pb-10 md:pb-14"
@@ -1289,13 +1278,13 @@
 
                         <h1 class="mt-5 font-black tracking-tight">
                             <span
-                                class="block text-sm sm:text-base font-extrabold uppercase tracking-[0.14em] leading-snug text-teal"
+                                class="hero-kicker block text-sm sm:text-base font-extrabold uppercase tracking-[0.14em] leading-snug text-teal"
                                 >Mobile car detailing in Sydney.</span
                             >
                             <span
-                                class="mt-3 block text-5xl sm:text-6xl md:text-7xl xl:text-[5.75rem] leading-[0.95]"
+                                class="hero-display mt-4 block"
                                 >More than<br />just a
-                                <span class="text-teal">wash.</span></span
+                                <span class="text-teal">wash</span><span class="dd-dot">.</span></span
                             >
                         </h1>
 
@@ -1314,7 +1303,7 @@
                         <div class="mt-7 flex flex-wrap gap-3 hero-ctas">
                             <a
                                 href="#booking-form"
-                                class="hero-cta-main group inline-flex items-center gap-2 rounded-2xl bg-teal text-navy hover:bg-white px-7 py-4 text-base font-extrabold transition shadow-cardLg"
+                                class="hero-cta-main group inline-flex items-center gap-2 rounded-2xl bg-navy text-white hover:bg-navy-700 px-7 py-4 text-base font-extrabold transition shadow-cardLg"
                             >
                                 Book Now
                                 <svg
@@ -1483,7 +1472,7 @@
                     <!-- RIGHT: hero image with floating stamp -->
                     <div class="lg:col-span-6 relative">
                         <div
-                            class="relative aspect-[5/4] rounded-lg overflow-hidden shadow-cardLg"
+                            class="hero-media relative aspect-[5/4] rounded-lg overflow-hidden shadow-cardLg"
                         >
                             <picture>
                                 <source
@@ -1589,7 +1578,7 @@
             </div>
 
             <!-- Marquee strip -->
-            <div class="border-t border-white/10 bg-navy-700 overflow-hidden">
+            <div class="marquee-strip border-t border-white/10 bg-navy-700 overflow-hidden">
                 <div class="marquee-mask overflow-hidden py-3">
                     <div
                         class="marquee text-white/70 text-sm font-bold tracking-[0.2em] uppercase"
@@ -5540,8 +5529,8 @@
                 style="
                     background: linear-gradient(
                         180deg,
-                        rgba(14, 42, 87, 0.85),
-                        rgba(14, 42, 87, 0.95)
+                        rgba(10, 10, 10, 0.85),
+                        rgba(10, 10, 10, 0.95)
                     );
                 "
             ></div>
@@ -5993,12 +5982,12 @@
                                         <path
                                             d="M32 0H0V32"
                                             fill="none"
-                                            stroke="#0E2A57"
+                                            stroke="#0A0A0A"
                                             stroke-opacity="0.06"
                                         />
                                     </pattern>
                                 </defs>
-                                <rect width="640" height="420" fill="#F5F7FA" />
+                                <rect width="640" height="420" fill="#F5F5F3" />
                                 <rect
                                     width="640"
                                     height="420"
@@ -6009,17 +5998,17 @@
                                     cy="238"
                                     rx="250"
                                     ry="150"
-                                    fill="#14C5BD"
+                                    fill="#11968A"
                                     opacity="0.10"
                                 />
                                 <path
                                     d="M602,-0 L588,28 L569,68 L536,108 L531,125 L526,170 L521,210 L517,238 L507,261 L507,289 L498,324 L488,346 L469,352 L469,369 L450,386 L427,420 L640,420 L640,0 Z"
-                                    fill="#E2FAF8"
+                                    fill="#E8F5F3"
                                 />
                                 <polyline
                                     points="602,-0 588,28 569,68 536,108 531,125 526,170 521,210 517,238 507,261 507,289 498,324 488,346 469,352 469,369 450,386 427,420"
                                     fill="none"
-                                    stroke="#14C5BD"
+                                    stroke="#11968A"
                                     stroke-width="2"
                                 />
                                 <text
@@ -6028,7 +6017,7 @@
                                     text-anchor="end"
                                     font-size="11"
                                     font-style="italic"
-                                    fill="#0FA39C"
+                                    fill="#0B6F66"
                                 >
                                     Tasman Sea
                                 </text>
@@ -6038,7 +6027,7 @@
                                     font-size="10"
                                     font-weight="800"
                                     letter-spacing="2"
-                                    fill="#0E2A57"
+                                    fill="#0A0A0A"
                                     opacity="0.35"
                                 >
                                     BLUE MOUNTAINS
@@ -6049,7 +6038,7 @@
                                     font-size="10"
                                     font-weight="800"
                                     letter-spacing="2"
-                                    fill="#0E2A57"
+                                    fill="#0A0A0A"
                                     opacity="0.35"
                                 >
                                     CENTRAL COAST
@@ -6060,7 +6049,7 @@
                                     font-size="10"
                                     font-weight="800"
                                     letter-spacing="2"
-                                    fill="#0E2A57"
+                                    fill="#0A0A0A"
                                     opacity="0.35"
                                 >
                                     WESTERN SYDNEY
@@ -6071,7 +6060,7 @@
                                     font-size="10"
                                     font-weight="800"
                                     letter-spacing="2"
-                                    fill="#0E2A57"
+                                    fill="#0A0A0A"
                                     opacity="0.35"
                                 >
                                     SOUTH WEST
@@ -6082,7 +6071,7 @@
                                         y="273"
                                         width="8"
                                         height="8"
-                                        fill="#C9A45D"
+                                        fill="#E9A321"
                                         transform="rotate(45 478 277)"
                                     />
                                     <text
@@ -6091,9 +6080,9 @@
                                         y="281"
                                         font-size="11"
                                         font-weight="700"
-                                        fill="#A8884B"
+                                        fill="#8A5A00"
                                         paint-order="stroke"
-                                        stroke="#E2FAF8"
+                                        stroke="#E8F5F3"
                                         stroke-width="3"
                                     >
                                         Sydney CBD
@@ -6104,14 +6093,14 @@
                                         cx="395"
                                         cy="266"
                                         r="9"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="395"
                                         cy="266"
                                         r="4.5"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6121,9 +6110,9 @@
                                         text-anchor="start"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Auburn
@@ -6134,14 +6123,14 @@
                                         cx="381"
                                         cy="247"
                                         r="9"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="381"
                                         cy="247"
                                         r="4.5"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6151,9 +6140,9 @@
                                         text-anchor="end"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Parramatta
@@ -6164,14 +6153,14 @@
                                         cx="335"
                                         cy="222"
                                         r="9"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="335"
                                         cy="222"
                                         r="4.5"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6181,9 +6170,9 @@
                                         text-anchor="end"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Blacktown
@@ -6194,14 +6183,14 @@
                                         cx="234"
                                         cy="211"
                                         r="9"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="234"
                                         cy="211"
                                         r="4.5"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6211,9 +6200,9 @@
                                         text-anchor="start"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Penrith
@@ -6224,14 +6213,14 @@
                                         cx="424"
                                         cy="280"
                                         r="9"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="424"
                                         cy="280"
                                         r="4.5"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6241,9 +6230,9 @@
                                         text-anchor="middle"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Strathfield
@@ -6254,14 +6243,14 @@
                                         cx="396"
                                         cy="305"
                                         r="9"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="396"
                                         cy="305"
                                         r="4.5"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6271,9 +6260,9 @@
                                         text-anchor="start"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Bankstown
@@ -6284,14 +6273,14 @@
                                         cx="343"
                                         cy="306"
                                         r="9"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="343"
                                         cy="306"
                                         r="4.5"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6301,9 +6290,9 @@
                                         text-anchor="end"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Liverpool
@@ -6314,14 +6303,14 @@
                                         cx="329"
                                         cy="335"
                                         r="9"
-                                        fill="#14C5BD"
+                                        fill="#11968A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="329"
                                         cy="335"
                                         r="4.5"
-                                        fill="#14C5BD"
+                                        fill="#11968A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6331,9 +6320,9 @@
                                         text-anchor="end"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Glenfield
@@ -6344,14 +6333,14 @@
                                         cx="385"
                                         cy="359"
                                         r="9"
-                                        fill="#14C5BD"
+                                        fill="#11968A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="385"
                                         cy="359"
                                         r="4.5"
-                                        fill="#14C5BD"
+                                        fill="#11968A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6361,9 +6350,9 @@
                                         text-anchor="start"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Menai
@@ -6374,14 +6363,14 @@
                                         cx="381"
                                         cy="199"
                                         r="9"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="381"
                                         cy="199"
                                         r="4.5"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6391,9 +6380,9 @@
                                         text-anchor="start"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Castle Hill
@@ -6404,14 +6393,14 @@
                                         cx="426"
                                         cy="183"
                                         r="9"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="426"
                                         cy="183"
                                         r="4.5"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6421,9 +6410,9 @@
                                         text-anchor="end"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Hornsby
@@ -6434,14 +6423,14 @@
                                         cx="428"
                                         cy="247"
                                         r="9"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="428"
                                         cy="247"
                                         r="4.5"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6451,9 +6440,9 @@
                                         text-anchor="middle"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Ryde
@@ -6464,14 +6453,14 @@
                                         cx="465"
                                         cy="237"
                                         r="9"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="465"
                                         cy="237"
                                         r="4.5"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6481,9 +6470,9 @@
                                         text-anchor="start"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Chatswood
@@ -6494,14 +6483,14 @@
                                         cx="53"
                                         cy="190"
                                         r="9"
-                                        fill="#14C5BD"
+                                        fill="#11968A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="53"
                                         cy="190"
                                         r="4.5"
-                                        fill="#14C5BD"
+                                        fill="#11968A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6511,9 +6500,9 @@
                                         text-anchor="start"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Katoomba
@@ -6524,14 +6513,14 @@
                                         cx="535"
                                         cy="70"
                                         r="9"
-                                        fill="#14C5BD"
+                                        fill="#11968A"
                                         opacity="0.18"
                                     />
                                     <circle
                                         cx="535"
                                         cy="70"
                                         r="4.5"
-                                        fill="#14C5BD"
+                                        fill="#11968A"
                                         stroke="#fff"
                                         stroke-width="1.5"
                                     />
@@ -6541,9 +6530,9 @@
                                         text-anchor="start"
                                         font-size="12"
                                         font-weight="700"
-                                        fill="#0E2A57"
+                                        fill="#0A0A0A"
                                         paint-order="stroke"
-                                        stroke="#F5F7FA"
+                                        stroke="#F5F5F3"
                                         stroke-width="3"
                                     >
                                         Blackwall
@@ -7595,7 +7584,7 @@
                                     />
                                     <span class="text-sm text-navy leading-snug">Engine Bay Rinse</span>
                                     </span>
-                                    <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $60</span>
+                                    <span class="shrink-0 text-xs font-extrabold text-[#0B6F66] whitespace-nowrap">from $60</span>
                                 </label>
                                 <label
                                     class="flex items-center justify-between gap-2 rounded-lg border border-navy/15 px-3 py-2.5 cursor-pointer hover:border-teal transition min-w-0"
@@ -7609,7 +7598,7 @@
                                     />
                                     <span class="text-sm text-navy leading-snug">Headlight Restoration x2</span>
                                     </span>
-                                    <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $100</span>
+                                    <span class="shrink-0 text-xs font-extrabold text-[#0B6F66] whitespace-nowrap">from $100</span>
                                 </label>
                                 <label
                                     class="flex items-center justify-between gap-2 rounded-lg border border-navy/15 px-3 py-2.5 cursor-pointer hover:border-teal transition min-w-0"
@@ -7623,7 +7612,7 @@
                                     />
                                     <span class="text-sm text-navy leading-snug">Plastic Trim Dye</span>
                                     </span>
-                                    <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $50</span>
+                                    <span class="shrink-0 text-xs font-extrabold text-[#0B6F66] whitespace-nowrap">from $50</span>
                                 </label>
                                 <label
                                     class="flex items-center justify-between gap-2 rounded-lg border border-navy/15 px-3 py-2.5 cursor-pointer hover:border-teal transition min-w-0"
@@ -7637,7 +7626,7 @@
                                     />
                                     <span class="text-sm text-navy leading-snug">Carpet &amp; Floor Mat Shampoo</span>
                                     </span>
-                                    <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $50</span>
+                                    <span class="shrink-0 text-xs font-extrabold text-[#0B6F66] whitespace-nowrap">from $50</span>
                                 </label>
                                 <label
                                     class="flex items-center justify-between gap-2 rounded-lg border border-navy/15 px-3 py-2.5 cursor-pointer hover:border-teal transition min-w-0"
@@ -7651,7 +7640,7 @@
                                     />
                                     <span class="text-sm text-navy leading-snug">Pet Hair Removal</span>
                                     </span>
-                                    <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $40</span>
+                                    <span class="shrink-0 text-xs font-extrabold text-[#0B6F66] whitespace-nowrap">from $40</span>
                                 </label>
                                 <label
                                     class="flex items-center justify-between gap-2 rounded-lg border border-navy/15 px-3 py-2.5 cursor-pointer hover:border-teal transition min-w-0"
@@ -7665,7 +7654,7 @@
                                     />
                                     <span class="text-sm text-navy leading-snug">Ozone Treatment (30 min)</span>
                                     </span>
-                                    <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $50</span>
+                                    <span class="shrink-0 text-xs font-extrabold text-[#0B6F66] whitespace-nowrap">from $50</span>
                                 </label>
                                 <label
                                     class="flex items-center justify-between gap-2 rounded-lg border border-navy/15 px-3 py-2.5 cursor-pointer hover:border-teal transition min-w-0"
@@ -7679,7 +7668,7 @@
                                     />
                                     <span class="text-sm text-navy leading-snug">Child Seat Clean</span>
                                     </span>
-                                    <span class="shrink-0 text-xs font-extrabold text-[#0B7F7A] whitespace-nowrap">from $50</span>
+                                    <span class="shrink-0 text-xs font-extrabold text-[#0B6F66] whitespace-nowrap">from $50</span>
                                 </label>
                             </div>
                             </div>
