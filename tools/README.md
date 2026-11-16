@@ -18,6 +18,14 @@ old CDN behaviour.
 
 ## Fonts
 
+`assets/fonts/archivo-latin-var.woff2` is the Google Fonts latin subset of Archivo
+(SIL OFL 1.1, variable weight 100-900 and width 62-125%). Since the Nov 2026
+nehem.dev-style restyle it is the only font the pages use: body copy at normal width,
+h1/h2 and prices at the condensed end (`font-stretch: 62-66%`). Labels use the system
+monospace stack (no download). Inter and Caveat are kept below but no longer referenced
+by any font-family. The restyle skin lives at the end of `tools/tailwind.input.css`;
+`assets/contours.svg` is the decorative contour-line canvas.
+
 `assets/fonts/inter-latin-var.woff2` and `caveat-latin-var.woff2` are the Google Fonts
 latin subsets of Inter and Caveat (SIL Open Font License 1.1), self-hosted to avoid
 render-blocking third-party requests. `@font-face` rules live in `tools/tailwind.input.css`.
